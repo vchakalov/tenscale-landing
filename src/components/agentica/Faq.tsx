@@ -54,11 +54,11 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="section-full py-24 sm:py-28">
+    <section id="faq" className="section-full py-24 sm:py-32">
       <div className="container-default">
         <div className="max-w-2xl">
           <p className="eyebrow mb-5">FAQ</p>
-          <h2 className="text-balance text-3xl font-extrabold tracking-[-0.03em] text-foreground sm:text-[2.75rem] sm:leading-[1.05]">
+          <h2 className="text-balance text-3xl font-extrabold leading-[1.1] tracking-[-0.03em] text-foreground sm:text-[2.5rem]">
             Questions, answered.
           </h2>
         </div>

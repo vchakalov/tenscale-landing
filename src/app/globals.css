@@ -140,6 +140,27 @@ body {
   box-shadow: var(--shadow-lg);
   overflow: hidden;
 }
+/* On narrow screens dense dashboards become unreadable at full width —
+   let them scroll horizontally at a legible min width instead. */
+@media (max-width: 640px) {
+  .device-frame {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .device-frame::-webkit-scrollbar { display: none; }
+  .device-frame > img { min-width: 680px; }
+}
+
+/* Subtle hover-lift for cards / framed elements */
+.lift {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
 
 /* icon size helpers (legacy) */
 .w-icon-xs { width: 1rem; }   .h-icon-xs { height: 1rem; }

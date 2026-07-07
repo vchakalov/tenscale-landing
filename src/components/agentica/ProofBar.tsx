@@ -7,30 +7,28 @@ const METRICS = [
 
 export function ProofBar() {
   return (
-    <section className="section-full border-y border-border">
+    <section className="section-full border-y border-border bg-surface-muted">
       <div className="container-default py-10">
-        <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
-          <p className="max-w-xs text-sm leading-relaxed text-foreground-secondary">
-            Built for performance teams scaling past{" "}
-            <span className="font-semibold text-foreground">€100k / month</span>.
-          </p>
+        <p className="text-center text-sm leading-relaxed text-foreground-secondary">
+          Built for performance teams scaling past{" "}
+          <span className="font-semibold text-foreground">€100k / month</span>.
+        </p>
 
-          <ul className="flex flex-wrap items-center gap-y-3">
-            {METRICS.map((metric, i) => (
-              <li key={metric} className="flex items-center">
-                {i > 0 && (
-                  <span
-                    aria-hidden
-                    className="mx-6 hidden h-3.5 w-px bg-border-strong sm:block"
-                  />
-                )}
-                <span className="mono text-xs tracking-tight text-foreground-tertiary">
-                  {metric}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:gap-x-0">
+          {METRICS.map((metric, i) => (
+            <li key={metric} className="flex items-center">
+              {i > 0 && (
+                <span
+                  aria-hidden
+                  className="mx-5 hidden h-3.5 w-px bg-border-strong sm:block"
+                />
+              )}
+              <span className="mono text-xs tracking-tight text-foreground-tertiary">
+                {metric}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

@@ -137,32 +137,29 @@ function Connector() {
   return (
     <div
       aria-hidden
-      className="flex shrink-0 items-center justify-center py-1 md:py-0"
+      className="flex shrink-0 items-center justify-center md:w-8"
     >
-      <svg
-        viewBox="0 0 20 20"
-        fill="none"
-        className="h-4 w-4 rotate-90 text-[var(--color-accent)] md:rotate-0"
-      >
-        <path
-          d="M4 10h11m0 0-4-4m4 4-4 4"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      {/* desktop: thin hairline with a small red chevron at the junction */}
+      <span className="relative hidden h-px w-full items-center justify-center bg-border md:flex">
+        <span className="mono absolute text-base leading-none text-[var(--color-accent)]">
+          ›
+        </span>
+      </span>
+      {/* mobile: small red down-chevron */}
+      <span className="mono rotate-90 text-base leading-none text-[var(--color-accent)] md:hidden">
+        ›
+      </span>
     </div>
   );
 }
 
 export function HowItWorks() {
   return (
-    <section id="how" className="section-full py-24 sm:py-28">
+    <section id="how" className="section-full py-24 sm:py-32">
       <div className="container-default">
         <div className="max-w-2xl">
           <p className="eyebrow mb-4">How it works</p>
-          <h2 className="text-balance text-3xl font-extrabold tracking-[-0.03em] text-foreground sm:text-4xl">
+          <h2 className="text-balance text-3xl font-extrabold leading-[1.1] tracking-[-0.03em] text-foreground sm:text-[2.5rem]">
             One engine, from first impression to repurchase.
           </h2>
         </div>
@@ -171,7 +168,7 @@ export function HowItWorks() {
           {STAGES.map(({ name, caption, Icon }, i) => (
             <div key={name} className={cn("flex flex-col md:contents")}>
               {i > 0 && <Connector />}
-              <div className="flex flex-1 flex-col rounded-[14px] border border-border bg-surface p-5 shadow-[var(--shadow-xs)] md:min-w-0">
+              <div className="lift flex h-full flex-1 flex-col rounded-[14px] border border-border bg-surface p-5 shadow-[var(--shadow-xs)] md:min-w-0">
                 <span className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface-muted text-foreground">
                   <Icon className="h-5 w-5" />
                 </span>

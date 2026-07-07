@@ -9,7 +9,7 @@ const footerLinks: { label: string; href: string }[] = [
 
 export function FooterCta() {
   return (
-    <section className="section-full bg-[var(--color-ink)] pt-24 text-white sm:pt-28">
+    <section className="section-full bg-[var(--color-ink)] pt-24 text-white sm:pt-32">
       <div className="container-default">
         {/* Final CTA card */}
         <div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] px-6 py-16 text-center sm:px-16 sm:py-20">

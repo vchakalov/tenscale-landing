@@ -101,14 +101,14 @@ const points: TrustPoint[] = [
 
 export function Trust() {
   return (
-    <section className="section-full bg-[var(--color-ink)] py-24 text-white sm:py-28">
+    <section className="section-full bg-[var(--color-ink)] py-24 text-white sm:py-32">
       <div className="container-default">
         {/* red hairline accent above the heading */}
         <div className="mb-8 h-px w-16 bg-[var(--color-accent)]" aria-hidden />
 
         <div className="max-w-3xl">
           <p className="eyebrow mb-5 text-zinc-500">The science, and the safety</p>
-          <h2 className="text-balance text-3xl font-extrabold tracking-[-0.03em] text-white sm:text-[2.75rem] sm:leading-[1.05]">
+          <h2 className="text-balance text-3xl font-extrabold leading-[1.1] tracking-[-0.03em] text-white sm:text-[2.5rem]">
             Powered by Andromeda.{" "}
             <span className="text-zinc-500">Governed by your rules.</span>
           </h2>

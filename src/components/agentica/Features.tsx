@@ -93,12 +93,12 @@ function CheckIcon() {
 
 export function Features() {
   return (
-    <section id="features" className="section-full py-24 sm:py-28">
+    <section id="features" className="section-full py-24 sm:py-32">
       <div className="container-default">
         {/* Section header */}
         <header className="max-w-2xl">
           <p className="eyebrow mb-4">The engine</p>
-          <h2 className="text-balance text-[2rem] font-extrabold leading-[1.08] tracking-[-0.03em] text-foreground sm:text-[2.75rem]">
+          <h2 className="text-balance text-3xl font-extrabold leading-[1.1] tracking-[-0.03em] text-foreground sm:text-[2.5rem]">
             Everything a growth team does — run by one engine.
           </h2>
           <p className="mt-5 text-pretty text-lg leading-relaxed text-foreground-secondary">
@@ -144,7 +144,7 @@ export function Features() {
 
                 {/* Image column */}
                 <div className={cn(flipped && "lg:order-1")}>
-                  <div className="device-frame">
+                  <div className="device-frame lift">
                     <img
                       src={`/images/agentica/${feature.image}`}
                       alt={feature.alt}

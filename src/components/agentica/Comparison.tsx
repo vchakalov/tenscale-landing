@@ -51,18 +51,18 @@ function CheckIcon({ className }: { className?: string }) {
 
 export function Comparison() {
   return (
-    <section className="section-full py-24 sm:py-28">
+    <section className="section-full py-24 sm:py-32">
       <div className="container-default">
         <div className="max-w-2xl">
           <p className="eyebrow mb-4">Why Agentica</p>
-          <h2 className="text-balance text-3xl font-extrabold tracking-[-0.03em] text-foreground sm:text-4xl">
+          <h2 className="text-balance text-3xl font-extrabold leading-[1.1] tracking-[-0.03em] text-foreground sm:text-[2.5rem]">
             One engine instead of a whole stack.
           </h2>
         </div>
 
         <div className="relative mt-14 flex flex-col items-stretch gap-4 md:flex-row md:gap-6">
           {/* The old way */}
-          <div className="flex flex-1 flex-col rounded-[14px] border border-border bg-surface-muted p-7">
+          <div className="lift flex flex-1 flex-col rounded-[14px] border border-border bg-surface-muted p-7">
             <p className="mono text-[0.68rem] uppercase tracking-[0.14em] text-foreground-tertiary">
               The old way
             </p>
@@ -94,7 +94,7 @@ export function Comparison() {
           {/* With Agentica */}
           <div
             className={cn(
-              "flex flex-1 flex-col rounded-[14px] border border-border bg-surface p-7",
+              "lift flex flex-1 flex-col rounded-[14px] border border-border bg-surface p-7",
               "ring-1 ring-[var(--color-accent-ring)]",
               "shadow-[var(--shadow-md)]",
             )}
