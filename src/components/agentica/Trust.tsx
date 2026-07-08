@@ -113,7 +113,7 @@ export function Trust() {
             <span className="text-zinc-500">Governed by your rules.</span>
           </h2>
           <p className="mt-6 text-pretty text-lg leading-relaxed text-zinc-300">
-            Meta&rsquo;s Andromeda decides who sees each creative — you don&rsquo;t hand-pick
+            Meta&rsquo;s Andromeda decides who sees each creative. You don&rsquo;t hand-pick
             audiences anymore. The job is to feed it{" "}
             <span className="font-semibold text-white">volume × diversity</span> and match the
             landing page to whatever the ad promised. That&rsquo;s the whole engine Agentica

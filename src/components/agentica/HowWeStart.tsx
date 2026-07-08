@@ -10,7 +10,7 @@ const steps: Step[] = [
   {
     no: "01",
     title: "Book a call",
-    body: "We look at your offer, your angles and your current funnel — and where buyers are dropping off.",
+    body: "We look at your offer, your angles and your current funnel, and where buyers are dropping off.",
   },
   {
     no: "02",
@@ -59,7 +59,7 @@ export function HowWeStart() {
           ))}
         </ol>
 
-        {/* Book-a-call band — light, so Trust stays the one dark moment */}
+        {/* Book-a-call band (light), so Trust stays the one dark moment */}
         <div className="relative mt-14 overflow-hidden rounded-[20px] border border-[var(--color-accent-soft)] bg-surface-muted px-8 py-14 text-center sm:px-16 sm:py-16">
           <div
             aria-hidden
@@ -71,7 +71,7 @@ export function HowWeStart() {
               Ready to give every buyer their own funnel?
             </h3>
             <p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-foreground-secondary">
-              Book a call and we&rsquo;ll map your offer, angles and first funnels —
+              Book a call and we&rsquo;ll map your offer, angles and first funnels,
               or message us on WhatsApp.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">

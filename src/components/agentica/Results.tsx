@@ -43,7 +43,7 @@ export function Results() {
             Built to move the metric that matters.
           </h2>
           <p className="mt-5 text-pretty text-lg leading-relaxed text-foreground-secondary">
-            Not vanity numbers — the conversion rate on the page and the cost of
+            Not vanity numbers: the conversion rate on the page and the cost of
             every result. When the funnel is built for the buyer, both move in
             the right direction.
           </p>

@@ -1,8 +1,12 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 
-// ── Swap these for the real links ─────────────────────────────
-export const BOOK_CALL_URL = "https://cal.com/agentica/intro"; // TODO: real Calendly/cal.com
-export const WHATSAPP_URL = "https://wa.me/00000000000"; // TODO: real wa.me number
+// ── Real links ────────────────────────────────────────────────
+export const BOOK_CALL_URL = "https://zcal.co/venelin/agentica";
+export const WHATSAPP_URL = "https://wa.me/359877895554";
 // ──────────────────────────────────────────────────────────────
 
 type Size = "sm" | "md" | "lg";
@@ -35,6 +39,81 @@ function WhatsAppIcon() {
   );
 }
 
+function CloseIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
+      <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** Modal that embeds the zcal booking page (works on mobile + desktop). */
+function BookingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [open, onClose]);
+
+  if (!open || !mounted) return null;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-4 backdrop-blur-sm sm:p-6"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Book a call"
+      onClick={onClose}
+    >
+      <div
+        className="relative flex h-[88vh] max-h-[760px] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between border-b border-border px-5 py-3">
+          <span className="text-sm font-semibold text-foreground">Book a call</span>
+          <div className="flex items-center gap-1">
+            <a
+              href={BOOK_CALL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md px-2 py-1 text-xs font-medium text-foreground-tertiary transition-colors hover:text-foreground"
+            >
+              Open in new tab ↗
+            </a>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="grid h-8 w-8 place-items-center rounded-md text-foreground-secondary transition-colors hover:bg-surface-muted hover:text-foreground"
+            >
+              <CloseIcon />
+            </button>
+          </div>
+        </div>
+        <iframe
+          src={BOOK_CALL_URL}
+          title="Book a call with Agentica"
+          className="h-full w-full flex-1 border-0"
+          allow="camera; microphone; fullscreen"
+        />
+      </div>
+    </div>,
+    document.body,
+  );
+}
+
 export function BookCallButton({
   size = "md",
   className,
@@ -44,22 +123,25 @@ export function BookCallButton({
   className?: string;
   children?: React.ReactNode;
 }) {
+  const [open, setOpen] = useState(false);
   return (
-    <a
-      href={BOOK_CALL_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cn(
-        "group inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--color-accent)] font-semibold text-white transition-all",
-        "shadow-[0_1px_2px_rgba(16,24,40,0.10),0_0_0_1px_rgba(229,72,77,0.12)] hover:bg-[var(--color-accent-hover)] hover:shadow-[0_6px_20px_-6px_var(--color-accent-ring)]",
-        "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-accent-ring)]",
-        sizeCls[size],
-        className,
-      )}
-    >
-      {children}
-      <ArrowIcon />
-    </a>
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className={cn(
+          "group inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--color-accent)] font-semibold text-white transition-all",
+          "shadow-[0_1px_2px_rgba(16,24,40,0.10),0_0_0_1px_rgba(229,72,77,0.12)] hover:bg-[var(--color-accent-hover)] hover:shadow-[0_6px_20px_-6px_var(--color-accent-ring)]",
+          "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-accent-ring)]",
+          sizeCls[size],
+          className,
+        )}
+      >
+        {children}
+        <ArrowIcon />
+      </button>
+      <BookingModal open={open} onClose={() => setOpen(false)} />
+    </>
   );
 }
 

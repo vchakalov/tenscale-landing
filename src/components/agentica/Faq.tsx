@@ -16,19 +16,19 @@ const faqs: QA[] = [
   },
   {
     q: "How is this different from an agency?",
-    a: "An agency sells you hours; Agentica is an engine. It scales horizontally — more angles and funnels rather than more budget on one — and it never stops testing, promoting winners and cutting losers. There's no queue and no waiting on a person to make the next change.",
+    a: "An agency sells you hours; Agentica is an engine. It scales horizontally, more angles and funnels rather than more budget on one, and it never stops testing, promoting winners and cutting losers. There's no queue and no waiting on a person to make the next change.",
   },
   {
     q: "Do I need to rebuild my landing page?",
-    a: "No. You add one line of code, and Agentica reads your existing page and rewrites only the persuasion copy for each angle — the hero, benefits and CTA. It never touches your facts, prices or page structure, so nothing about the offer itself changes.",
+    a: "No. You add one line of code, and Agentica reads your existing page and rewrites only the persuasion copy for each angle: the hero, benefits and CTA. It never touches your facts, prices or page structure, so nothing about the offer itself changes.",
   },
   {
     q: "Does it touch my ad account directly?",
-    a: "Yes, securely, through the official Meta Ads API. Everything runs inside your own account, and you stay in control the whole time — you can approve, pause or scale anything, and nothing goes live without your sign-off.",
+    a: "Yes, securely, through the official Meta Ads API. Everything runs inside your own account, and you stay in control the whole time. You can approve, pause or scale anything, and nothing goes live without your sign-off.",
   },
   {
     q: "What does ‘+300% conversion’ actually mean?",
-    a: "Message-matched pages can lift conversion up to roughly 3× because the buyer feels the funnel was built specifically for them, not bolted on after the click. It's a positioning claim, not a guarantee — real results vary by offer, audience and starting point.",
+    a: "Message-matched pages can lift conversion up to roughly 3× because the buyer feels the funnel was built specifically for them, not bolted on after the click. It's a positioning claim, not a guarantee. Real results vary by offer, audience and starting point.",
   },
   {
     q: "How do we start?",

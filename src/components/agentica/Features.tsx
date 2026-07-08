@@ -14,7 +14,7 @@ const FEATURES: Feature[] = [
     kicker: "PERSONALIZED LANDING PAGES",
     heading: "Message-match, at scale.",
     paragraphs: [
-      "Each angle gets its own landing variation that mirrors the ad's exact promise — hero, benefits and CTA rewritten, while facts, prices and structure stay untouched.",
+      "Each angle gets its own landing variation that mirrors the ad's exact promise: hero, benefits and CTA rewritten, while facts, prices and structure stay untouched.",
       "Install is one line of code and it works with Shopify, Webflow and GTM. Matching the page to the ad can lift the conversion rate up to 3×.",
     ],
     checks: [
@@ -29,7 +29,7 @@ const FEATURES: Feature[] = [
     kicker: "ANGLE & PERSONA ENGINE",
     heading: "Scale with angles, not budget.",
     paragraphs: [
-      "Agentica proposes new angles, tests them, and sorts them into Winning, Testing and Losers by real ROAS — then auto-generates fresh angles as the pool thins.",
+      "Agentica proposes new angles, tests them, and sorts them into Winning, Testing and Losers by real ROAS, then auto-generates fresh angles as the pool thins.",
       "This is horizontal scaling: 50 angles in 50 funnels beats pouring budget into one. You expand reach by variety, not by spending more on the same message.",
     ],
     checks: [
@@ -44,7 +44,7 @@ const FEATURES: Feature[] = [
     kicker: "WINNING CREATIVES, GENERATED",
     heading: "A creative for every angle.",
     paragraphs: [
-      "The engine starts from proven winning ad structures and produces fresh creatives for each angle and audience — keeping the message specific while the format stays reliable.",
+      "The engine starts from proven winning ad structures and produces fresh creatives for each angle and audience, keeping the message specific while the format stays reliable.",
       "Volume × diversity is exactly what Meta's Andromeda rewards, so more angle-matched creatives means more of the right buyers reached.",
     ],
     checks: [
@@ -59,7 +59,7 @@ const FEATURES: Feature[] = [
     kicker: "24/7 AD AUTOMATION",
     heading: "An operator that never sleeps.",
     paragraphs: [
-      "Set the rules once — when spend passes a cap with no results, or cost-per-result climbs, Agentica pauses, scales or recreates the ad automatically.",
+      "Set the rules once: when spend passes a cap with no results, or cost-per-result climbs, Agentica pauses, scales or recreates the ad automatically.",
       "That means constant freshness without anyone sitting in Ads Manager, which is exactly the kind of consistent activity Meta rewards.",
     ],
     checks: [
@@ -99,10 +99,10 @@ export function Features() {
         <header className="max-w-2xl">
           <p className="eyebrow mb-4">The engine</p>
           <h2 className="text-balance text-3xl font-extrabold leading-[1.1] tracking-[-0.03em] text-foreground sm:text-[2.5rem]">
-            Everything a growth team does — run by one engine.
+            Everything a growth team does, run by one engine.
           </h2>
           <p className="mt-5 text-pretty text-lg leading-relaxed text-foreground-secondary">
-            Angles, creatives, message-matched pages and round-the-clock optimization —
+            Angles, creatives, message-matched pages and round-the-clock optimization:
             the four jobs it usually takes a whole team to run, working together as a
             single system.
           </p>
