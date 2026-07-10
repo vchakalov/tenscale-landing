@@ -32,7 +32,7 @@ LIGHT VISUAL SYSTEM (apply to the whole screen — think Ramp, Linear, Vercel da
 - Canvas background: pure white #FFFFFF, with an optional very light #FAFAFA panel behind cards.
 - Card / surface: #FFFFFF, 1px hairline border #ECECEC, 12px radius, a very soft shadow (0 1px 2px rgba(16,24,40,0.05)). Generous whitespace, 24–32px padding.
 - Primary text: near-black #171717. Secondary/muted text: #6B7280. Faint labels: #9CA3AF.
-- ONE signature accent: warm red #E5484D — used SPARINGLY: the primary button, the active sidebar item, ONE hero metric per screen, focus rings, and "Winner"/"Live" status pills. Never large red fills.
+- ONE signature accent: warm red #E11D2E — used SPARINGLY: the primary button, the active sidebar item, ONE hero metric per screen, focus rings, and "Winner"/"Live" status pills. Never large red fills.
 - Positive deltas & "Active/Live" dots may use green #16A34A. No other accent colors.
 - Data & metrics in a monospace face (JetBrains Mono feel): tabular figures, crisp. UI text in a tight geometric grotesk (Plus Jakarta Sans / Söhne feel) — never default Inter-bland, never serif.
 - Charts: thin, elegant lines/bars, no heavy gridlines, one baseline; a subtle red area-fill under a hero line is allowed.

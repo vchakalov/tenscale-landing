@@ -64,7 +64,7 @@ export function HowWeStart() {
           <div
             aria-hidden
             className="pointer-events-none absolute inset-x-0 -top-24 mx-auto h-64 w-[560px] rounded-full opacity-80 blur-[110px]"
-            style={{ background: "radial-gradient(closest-side, rgba(229,72,77,0.12), transparent)" }}
+            style={{ background: "radial-gradient(closest-side, rgba(17,17,17,0.12), transparent)" }}
           />
           <div className="relative">
             <h3 className="mx-auto max-w-2xl text-balance text-2xl font-extrabold leading-[1.12] tracking-[-0.03em] text-foreground sm:text-4xl">

@@ -17,7 +17,7 @@ export function FooterCta() {
           <div
             aria-hidden
             className="pointer-events-none absolute left-1/2 top-0 -z-0 h-[380px] w-[680px] -translate-x-1/2 rounded-full opacity-60 blur-[120px]"
-            style={{ background: "radial-gradient(closest-side, rgba(229,72,77,0.20), transparent)" }}
+            style={{ background: "radial-gradient(closest-side, rgba(17,17,17,0.20), transparent)" }}
           />
           <div className="relative">
             <h2 className="mx-auto max-w-2xl text-balance text-3xl font-extrabold tracking-[-0.03em] text-white sm:text-5xl sm:leading-[1.05]">

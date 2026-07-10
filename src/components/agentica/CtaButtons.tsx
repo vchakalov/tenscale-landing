@@ -11,19 +11,31 @@ export const WHATSAPP_URL = "https://wa.me/359877895554";
 
 type Size = "sm" | "md" | "lg";
 
-const sizeCls: Record<Size, string> = {
-  sm: "h-9 px-4 text-sm",
-  md: "h-11 px-5 text-[15px]",
-  lg: "h-12 px-6 text-base",
+// Premium mono CTA: solid near-black pill + white chip with an oxblood arrow,
+// and a faint oxblood glow so it has life on the warm canvas.
+const bookPill: Record<Size, string> = {
+  sm: "h-10 pl-5 pr-1.5 text-sm gap-2.5",
+  md: "h-12 pl-6 pr-1.5 text-[15px] gap-3",
+  lg: "h-14 pl-7 pr-2 text-[17px] gap-4",
+};
+const bookChip: Record<Size, string> = {
+  sm: "h-7 w-7",
+  md: "h-9 w-9",
+  lg: "h-10 w-10",
+};
+const waCls: Record<Size, string> = {
+  sm: "h-10 px-4 text-sm",
+  md: "h-12 px-5 text-[15px]",
+  lg: "h-14 px-6 text-base",
 };
 
-function ArrowIcon() {
+function ArrowUpRight() {
   return (
-    <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" className="h-[46%] w-[46%]" aria-hidden="true">
       <path
-        d="M4.167 10h11.666m0 0L10 4.167M15.833 10 10 15.833"
+        d="M7 17 17 7M17 7H8.5M17 7v8.5"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -130,15 +142,25 @@ export function BookCallButton({
         type="button"
         onClick={() => setOpen(true)}
         className={cn(
-          "group inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--color-accent)] font-semibold text-white transition-all",
-          "shadow-[0_1px_2px_rgba(16,24,40,0.10),0_0_0_1px_rgba(229,72,77,0.12)] hover:bg-[var(--color-accent-hover)] hover:shadow-[0_6px_20px_-6px_var(--color-accent-ring)]",
+          "group inline-flex items-center justify-between whitespace-nowrap rounded-full font-semibold text-white ring-1 ring-white/10",
+          "bg-[linear-gradient(180deg,#242424_0%,#000000_100%)]",
+          "shadow-[0_12px_30px_-12px_rgba(139,17,32,0.40)] transition-shadow duration-200",
+          "hover:shadow-[0_16px_38px_-12px_rgba(139,17,32,0.55)]",
           "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-accent-ring)]",
-          sizeCls[size],
+          bookPill[size],
           className,
         )}
       >
-        {children}
-        <ArrowIcon />
+        <span>{children}</span>
+        {/* white chip, oxblood arrow — the one spark of colour */}
+        <span
+          className={cn(
+            "grid shrink-0 place-items-center rounded-full bg-white text-[#8B1120] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
+            bookChip[size],
+          )}
+        >
+          <ArrowUpRight />
+        </span>
       </button>
       <BookingModal open={open} onClose={() => setOpen(false)} />
     </>
@@ -166,7 +188,7 @@ export function WhatsAppButton({
         variant === "outline"
           ? "border border-border-strong bg-white hover:bg-surface-muted"
           : "hover:bg-surface-muted",
-        sizeCls[size],
+        waCls[size],
         className,
       )}
     >

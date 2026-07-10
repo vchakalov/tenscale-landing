@@ -7,7 +7,7 @@ export function Hero() {
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-[38%] -z-10 h-[520px] w-[820px] -translate-x-1/2 rounded-full opacity-70 blur-[120px]"
-        style={{ background: "radial-gradient(closest-side, rgba(229,72,77,0.14), transparent)" }}
+        style={{ background: "radial-gradient(closest-side, rgba(17,17,17,0.14), transparent)" }}
       />
 
       <div className="container-default flex flex-col items-center text-center">

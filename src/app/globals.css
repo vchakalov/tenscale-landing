@@ -1,60 +1,50 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Agentica landing — premium LIGHT design system (Ramp-inspired)
-   White canvas · near-black type · ONE warm-red accent · mono metrics
+   Agentica — jace.ai's design, recolored to white / black / red.
+   Same structure, spacing, serif headlines. Palette swapped:
+   cream -> white, navy -> black, pastel accents -> one true red.
    ============================================================ */
 @theme {
-  /* Type */
-  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-mono), ui-monospace, "JetBrains Mono", monospace;
+  /* Fonts — jace's pairing: Gelica (serif display) + Geist (body) */
+  --font-sans: var(--font-geist-sans), "GeistSans Fallback", Arial, sans-serif;
+  --font-serif: var(--font-gelica), Georgia, serif;
+  --font-gelica: var(--font-gelica), Georgia, serif;
 
-  /* Core neutrals */
-  --color-background: #ffffff;
-  --color-surface: #ffffff;
-  --color-surface-muted: #fafafa;      /* alt panels */
-  --color-surface-sunken: #f4f4f5;     /* wells, code, inputs */
-  --color-foreground: #171717;         /* near-black text */
-  --color-foreground-secondary: #52525b;
-  --color-foreground-tertiary: #9ca3af;
-  --color-border: #ececec;
-  --color-border-strong: #e0e0e0;
+  /* Neutral scale (kept close to jace) */
+  --color-neutral-dark: #6b6b6b;
+  --color-neutral-darker: #454545;
+  --color-neutral-darkest: #1a1a1a;
+  --color-neutral-light: #d4d4d4;
+  --color-neutral-lighter: #e7e7e7;
+  --color-neutral-lightest: #f6f6f6;
 
-  /* Signature accent — warm red, used sparingly */
-  --color-accent: #e5484d;
-  --color-accent-hover: #d33a3f;
-  --color-accent-soft: #fdeaea;        /* tinted chip bg */
-  --color-accent-ring: rgba(229, 72, 77, 0.35);
+  /* Foreground — black instead of jace's navy */
+  --color-foreground: #1a1a1a;
+  --color-foreground-secondary: #3a3a3a;
+  --color-foreground-tertiary: #6b6b6b;
+  --color-headline: #0f0f0f;
 
-  /* Support */
-  --color-success: #16a34a;
-  --color-success-soft: #e7f6ec;
-  --color-ink: #0a0a0a;                /* pure dark sections (footer/cta) */
+  /* ONE true red (Agentica crimson) replacing lilac/lemon/pink */
+  --color-brand: #8B1120;
+  --color-brand-hover: #000000;
+  --color-brand-soft: #F4F2EE;      /* light red tint for pills/chips */
+  --color-brand-lilac: #F4F2EE;     /* jace token -> red tint */
+  --color-brand-yellow: #F4F2EE;    /* jace token -> red tint */
+  --color-brand-pink: #F4F2EE;      /* jace token -> red tint */
+  --color-brand-purple: #F4F2EE;    /* jace token -> red tint */
+  --color-brand-ember: #8B1120;
+  --color-accent: #8B1120;
+  --color-accent-hover: #6E0B14;
+  --color-accent-ring: rgba(139,17,32, 0.35);
 
-  /* Radii & shadow scale (soft, premium) */
-  --radius-card: 14px;
-  --radius-pill: 9999px;
-  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
-  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
-  --shadow-md: 0 8px 24px -6px rgba(16, 24, 40, 0.10), 0 2px 6px rgba(16, 24, 40, 0.05);
-  --shadow-lg: 0 24px 48px -12px rgba(16, 24, 40, 0.16);
-
-  /* ---- Legacy jace token aliases (kept so in-flight markup renders) ---- */
-  --color-neutral-darkest: #171717;
-  --color-neutral-darker: #3f3f46;
-  --color-neutral-dark: #52525b;
-  --color-neutral-light: #d4d4d8;
-  --color-neutral-lighter: #ececec;
-  --color-neutral-lightest: #fafafa;
-  --color-headline: #171717;
-  --color-brand-yellow: #f4f4f5;   /* neutralised */
-  --color-brand-lilac: #fdeaea;    /* → soft red tint */
-  --color-brand-pink: #fdeaea;
-  --color-brand-ember: #e5484d;
-  --color-cream-from: #ffffff;
+  /* Surfaces */
+  --color-sand: #f6f6f6;
+  --color-ink: #0f0f0f;             /* dark sections */
+  --color-cream-from: #ffffff;      /* page bg (was cream) */
   --color-cream-to: #ffffff;
 
+  /* jace custom line-height scale */
   --leading-md: 1.25rem;
   --leading-lg: 1.5rem;
   --leading-xl: 1.5rem;
@@ -62,116 +52,54 @@
   --leading-5xl: 3rem;
 }
 
-/* Explicit :root mirror — guarantees var() resolution for direct references
-   and arbitrary utilities (bg-[var(--color-ink)]), which Tailwind v4 would
-   otherwise tree-shake out of the emitted @theme. */
+/* Explicit :root mirror so var() + arbitrary utilities always resolve. */
 :root {
-  --color-background: #ffffff;
-  --color-surface: #ffffff;
-  --color-surface-muted: #fafafa;
-  --color-surface-sunken: #f4f4f5;
-  --color-foreground: #171717;
-  --color-foreground-secondary: #52525b;
-  --color-foreground-tertiary: #9ca3af;
-  --color-border: #ececec;
-  --color-border-strong: #e0e0e0;
-  --color-accent: #e5484d;
-  --color-accent-hover: #d33a3f;
-  --color-accent-soft: #fdeaea;
-  --color-accent-ring: rgba(229, 72, 77, 0.35);
-  --color-success: #16a34a;
-  --color-success-soft: #e7f6ec;
-  --color-ink: #0a0a0a;
-  --radius-card: 14px;
-  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
-  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
-  --shadow-md: 0 8px 24px -6px rgba(16, 24, 40, 0.10), 0 2px 6px rgba(16, 24, 40, 0.05);
-  --shadow-lg: 0 24px 48px -12px rgba(16, 24, 40, 0.16);
+  --color-foreground: #1a1a1a;
+  --color-foreground-secondary: #3a3a3a;
+  --color-foreground-tertiary: #6b6b6b;
+  --color-headline: #0f0f0f;
+  --color-neutral-darkest: #1a1a1a;
+  --color-neutral-darker: #454545;
+  --color-neutral-dark: #6b6b6b;
+  --color-neutral-lighter: #e7e7e7;
+  --color-neutral-lightest: #f6f6f6;
+  --color-brand: #8B1120;
+  --color-brand-hover: #000000;
+  --color-brand-soft: #F4F2EE;
+  --color-accent: #8B1120;
+  --color-accent-hover: #6E0B14;
+  --color-accent-ring: rgba(139,17,32, 0.35);
+  --color-ink: #0f0f0f;
 }
 
-/* Base */
-* { border-color: var(--color-border); }
-
 body {
-  background: var(--color-background);
+  background: #FAF9F7;
   color: var(--color-foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
   min-height: 100vh;
   overflow-x: hidden;
 }
+::selection { background: var(--color-brand); color: #fff; }
 
-/* Selection */
-::selection { background: var(--color-accent); color: #fff; }
-
-/* Layout utilities carried over */
-.section-full {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.container-default {
-  width: 100%;
-  max-width: 1200px;
-  margin-inline: auto;
-  padding-inline: 32px;
-}
+/* jace layout utilities */
+.section-full { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.container-default { width: 100%; max-width: 1400px; margin-inline: auto; padding-inline: 32px; }
+.container-small { width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: 32px; }
 @media (max-width: 640px) {
   .container-default { padding-inline: 20px; }
+  .container-small { padding-inline: 20px; }
 }
 
-/* Eyebrow / mono label — premium instrument feel */
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-foreground-tertiary);
+/* jace dotted rules */
+.border-dotted-vertical {
+  border-top: 1px dashed var(--color-neutral-lighter);
+  border-bottom: 1px dashed var(--color-neutral-lighter);
 }
-.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.border-dotted-top { border-top: 1px dashed var(--color-neutral-lighter); }
+.border-dotted-bottom { border-bottom: 1px dashed var(--color-neutral-lighter); }
 
-/* Framed product screenshot — the recurring hero device */
-.device-frame {
-  border-radius: 16px;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-}
-/* On narrow screens dense dashboards become unreadable at full width —
-   let them scroll horizontally at a legible min width instead. */
-@media (max-width: 640px) {
-  .device-frame {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .device-frame::-webkit-scrollbar { display: none; }
-  .device-frame > img { min-width: 680px; }
-}
-
-/* Subtle hover-lift for cards / framed elements */
-.lift {
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.lift:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-}
-
-/* icon size helpers (legacy) */
+/* icon size helpers */
 .w-icon-xs { width: 1rem; }   .h-icon-xs { height: 1rem; }
 .w-icon-sm { width: 1.25rem; } .h-icon-sm { height: 1.25rem; }
-.w-icon-md { width: 1.5rem; }  .h-icon-md { height: 1.5rem; }
-
-/* legacy helpers remapped */
-.bg-jace, .bg-jace-gradient { background-image: none; color: var(--color-accent); }
-.text-highlight { color: var(--color-accent); }
-.border-dotted-vertical {
-  border-top: 1px dashed var(--color-border-strong);
-  border-bottom: 1px dashed var(--color-border-strong);
-}
-.footer-section { background: var(--color-ink); }
+.w-icon-md { width: 1.5rem;  } .h-icon-md { height: 1.5rem; }
