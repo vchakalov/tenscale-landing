@@ -49,3 +49,8 @@ next-env.d.ts
 temp/
 Steven - Esta/
 /out/
+
+# Local tool artifacts
+.playwright-mcp/
+.claude/tsc-cache/
+.tldr/

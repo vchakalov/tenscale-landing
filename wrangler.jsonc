@@ -1,0 +1,40 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+
+  // Static assets only: there is no `main`, so no Worker code runs and no
+  // request is billed as an invocation. Cloudflare's asset server answers
+  // everything straight from the edge.
+  //
+  // When the Meta Conversions API endpoint is added, it arrives as:
+  //   "main": "worker/index.ts",
+  //   "assets": { ..., "run_worker_first": ["/api/*"] }
+  // Everything else keeps bypassing the Worker.
+  "name": "agentica-landing",
+  "compatibility_date": "2026-09-18",
+
+  "assets": {
+    "directory": "./out",
+
+    // next.config.ts sets `trailingSlash: true`, so every route is a directory
+    // with an index.html. This is the matching behaviour.
+    "html_handling": "auto-trailing-slash",
+
+    // The export writes out/404.html. Without this, an unknown path returns a
+    // bare 404 with no page.
+    "not_found_handling": "404-page"
+  },
+
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+
+  // Custom domains go here once agenticalab.io is a zone in this Cloudflare
+  // account. Adding them before that makes `wrangler deploy` fail, so they stay
+  // commented until the nameservers move off Porkbun:
+  //
+  // "routes": [
+  //   { "pattern": "agenticalab.io", "custom_domain": true },
+  //   { "pattern": "www.agenticalab.io", "custom_domain": true }
+  // ]
+}

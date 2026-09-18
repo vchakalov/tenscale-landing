@@ -1,0 +1,26 @@
+# Response headers for the Cloudflare Workers asset server.
+#
+# This file is not served. Cloudflare parses it and applies the rules to every
+# static asset response. It lives in public/ because the Next.js export copies
+# that directory into out/ verbatim.
+#
+# Cloudflare's default is `public, max-age=0, must-revalidate`, so without the
+# first rule every visitor revalidates every file on every page view. GitHub
+# Pages forces 10 minutes and gives no way to change it. This is the thing that
+# host could not do.
+
+# Next.js puts a content hash in each of these file names, so a changed file is
+# a new URL. They can therefore be cached for a year and never checked again.
+/_next/static/*
+  Cache-Control: public, max-age=31556952, immutable
+
+/images/*
+  Cache-Control: public, max-age=604800
+
+/videos/*
+  Cache-Control: public, max-age=604800
+
+# Cheap, and none of it touches how the page behaves.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

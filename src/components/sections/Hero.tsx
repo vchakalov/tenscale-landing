@@ -7,7 +7,7 @@ export function Hero() {
         Personalized AI marketing funnels.
       </h1>
       <p className="font-[family-name:var(--font-geist-sans)] font-normal text-[14px] sm:text-[16px] leading-[18px] sm:leading-[26px] pb-10 sm:pb-14 text-center max-w-xl text-foreground-secondary">
-        Agentica turns every winning angle into its own funnel — hundreds of creatives, a message-matched page, ads run 24/7 and swapped the second they stop selling.
+        Agentica turns every winning angle into its own funnel. Hundreds of creatives, a message-matched page, ads run 24/7 and swapped the second they stop selling.
       </p>
       <div className="relative mb-10 sm:mb-14 space-y-4">
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -104,7 +104,7 @@ export function Hero() {
         </div>
         <div className="relative row-1 col-1 px-4 pt-8 sm:pt-16">
           <img
-            alt="Agentica — a personalized funnel for every awareness stage"
+            alt="Agentica: a personalized funnel for every awareness stage"
             width="2752"
             height="1536"
             className="rounded-t-2xl border border-[#ECEAE4] shadow-[0_40px_90px_-40px_rgba(17,17,17,0.35)] mx-auto w-full max-w-5xl h-auto"

@@ -103,3 +103,84 @@ body {
 .w-icon-xs { width: 1rem; }   .h-icon-xs { height: 1rem; }
 .w-icon-sm { width: 1.25rem; } .h-icon-sm { height: 1.25rem; }
 .w-icon-md { width: 1.5rem;  } .h-icon-md { height: 1.5rem; }
+
+/* ---------------------------------------------------------------------------
+ * Eleven Cloud landing, ported 1:1 as the base for the new Agentica page.
+ * Scoped to `.ec-landing` so none of it touches the existing jace-derived home
+ * page. Palette and type are the source's; swapping them is the next step.
+ * ------------------------------------------------------------------------ */
+@theme inline {
+  --font-inter: var(--font-inter);
+  --font-libre-baskerville: var(--font-libre-baskerville);
+  --font-pt-serif: var(--font-pt-serif);
+  --font-poppins: var(--font-poppins);
+}
+
+.ec-landing {
+  /* palette */
+  --ec-cream: #f4f1ea;          /* page bg, text on dark */
+  --ec-navy: #001232;           /* ink, dark cards, borders */
+  --ec-blue: #0158ff;           /* primary CTA */
+  --ec-muted-on-dark: rgba(244, 241, 234, 0.6);
+  --ec-muted-on-dark-mobile: rgba(244, 241, 234, 0.4);
+  --ec-header-pill: rgba(0, 18, 50, 0.03);
+  --ec-notice-bg: #fff5f5;
+  --ec-notice-border: #ffe3e3;
+  --ec-notice-border-hover: #ffd1d1;
+
+  background-color: var(--ec-cream);
+  color: var(--ec-navy);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* "Only 2 spots left" pill, the one element on the page with a real hover. */
+.ec-landing .ec-notice-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background-color: var(--ec-notice-bg);
+  border: 1px solid var(--ec-notice-border);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.ec-landing .ec-notice-box:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.12);
+  border-color: var(--ec-notice-border-hover);
+}
+
+/* ---------------------------------------------------------------------------
+ * Pulsing halo behind the VSL unmute panel.
+ *
+ * The panel has to read as a thing you press, and a static panel over a silent
+ * video reads as a caption. Only transform and opacity are animated, so the
+ * halo costs nothing per frame, and it collapses to a still ring when the
+ * visitor has asked for reduced motion.
+ * ------------------------------------------------------------------------ */
+@keyframes ec-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.42;
+  }
+  70% {
+    transform: scale(1.09);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.09);
+    opacity: 0;
+  }
+}
+
+.ec-landing .ec-pulse-ring {
+  animation: ec-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ec-landing .ec-pulse-ring {
+    animation: none;
+    opacity: 0.22;
+    transform: scale(1.03);
+  }
+}
