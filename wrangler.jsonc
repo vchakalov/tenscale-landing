@@ -27,14 +27,15 @@
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1
-  }
+  },
 
-  // Custom domains go here once agenticalab.io is a zone in this Cloudflare
-  // account. Adding them before that makes `wrangler deploy` fail, so they stay
-  // commented until the nameservers move off Porkbun:
-  //
-  // "routes": [
-  //   { "pattern": "agenticalab.io", "custom_domain": true },
-  //   { "pattern": "www.agenticalab.io", "custom_domain": true }
-  // ]
+  // The live domain. A custom domain, not a redirect: agenticalab.io *is* this
+  // Worker, so a visitor pays for one request and sees our own name in the bar.
+  // Rolling back means pointing the apex record at the old host again, which
+  // now takes seconds, because the zone is in Cloudflare rather than at the
+  // registrar.
+  "routes": [
+    { "pattern": "agenticalab.io", "custom_domain": true },
+    { "pattern": "www.agenticalab.io", "custom_domain": true }
+  ]
 }
