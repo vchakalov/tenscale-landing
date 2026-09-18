@@ -23,10 +23,24 @@ import { Vsl } from "./Vsl";
  * larger than the space inside any of them.
  */
 
+/**
+ * Two lines, one element.
+ *
+ * The congratulation leads, because the visitor just did the thing we asked
+ * and the page should say so before it asks for anything else. The fact
+ * follows in the accent, which is the job the reference page gives a
+ * highlighted strip: it is the line that answers "did it work?".
+ *
+ * Kept as one heading rather than a heading plus a second line, because a
+ * third stacked block above the player costs the fold more than the emphasis
+ * is worth.
+ */
 function Headline({ className }: { className: string }) {
   return (
     <h1 className={className}>
-      Your Call Is <span className="text-[#0158ff]">Booked.</span>
+      Congratulations.
+      <br />
+      <span className="text-[#0158ff]">Your Call Is Booked.</span>
     </h1>
   );
 }
@@ -50,7 +64,7 @@ export function ThankYouFold() {
 
           <div className="h-[74px]" />
 
-          <Headline className="mx-auto text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(32px,3.1vw,58px)] leading-[1.18] font-bold text-[#001232]" />
+          <Headline className="mx-auto text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(29px,2.7vw,50px)] leading-[1.16] font-bold text-[#001232]" />
 
           <p className="mx-auto mt-[24px] max-w-[min(900px,72vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(16px,1.1vw,21px)] leading-[1.55] font-normal text-[#001232]">
             <SubheadCopy />
@@ -68,7 +82,7 @@ export function ThankYouFold() {
       <section className="flex flex-col items-center bg-[#f4f1ea] px-[14px] pt-[40px] pb-[12px] text-center min-[801px]:hidden">
         <Logo size={20} className="mb-[26px]" />
 
-        <Headline className="text-balance font-[family-name:var(--font-pt-serif)] text-[33px] leading-[1.22] font-bold text-[#001232]" />
+        <Headline className="text-balance font-[family-name:var(--font-pt-serif)] text-[30px] leading-[1.2] font-bold text-[#001232]" />
 
         <p className="mt-[18px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] font-normal text-[#001232]">
           <SubheadCopy />
