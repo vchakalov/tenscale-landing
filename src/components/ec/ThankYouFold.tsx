@@ -16,6 +16,11 @@ import { Vsl } from "./Vsl";
  * and no eyebrow competing with it, so the fold can spend its width on the one
  * thing it wants watched. The card is set to the same width, which makes the
  * two read as a single column instead of two stacked blocks.
+ *
+ * The gaps between the three blocks are wide on purpose. Each one is a bordered
+ * card, and stacked tight they read as one striped object rather than as a
+ * video, a booking and a warning. The space is what separates them, so it is
+ * larger than the space inside any of them.
  */
 
 function Headline({ className }: { className: string }) {
@@ -53,9 +58,9 @@ export function ThankYouFold() {
 
           <Vsl className="mx-auto mt-[40px] w-full max-w-[clamp(560px,40vw,820px)] text-left" />
 
-          <AppointmentCard className="mx-auto mt-[34px] w-full max-w-[clamp(560px,40vw,820px)]" />
+          <AppointmentCard className="mx-auto mt-[54px] w-full max-w-[clamp(560px,40vw,820px)]" />
 
-          <GmailNotice className="mx-auto mt-[26px] w-full max-w-[clamp(560px,40vw,820px)]" />
+          <GmailNotice className="mx-auto mt-[46px] w-full max-w-[clamp(560px,40vw,820px)]" />
         </div>
       </section>
 
@@ -71,9 +76,9 @@ export function ThankYouFold() {
 
         <Vsl className="mt-[24px] w-full text-left" />
 
-        <AppointmentCard className="mt-[24px] w-full" />
+        <AppointmentCard className="mt-[36px] w-full" />
 
-        <GmailNotice className="mt-[20px] w-full" />
+        <GmailNotice className="mt-[32px] w-full" />
       </section>
     </>
   );

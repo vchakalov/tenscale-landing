@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import {
   downloadIcs,
@@ -45,6 +46,18 @@ import {
  * browser's. The two are usually the same, and when they are not, the page
  * agreeing with the confirmation email matters more than the page being clever.
  */
+
+/**
+ * Who takes the call.
+ *
+ * `assigned_to` arrives in the URL, but it is an internal handle such as
+ * "md.repharma", which tells a visitor nothing and looks like a database row.
+ * The person is always the same one, so the name is written here.
+ */
+const HOST = {
+  name: "Ben, Founder",
+  photo: "/images/team/venelin.jpg",
+};
 
 type State =
   | { status: "pending" }
@@ -134,7 +147,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
 
   return (
     <div
-      className={`rounded-[16px] border-[1.5px] border-[#001232] bg-[#f4f1ea] px-[clamp(22px,2.4vw,40px)] py-[clamp(22px,2.2vw,34px)] shadow-[0_10px_0_0_rgba(0,18,50,0.12)] ${className}`}
+      className={`rounded-[16px] border-[1.5px] border-[#001232] bg-[#f4f1ea] px-[clamp(24px,2.6vw,44px)] py-[clamp(28px,2.8vw,42px)] shadow-[0_10px_0_0_rgba(0,18,50,0.12)] ${className}`}
     >
       {state.status === "pending" && (
         /* One frame, until the query string has been read. Bars rather than a
@@ -173,7 +186,31 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
               ` · ${timeZoneLabel(state.appointment)}`}
           </p>
 
-          <div className="mt-[22px] border-t border-[rgba(0,18,50,0.14)] pt-[22px]">
+          {/*
+            A name and a face, because a booked call with nobody attached to it
+            is the easiest thing in the world to miss. The visitor should
+            recognise the person on the other end before the call, not during
+            it.
+          */}
+          <div className="mt-[26px] flex items-center gap-[16px]">
+            <Image
+              src={HOST.photo}
+              alt={HOST.name}
+              width={112}
+              height={112}
+              className="h-[58px] w-[58px] shrink-0 rounded-full border-[1.5px] border-[#001232] object-cover max-[800px]:h-[52px] max-[800px]:w-[52px]"
+            />
+            <div className="min-w-0">
+              <p className="font-[family-name:var(--font-inter)] text-[14px] leading-[20px] text-[rgba(0,18,50,0.55)]">
+                Your call is with
+              </p>
+              <p className="mt-[1px] font-[family-name:var(--font-pt-serif)] text-[clamp(18px,1.35vw,23px)] leading-[1.3] font-bold text-[#001232]">
+                {HOST.name}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-[30px] border-t border-[rgba(0,18,50,0.14)] pt-[30px]">
             {added ? (
               /* Confirmed, not just clicked. Without this people press the
                  button three times and still are not sure it worked. */
@@ -225,7 +262,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
               right one, which is the doubt a visitor actually has at this
               moment. */}
           {state.appointment.email && (
-            <p className="mt-[20px] border-t border-[rgba(0,18,50,0.14)] pt-[18px] font-[family-name:var(--font-inter)] text-[14px] leading-[21px] text-[rgba(0,18,50,0.5)]">
+            <p className="mt-[28px] border-t border-[rgba(0,18,50,0.14)] pt-[24px] font-[family-name:var(--font-inter)] text-[14px] leading-[21px] text-[rgba(0,18,50,0.5)]">
               A confirmation email is on its way to{" "}
               <span className="font-medium text-[rgba(0,18,50,0.75)]">
                 {state.appointment.email}
