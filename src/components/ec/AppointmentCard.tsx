@@ -265,19 +265,6 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
             </div>
           </div>
 
-          {/* The one thing the scheduler's own card says that ours would
-              otherwise drop: the email is sent. Naming the address proves we
-              have the right one, which is the doubt a visitor actually has at
-              this moment. */}
-          {state.appointment.email && (
-            <p className="mt-[28px] border-t border-[rgba(0,18,50,0.14)] pt-[24px] font-[family-name:var(--font-inter)] text-[14px] leading-[21px] text-[rgba(0,18,50,0.5)]">
-              A confirmation email is on its way to{" "}
-              <span className="font-medium text-[rgba(0,18,50,0.75)]">
-                {state.appointment.email}
-              </span>
-              .
-            </p>
-          )}
         </div>
       )}
     </div>
