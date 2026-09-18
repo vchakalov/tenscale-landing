@@ -17,6 +17,16 @@ export interface Appointment {
   end: Date;
   /** The invitee's name, when the scheduler passes one. */
   name?: string;
+  /** Where the confirmation email went. Shown back as reassurance. */
+  email?: string;
+  /** Who they are meeting. */
+  host?: string;
+  /**
+   * The zone the invitee picked while booking, as an IANA name. Times are
+   * shown in it rather than in the browser's zone, so the page and the
+   * confirmation email never disagree about when the call is.
+   */
+  timeZone?: string;
   /** Meeting link or place, when the scheduler passes one. */
   location?: string;
 }
@@ -51,7 +61,21 @@ const END_KEYS = [
   "eventEndTime",
 ];
 
-const NAME_KEYS = ["name", "firstName", "first_name", "invitee", "invitee_name"];
+const NAME_KEYS = [
+  "invitee_full_name",
+  "inviteeName",
+  "invitee_name",
+  "name",
+  "firstName",
+  "first_name",
+  "invitee",
+];
+
+const EMAIL_KEYS = ["invitee_email", "inviteeEmail", "email"];
+
+const HOST_KEYS = ["assigned_to", "assignedTo", "host", "host_name"];
+
+const TIMEZONE_KEYS = ["timeZone", "timezone", "time_zone", "tz"];
 
 const LOCATION_KEYS = [
   "location",
@@ -105,8 +129,26 @@ export function readAppointment(search: string): Appointment | null {
     start,
     end,
     name: firstValue(params, NAME_KEYS) ?? undefined,
+    email: firstValue(params, EMAIL_KEYS) ?? undefined,
+    host: firstValue(params, HOST_KEYS) ?? undefined,
+    timeZone: usableTimeZone(firstValue(params, TIMEZONE_KEYS)),
     location: firstValue(params, LOCATION_KEYS) ?? undefined,
   };
+}
+
+/**
+ * A zone name from a URL is untrusted. `Intl` throws on a bad one, and a throw
+ * here would take the whole card down, so it is tried once and dropped if the
+ * runtime does not know it.
+ */
+function usableTimeZone(raw: string | null): string | undefined {
+  if (!raw) return undefined;
+  try {
+    new Intl.DateTimeFormat(undefined, { timeZone: raw }).format(new Date());
+    return raw;
+  } catch {
+    return undefined;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -119,26 +161,29 @@ export function readAppointment(search: string): Appointment | null {
  * no-show, and `longGeneric` gives the human name ("Bulgaria Time") instead of
  * the daylight-saving one.
  */
-export function formatDay(date: Date): string {
+export function formatDay(appointment: Appointment): string {
   return new Intl.DateTimeFormat(undefined, {
     weekday: "long",
     month: "long",
     day: "numeric",
-  }).format(date);
+    timeZone: appointment.timeZone,
+  }).format(appointment.start);
 }
 
 export function formatTimeRange(appointment: Appointment): string {
   const format = new Intl.DateTimeFormat(undefined, {
     hour: "numeric",
     minute: "2-digit",
+    timeZone: appointment.timeZone,
   });
   return `${format.format(appointment.start)} to ${format.format(appointment.end)}`;
 }
 
-export function timeZoneLabel(date: Date): string {
+export function timeZoneLabel(appointment: Appointment): string {
   const parts = new Intl.DateTimeFormat(undefined, {
+    timeZone: appointment.timeZone,
     timeZoneName: "longGeneric",
-  }).formatToParts(date);
+  }).formatToParts(appointment.start);
   return parts.find((part) => part.type === "timeZoneName")?.value ?? "";
 }
 

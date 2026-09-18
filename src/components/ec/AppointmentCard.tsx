@@ -27,6 +27,23 @@ import {
  * The query string is read after mount rather than through the router, because
  * the site is a static export: `useSearchParams` would force this subtree to
  * bail out of prerendering, and `window.location` costs nothing and cannot.
+ *
+ * This card replaced iClosed's own confirmation embed, and then the embed
+ * replaced it, and now it is back. The embed was the right call while the
+ * parameter contract was a guess: it held the real booking and we did not.
+ * A live booking settled that. iClosed forwards the whole event on the
+ * redirect, `event_start_time`, `event_end_time`, `timeZone`, `assigned_to`
+ * and the invitee's name and address, so the data is ours either way.
+ *
+ * What the embed could not give us is the design. It is a cross-origin iframe
+ * carrying its own white card, its own border and its own green banner, so it
+ * drew a second card inside ours and nothing about it could be restyled. With
+ * the contract known, drawing it ourselves costs one parser and buys the whole
+ * page back.
+ *
+ * Times are shown in the zone the invitee chose while booking, not in the
+ * browser's. The two are usually the same, and when they are not, the page
+ * agreeing with the confirmation email matters more than the page being clever.
  */
 
 type State =
@@ -148,12 +165,12 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
           </p>
 
           <p className="mt-[10px] font-[family-name:var(--font-pt-serif)] text-[clamp(23px,2vw,36px)] leading-[1.22] font-bold text-[#001232]">
-            {formatDay(state.appointment.start)}
+            {formatDay(state.appointment)}
           </p>
           <p className="mt-[6px] font-[family-name:var(--font-inter)] text-[clamp(15px,1.15vw,19px)] leading-[1.5] text-[rgba(0,18,50,0.7)]">
             {formatTimeRange(state.appointment)}
-            {timeZoneLabel(state.appointment.start) &&
-              ` · ${timeZoneLabel(state.appointment.start)}`}
+            {timeZoneLabel(state.appointment) &&
+              ` · ${timeZoneLabel(state.appointment)}`}
           </p>
 
           <div className="mt-[22px] border-t border-[rgba(0,18,50,0.14)] pt-[22px]">
@@ -162,7 +179,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
                  button three times and still are not sure it worked. */
               <p className="inline-flex items-center gap-[10px] rounded-[100px] border-[1.5px] border-[#001232] px-[26px] py-[13px] font-[family-name:var(--font-inter)] text-[16px] leading-[25px] font-medium text-[#001232]">
                 <CheckIcon className="h-[19px] w-[19px] text-[#0158ff]" />
-                Added. See you {formatDay(state.appointment.start)}.
+                Added. See you {formatDay(state.appointment)}.
               </p>
             ) : (
               <a
@@ -202,6 +219,20 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
               instead.
             </p>
           </div>
+
+          {/* The one thing iClosed's own card says that ours would otherwise
+              drop: the email is sent. Naming the address proves we have the
+              right one, which is the doubt a visitor actually has at this
+              moment. */}
+          {state.appointment.email && (
+            <p className="mt-[20px] border-t border-[rgba(0,18,50,0.14)] pt-[18px] font-[family-name:var(--font-inter)] text-[14px] leading-[21px] text-[rgba(0,18,50,0.5)]">
+              A confirmation email is on its way to{" "}
+              <span className="font-medium text-[rgba(0,18,50,0.75)]">
+                {state.appointment.email}
+              </span>
+              .
+            </p>
+          )}
         </div>
       )}
     </div>

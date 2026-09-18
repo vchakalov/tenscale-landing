@@ -1,4 +1,4 @@
-import { CallDetails } from "./CallDetails";
+import { AppointmentCard } from "./AppointmentCard";
 import { GmailNotice } from "./GmailNotice";
 import { Logo } from "./Logo";
 import { Vsl } from "./Vsl";
@@ -53,7 +53,7 @@ export function ThankYouFold() {
 
           <Vsl className="mx-auto mt-[40px] w-full max-w-[clamp(560px,40vw,820px)] text-left" />
 
-          <CallDetails className="mx-auto mt-[34px] w-full max-w-[clamp(560px,40vw,820px)]" />
+          <AppointmentCard className="mx-auto mt-[34px] w-full max-w-[clamp(560px,40vw,820px)]" />
 
           <GmailNotice className="mx-auto mt-[26px] w-full max-w-[clamp(560px,40vw,820px)]" />
         </div>
@@ -71,7 +71,7 @@ export function ThankYouFold() {
 
         <Vsl className="mt-[24px] w-full text-left" />
 
-        <CallDetails className="mt-[24px] w-full" />
+        <AppointmentCard className="mt-[24px] w-full" />
 
         <GmailNotice className="mt-[20px] w-full" />
       </section>
