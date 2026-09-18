@@ -57,6 +57,7 @@ import {
 const HOST = {
   name: "Ben, Founder",
   photo: "/images/team/venelin.jpg",
+  bio: "Ben has built SaaS, ecommerce and service businesses, three of which still run without him in the week. He has spent eight years putting AI into live operations at this size, first his own. Before that he shipped software inside a Fortune 500.",
 };
 
 type State =
@@ -183,39 +184,15 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
           <p className="mt-[6px] font-[family-name:var(--font-inter)] text-[clamp(15px,1.15vw,19px)] leading-[1.5] text-[rgba(0,18,50,0.7)]">
             {formatTimeRange(state.appointment)}
             {timeZoneLabel(state.appointment) &&
-              ` · ${timeZoneLabel(state.appointment)}`}
+              ` \u00b7 ${timeZoneLabel(state.appointment)}`}
           </p>
-
-          {/*
-            A name and a face, because a booked call with nobody attached to it
-            is the easiest thing in the world to miss. The visitor should
-            recognise the person on the other end before the call, not during
-            it.
-          */}
-          <div className="mt-[26px] flex items-center gap-[16px]">
-            <Image
-              src={HOST.photo}
-              alt={HOST.name}
-              width={112}
-              height={112}
-              className="h-[58px] w-[58px] shrink-0 rounded-full border-[1.5px] border-[#001232] object-cover max-[800px]:h-[52px] max-[800px]:w-[52px]"
-            />
-            <div className="min-w-0">
-              <p className="font-[family-name:var(--font-inter)] text-[14px] leading-[20px] text-[rgba(0,18,50,0.55)]">
-                Your call is with
-              </p>
-              <p className="mt-[1px] font-[family-name:var(--font-pt-serif)] text-[clamp(18px,1.35vw,23px)] leading-[1.3] font-bold text-[#001232]">
-                {HOST.name}
-              </p>
-            </div>
-          </div>
 
           <div className="mt-[30px] border-t border-[rgba(0,18,50,0.14)] pt-[30px]">
             {added ? (
               /* Confirmed, not just clicked. Without this people press the
                  button three times and still are not sure it worked. */
               <p className="inline-flex items-center gap-[10px] rounded-[100px] border-[1.5px] border-[#001232] px-[26px] py-[13px] font-[family-name:var(--font-inter)] text-[16px] leading-[25px] font-medium text-[#001232]">
-                <CheckIcon className="h-[19px] w-[19px] text-[#0158ff]" />
+                <CheckIcon className="h-[19px] w-[19px] shrink-0 text-[#0158ff]" />
                 Added. See you {formatDay(state.appointment)}.
               </p>
             ) : (
@@ -224,7 +201,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => remember(state.appointment)}
-                className="inline-flex items-center gap-[12px] rounded-[100px] bg-[#0158ff] px-[clamp(26px,2.2vw,38px)] py-[clamp(12px,1vw,15px)] font-[family-name:var(--font-inter)] text-[clamp(16px,1.15vw,19px)] leading-[25px] font-medium text-[#f4f1ea] shadow-[0_8px_1px_0_rgba(0,0,0,0.1)] transition-transform duration-200 hover:-translate-y-px active:scale-[0.98]"
+                className="inline-flex items-center gap-[12px] rounded-[100px] bg-[#0158ff] px-[clamp(26px,2.2vw,38px)] py-[clamp(12px,1vw,15px)] font-[family-name:var(--font-inter)] text-[clamp(16px,1.15vw,19px)] leading-[25px] font-medium whitespace-nowrap text-[#f4f1ea] shadow-[0_8px_1px_0_rgba(0,0,0,0.1)] transition-transform duration-200 hover:-translate-y-px active:scale-[0.98]"
               >
                 <CalendarIcon className="h-[20px] w-[20px] shrink-0" />
                 Add To Google Calendar
@@ -257,10 +234,41 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
             </p>
           </div>
 
-          {/* The one thing iClosed's own card says that ours would otherwise
-              drop: the email is sent. Naming the address proves we have the
-              right one, which is the doubt a visitor actually has at this
-              moment. */}
+          {/*
+            A face beside three sentences, as one row rather than as a second
+            column. A column narrow enough to sit next to this card left the
+            button wrapping onto three lines, and the button is the only thing
+            on the page that has to be pressed.
+
+            The sentences are here because a booked call with nobody attached to
+            it is the easiest thing in the world to miss, and knowing who
+            someone is decides whether the slot survives until Friday.
+          */}
+          <div className="mt-[30px] flex items-start gap-[clamp(18px,1.8vw,26px)] border-t border-[rgba(0,18,50,0.14)] pt-[30px]">
+            <Image
+              src={HOST.photo}
+              alt={HOST.name}
+              width={220}
+              height={220}
+              className="h-[96px] w-[96px] shrink-0 rounded-full border-[1.5px] border-[#001232] object-cover max-[800px]:h-[68px] max-[800px]:w-[68px]"
+            />
+            <div className="min-w-0">
+              <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(0,18,50,0.5)] uppercase">
+                Your call is with
+              </p>
+              <p className="mt-[5px] font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.45vw,24px)] leading-[1.3] font-bold text-[#001232]">
+                {HOST.name}
+              </p>
+              <p className="mt-[10px] text-pretty font-[family-name:var(--font-inter)] text-[15px] leading-[23px] text-[rgba(0,18,50,0.65)] max-[800px]:text-[14px] max-[800px]:leading-[22px]">
+                {HOST.bio}
+              </p>
+            </div>
+          </div>
+
+          {/* The one thing the scheduler's own card says that ours would
+              otherwise drop: the email is sent. Naming the address proves we
+              have the right one, which is the doubt a visitor actually has at
+              this moment. */}
           {state.appointment.email && (
             <p className="mt-[28px] border-t border-[rgba(0,18,50,0.14)] pt-[24px] font-[family-name:var(--font-inter)] text-[14px] leading-[21px] text-[rgba(0,18,50,0.5)]">
               A confirmation email is on its way to{" "}
