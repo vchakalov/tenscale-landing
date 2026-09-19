@@ -1,6 +1,6 @@
 function StepNumber({ n }: { n: string }) {
   return (
-    <span className="flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-full bg-[#EDE8DF] font-[family-name:var(--font-pt-serif)] text-[28px] font-bold text-[#0A0908] max-[800px]:h-[48px] max-[800px]:w-[48px] max-[800px]:text-[16px]">
+    <span className="flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-full bg-[#0c0a08] font-[family-name:var(--font-pt-serif)] text-[28px] font-bold text-[#f4f2f0] max-[800px]:h-[48px] max-[800px]:w-[48px] max-[800px]:text-[16px]">
       {n}
     </span>
   );
@@ -18,7 +18,7 @@ function OperationMap() {
         y1="20"
         x2="210"
         y2="300"
-        stroke="#EDE8DF"
+        stroke="#0c0a08"
         strokeWidth="2"
       />
       <line
@@ -26,36 +26,36 @@ function OperationMap() {
         y1="160"
         x2="380"
         y2="160"
-        stroke="#EDE8DF"
+        stroke="#0c0a08"
         strokeWidth="2"
       />
-      <circle cx="300" cy="90" r="36" fill="#EDE8DF" />
+      <circle cx="300" cy="90" r="36" fill="#0c0a08" />
       <text
         x="338"
         y="58"
-        fill="#EDE8DF"
+        fill="#0c0a08"
         fontFamily="Georgia, serif"
         fontSize="16"
       >
         You
       </text>
-      <path d="M328 68 L300 82" stroke="#EDE8DF" strokeWidth="1.5" fill="none" />
+      <path d="M328 68 L300 82" stroke="#0c0a08" strokeWidth="1.5" fill="none" />
       <text
         x="52"
         y="198"
-        fill="#EDE8DF"
+        fill="#0c0a08"
         fontFamily="Georgia, serif"
         fontSize="13"
       >
         Day-to-day work
       </text>
-      <circle cx="88" cy="228" r="10" fill="#EDE8DF" />
-      <circle cx="132" cy="252" r="10" fill="#EDE8DF" />
-      <circle cx="108" cy="278" r="10" fill="#EDE8DF" />
-      <circle cx="164" cy="222" r="10" fill="#EDE8DF" />
-      <circle cx="156" cy="270" r="10" fill="#EDE8DF" />
-      <circle cx="72" cy="258" r="10" fill="#EDE8DF" />
-      <circle cx="186" cy="248" r="10" fill="#EDE8DF" />
+      <circle cx="88" cy="228" r="10" fill="#0c0a08" />
+      <circle cx="132" cy="252" r="10" fill="#0c0a08" />
+      <circle cx="108" cy="278" r="10" fill="#0c0a08" />
+      <circle cx="164" cy="222" r="10" fill="#0c0a08" />
+      <circle cx="156" cy="270" r="10" fill="#0c0a08" />
+      <circle cx="72" cy="258" r="10" fill="#0c0a08" />
+      <circle cx="186" cy="248" r="10" fill="#0c0a08" />
     </svg>
   );
 }
@@ -66,42 +66,42 @@ export function HowWeWork() {
       <div className="mt-[70px] hidden min-[801px]:block">
         <section className="px-[40px] pt-[50px] pb-[43px]">
           <div className="mx-auto w-full max-w-[905px]">
-            <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[48px] leading-[56px] font-bold text-[#EDE8DF]">
+            <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[48px] leading-[56px] font-bold text-[#0c0a08]">
               This Is How We Work:
             </h2>
 
             <div className="mt-[72px]">
-              <div className="border-t border-[#EDE8DF] pt-[36px] pb-[48px]">
+              <div className="border-t border-[#0c0a08] pt-[36px] pb-[48px]">
                 <div className="flex items-center gap-[28px]">
                   <StepNumber n="01" />
-                  <h3 className="font-[family-name:var(--font-pt-serif)] text-[32px] leading-[40px] font-bold text-[#EDE8DF]">
+                  <h3 className="font-[family-name:var(--font-pt-serif)] text-[32px] leading-[40px] font-bold text-[#0c0a08]">
                     We analyze the day-to-day operations
                   </h3>
                 </div>
                 <div className="mt-[48px]">
                   <OperationMap />
                 </div>
-                <p className="mt-[36px] text-center font-[family-name:var(--font-pt-serif)] text-[22px] leading-[30px] text-[#EDE8DF]">
+                <p className="mt-[36px] text-center font-[family-name:var(--font-pt-serif)] text-[22px] leading-[30px] text-[#0c0a08]">
                   <strong className="font-bold">
                     The work the company already does.
                   </strong>
                 </p>
               </div>
 
-              <div className="border-t border-[#EDE8DF] py-[36px]">
+              <div className="border-t border-[#0c0a08] py-[36px]">
                 <div className="flex items-center gap-[28px]">
                   <StepNumber n="02" />
-                  <h3 className="font-[family-name:var(--font-pt-serif)] text-[32px] leading-[40px] font-bold text-[#EDE8DF]">
+                  <h3 className="font-[family-name:var(--font-pt-serif)] text-[32px] leading-[40px] font-bold text-[#0c0a08]">
                     We write the assessment: what can be automated, and the ROI
                     on each
                   </h3>
                 </div>
               </div>
 
-              <div className="border-y border-[#EDE8DF] py-[36px]">
+              <div className="border-y border-[#0c0a08] py-[36px]">
                 <div className="flex items-center gap-[28px]">
                   <StepNumber n="03" />
-                  <h3 className="font-[family-name:var(--font-pt-serif)] text-[32px] leading-[40px] font-bold text-[#EDE8DF]">
+                  <h3 className="font-[family-name:var(--font-pt-serif)] text-[32px] leading-[40px] font-bold text-[#0c0a08]">
                     We implement it, or we give you the plan to do it yourself
                   </h3>
                 </div>
@@ -113,37 +113,37 @@ export function HowWeWork() {
 
       <div className="max-[800px]:block min-[801px]:hidden">
         <section className="mt-[65px] px-[20px] py-[20px]">
-          <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[40px] leading-[46px] font-bold text-[#EDE8DF]">
+          <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[40px] leading-[46px] font-bold text-[#0c0a08]">
             This Is How We Work:
           </h2>
           <div className="mt-[40px]">
-            <div className="border-t border-[#EDE8DF] py-[24px]">
+            <div className="border-t border-[#0c0a08] py-[24px]">
               <div className="flex items-start gap-[16px]">
                 <StepNumber n="01" />
-                <h3 className="font-[family-name:var(--font-pt-serif)] text-[22px] leading-[28px] font-bold text-[#EDE8DF]">
+                <h3 className="font-[family-name:var(--font-pt-serif)] text-[22px] leading-[28px] font-bold text-[#0c0a08]">
                   We analyze the day-to-day operations
                 </h3>
               </div>
               <div className="mt-[24px]">
                 <OperationMap />
               </div>
-              <p className="mt-[16px] text-center font-[family-name:var(--font-pt-serif)] text-[18px] leading-[24px] text-[#EDE8DF]">
+              <p className="mt-[16px] text-center font-[family-name:var(--font-pt-serif)] text-[18px] leading-[24px] text-[#0c0a08]">
                 The work the company already does.
               </p>
             </div>
-            <div className="border-t border-[#EDE8DF] py-[24px]">
+            <div className="border-t border-[#0c0a08] py-[24px]">
               <div className="flex items-start gap-[16px]">
                 <StepNumber n="02" />
-                <h3 className="font-[family-name:var(--font-pt-serif)] text-[22px] leading-[28px] font-bold text-[#EDE8DF]">
+                <h3 className="font-[family-name:var(--font-pt-serif)] text-[22px] leading-[28px] font-bold text-[#0c0a08]">
                   We write the assessment: what can be automated, and the ROI on
                   each
                 </h3>
               </div>
             </div>
-            <div className="border-y border-[#EDE8DF] py-[24px]">
+            <div className="border-y border-[#0c0a08] py-[24px]">
               <div className="flex items-start gap-[16px]">
                 <StepNumber n="03" />
-                <h3 className="font-[family-name:var(--font-pt-serif)] text-[22px] leading-[28px] font-bold text-[#EDE8DF]">
+                <h3 className="font-[family-name:var(--font-pt-serif)] text-[22px] leading-[28px] font-bold text-[#0c0a08]">
                   We implement it, or we give you the plan to do it yourself
                 </h3>
               </div>

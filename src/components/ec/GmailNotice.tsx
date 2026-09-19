@@ -72,13 +72,13 @@ function PointerArrow({ className }: { className: string }) {
  */
 function GmailBannerMock() {
   return (
-    <div className="rounded-[10px] bg-[rgba(237,232,223,0.05)] px-[clamp(16px,1.6vw,24px)] py-[clamp(16px,1.6vw,22px)]">
-      <p className="font-[family-name:var(--font-inter)] text-[clamp(14px,1.02vw,16px)] leading-[1.45] font-medium text-[rgba(237,232,223,0.85)]">
+    <div className="rounded-[10px] bg-[rgba(12,10,8,0.05)] px-[clamp(16px,1.6vw,24px)] py-[clamp(16px,1.6vw,22px)]">
+      <p className="font-[family-name:var(--font-inter)] text-[clamp(14px,1.02vw,16px)] leading-[1.45] font-medium text-[rgba(12,10,8,0.85)]">
         Unknown sender: not added to Calendar yet
       </p>
-      <p className="mt-[8px] font-[family-name:var(--font-inter)] text-[clamp(13px,0.95vw,15px)] leading-[1.55] text-[rgba(237,232,223,0.6)]">
+      <p className="mt-[8px] font-[family-name:var(--font-inter)] text-[clamp(13px,0.95vw,15px)] leading-[1.55] text-[rgba(12,10,8,0.6)]">
         It looks like you&apos;ve never been in contact with this sender (
-        <span className="font-medium text-[rgba(237,232,223,0.8)]">
+        <span className="font-medium text-[rgba(12,10,8,0.8)]">
           {SENDER_ADDRESS}
         </span>
         ).
@@ -87,7 +87,7 @@ function GmailBannerMock() {
       <div className="mt-[18px] flex flex-wrap items-center gap-x-[18px] gap-y-[12px] max-[800px]:flex-col max-[800px]:items-start">
         <div
           aria-hidden="true"
-          className="shrink-0 rounded-[5px] border border-[rgba(237,232,223,0.28)] bg-[#ffffff] px-[16px] py-[8px] font-[family-name:var(--font-inter)] text-[clamp(13px,0.95vw,15px)] leading-[20px] text-[rgba(237,232,223,0.8)]"
+          className="shrink-0 rounded-[5px] border border-[rgba(12,10,8,0.28)] bg-[#ffffff] px-[16px] py-[8px] font-[family-name:var(--font-inter)] text-[clamp(13px,0.95vw,15px)] leading-[20px] text-[rgba(12,10,8,0.8)]"
         >
           I know the sender
         </div>
@@ -95,8 +95,8 @@ function GmailBannerMock() {
         {/* Arrow and caption wrap as one piece. Loose, the caption dropped to
             its own line and left the arrow pointing at nothing. */}
         <span className="flex items-center gap-[12px]">
-          <PointerArrow className="h-[20px] w-[40px] shrink-0 text-[#C6A660] max-[800px]:h-[24px] max-[800px]:w-[24px] max-[800px]:rotate-90" />
-          <span className="font-[family-name:var(--font-inter)] text-[clamp(15px,1.15vw,18px)] leading-[1.4] font-bold text-[#C6A660]">
+          <PointerArrow className="h-[20px] w-[40px] shrink-0 text-[#0c0a08] max-[800px]:h-[24px] max-[800px]:w-[24px] max-[800px]:rotate-90" />
+          <span className="font-[family-name:var(--font-inter)] text-[clamp(15px,1.15vw,18px)] leading-[1.4] font-bold text-[#0c0a08]">
             Press this.
           </span>
         </span>
@@ -108,19 +108,19 @@ function GmailBannerMock() {
 export function GmailNotice({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`overflow-hidden rounded-[16px] border-[1.5px] border-[#EDE8DF] bg-[#0A0908] text-left shadow-[0_10px_0_0_rgba(237,232,223,0.12)] ${className}`}
+      className={`overflow-hidden rounded-[16px] border border-[#e5e7eb] bg-[#f4f2f0] text-left ${className}`}
     >
-      <div className="flex items-center justify-center gap-[10px] bg-[#EDE8DF] px-[20px] py-[clamp(11px,1vw,15px)]">
-        <WarningIcon className="h-[19px] w-[19px] shrink-0 text-[#0A0908]" />
-        <p className="text-center font-[family-name:var(--font-pt-serif)] text-[clamp(16px,1.2vw,21px)] leading-[1.35] font-bold text-[#0A0908]">
+      <div className="flex items-center justify-center gap-[10px] bg-[#0c0a08] px-[20px] py-[clamp(11px,1vw,15px)]">
+        <WarningIcon className="h-[19px] w-[19px] shrink-0 text-[#f4f2f0]" />
+        <p className="text-center font-[family-name:var(--font-pt-serif)] text-[clamp(16px,1.2vw,21px)] leading-[1.35] font-bold text-[#f4f2f0]">
           This Google Update Could Affect Your Appointment
         </p>
       </div>
 
       <div className="px-[clamp(20px,2.2vw,36px)] py-[clamp(20px,2vw,30px)]">
-        <p className="text-pretty font-[family-name:var(--font-inter)] text-[clamp(16px,1.2vw,19px)] leading-[1.6] text-[rgba(237,232,223,0.78)]">
+        <p className="text-pretty font-[family-name:var(--font-inter)] text-[clamp(16px,1.2vw,19px)] leading-[1.6] text-[rgba(12,10,8,0.78)]">
           Google may email you{" "}
-          <strong className="font-bold text-[#EDE8DF]">
+          <strong className="font-bold text-[#0c0a08]">
             &ldquo;Invitation from an unknown sender&rdquo;
           </strong>
           . Until you answer it, the call is not in your calendar.

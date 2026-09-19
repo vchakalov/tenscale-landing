@@ -51,23 +51,23 @@ function Skeleton() {
       className="absolute inset-0 flex animate-pulse gap-[28px] p-[28px] max-[800px]:flex-col max-[800px]:p-[20px]"
     >
       <div className="flex w-[46%] flex-col gap-[14px] max-[800px]:w-full">
-        <div className="h-[26px] w-[55%] rounded-[6px] bg-[rgba(237,232,223,0.09)]" />
-        <div className="h-[14px] w-[75%] rounded-[6px] bg-[rgba(237,232,223,0.06)]" />
-        <div className="mt-[10px] h-[48px] rounded-[8px] bg-[rgba(237,232,223,0.06)]" />
+        <div className="h-[26px] w-[55%] rounded-[6px] bg-[rgba(12,10,8,0.09)]" />
+        <div className="h-[14px] w-[75%] rounded-[6px] bg-[rgba(12,10,8,0.06)]" />
+        <div className="mt-[10px] h-[48px] rounded-[8px] bg-[rgba(12,10,8,0.06)]" />
         <div className="flex gap-[12px]">
-          <div className="h-[48px] flex-1 rounded-[8px] bg-[rgba(237,232,223,0.06)]" />
-          <div className="h-[48px] flex-1 rounded-[8px] bg-[rgba(237,232,223,0.06)]" />
+          <div className="h-[48px] flex-1 rounded-[8px] bg-[rgba(12,10,8,0.06)]" />
+          <div className="h-[48px] flex-1 rounded-[8px] bg-[rgba(12,10,8,0.06)]" />
         </div>
-        <div className="mt-[14px] h-[48px] rounded-[8px] bg-[rgba(237,232,223,0.12)]" />
+        <div className="mt-[14px] h-[48px] rounded-[8px] bg-[rgba(12,10,8,0.12)]" />
       </div>
 
       <div className="flex-1 max-[800px]:hidden">
-        <div className="h-[22px] w-[45%] rounded-[6px] bg-[rgba(237,232,223,0.09)]" />
+        <div className="h-[22px] w-[45%] rounded-[6px] bg-[rgba(12,10,8,0.09)]" />
         <div className="mt-[22px] grid grid-cols-7 gap-[10px]">
           {Array.from({ length: 35 }).map((_, i) => (
             <div
               key={i}
-              className="aspect-square rounded-[6px] bg-[rgba(237,232,223,0.05)]"
+              className="aspect-square rounded-[6px] bg-[rgba(12,10,8,0.05)]"
             />
           ))}
         </div>
@@ -165,7 +165,7 @@ export function BookingModal() {
         aria-label="Close"
         tabIndex={open ? 0 : -1}
         onClick={close}
-        className="absolute inset-0 cursor-default bg-[rgba(237,232,223,0.55)]"
+        className="absolute inset-0 cursor-default bg-[rgba(12,10,8,0.55)]"
       />
 
       <div
@@ -176,13 +176,13 @@ export function BookingModal() {
         tabIndex={-1}
         className="absolute inset-0 flex items-center justify-center p-[28px] outline-none max-[800px]:p-0"
       >
-        <div className="relative flex max-h-[94vh] w-full max-w-[1060px] flex-col overflow-y-auto rounded-[18px] bg-white shadow-[0_24px_60px_-20px_rgba(237,232,223,0.5)] max-[800px]:h-full max-[800px]:max-h-none max-[800px]:max-w-none max-[800px]:rounded-none">
+        <div className="relative flex max-h-[94vh] w-full max-w-[1060px] flex-col overflow-y-auto rounded-[16px] bg-white shadow-[0_24px_60px_-20px_rgba(12,10,8,0.5)] max-[800px]:h-full max-[800px]:max-h-none max-[800px]:max-w-none max-[800px]:rounded-none">
           <div className="relative shrink-0 px-[40px] pt-[28px] pb-[20px] text-center max-[800px]:px-[20px] max-[800px]:pt-[20px] max-[800px]:pb-[18px]">
-            <p className="font-[family-name:var(--font-pt-serif)] text-[28px] leading-[36px] font-bold text-[#EDE8DF] max-[800px]:text-[22px] max-[800px]:leading-[29px]">
+            <p className="font-[family-name:var(--font-pt-serif)] text-[28px] leading-[36px] font-bold text-[#0c0a08] max-[800px]:text-[22px] max-[800px]:leading-[29px]">
               Book Your Free Demo
             </p>
 
-            <p className="mx-auto mt-[10px] max-w-[620px] font-[family-name:var(--font-inter)] text-[17px] leading-[26px] text-[rgba(237,232,223,0.72)] max-[800px]:mt-[8px] max-[800px]:text-[15px] max-[800px]:leading-[23px]">
+            <p className="mx-auto mt-[10px] max-w-[620px] font-[family-name:var(--font-inter)] text-[17px] leading-[26px] text-[rgba(12,10,8,0.72)] max-[800px]:mt-[8px] max-[800px]:text-[15px] max-[800px]:leading-[23px]">
               On the call we show you exactly how your client fulfillment gets
               automated.
             </p>
@@ -192,7 +192,7 @@ export function BookingModal() {
               onClick={close}
               tabIndex={open ? 0 : -1}
               aria-label="Close"
-              className="absolute top-[18px] right-[18px] flex h-[38px] w-[38px] items-center justify-center rounded-full text-[#EDE8DF] transition-colors duration-200 hover:bg-[rgba(237,232,223,0.07)] max-[800px]:top-[12px] max-[800px]:right-[12px]"
+              className="absolute top-[18px] right-[18px] flex h-[38px] w-[38px] items-center justify-center rounded-full text-[#0c0a08] transition-colors duration-200 hover:bg-[rgba(12,10,8,0.07)] max-[800px]:top-[12px] max-[800px]:right-[12px]"
             >
               <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]">
                 <path

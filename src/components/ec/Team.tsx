@@ -45,12 +45,12 @@ const STATS = [
 
 function PersonCard({ name, role, initial, bio, photo }: Person) {
   return (
-    <article className="overflow-hidden rounded-[12px] border border-[#EDE8DF] bg-[#0A0908]">
-      <div className="bg-[#EDE8DF] px-[16px] py-[12px] text-center font-[family-name:var(--font-pt-serif)] text-[14px] leading-[18px] font-bold text-[#0A0908]">
+    <article className="overflow-hidden rounded-[12px] border border-[#0c0a08] bg-[#f4f2f0]">
+      <div className="bg-[#0c0a08] px-[16px] py-[12px] text-center font-[family-name:var(--font-pt-serif)] text-[14px] leading-[18px] font-bold text-[#f4f2f0]">
         {name}, {role}
       </div>
       <div className="flex flex-col items-center px-[18px] py-[28px]">
-        <div className="relative h-[112px] w-[112px] overflow-hidden rounded-full border border-[#EDE8DF] bg-[#0A0908]">
+        <div className="relative h-[112px] w-[112px] overflow-hidden rounded-full border border-[#0c0a08] bg-[#f4f2f0]">
           {photo ? (
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -63,16 +63,16 @@ function PersonCard({ name, role, initial, bio, photo }: Person) {
               />
               <span
                 aria-hidden
-                className="pointer-events-none absolute inset-0 bg-[#EDE8DF] opacity-[0.18]"
+                className="pointer-events-none absolute inset-0 bg-[#0c0a08] opacity-[0.18]"
               />
             </>
           ) : (
-            <span className="flex h-full w-full items-center justify-center font-[family-name:var(--font-pt-serif)] text-[28px] font-bold text-[#EDE8DF]">
+            <span className="flex h-full w-full items-center justify-center font-[family-name:var(--font-pt-serif)] text-[28px] font-bold text-[#0c0a08]">
               {initial}
             </span>
           )}
         </div>
-        <p className="mt-[20px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] text-[#EDE8DF]">
+        <p className="mt-[20px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] text-[#0c0a08]">
           {bio}
         </p>
       </div>
@@ -86,7 +86,7 @@ export function Team() {
       <div className="hidden min-[801px]:block">
         <section className="mt-[220px] px-[40px] py-[5px]">
           <div className="mx-auto w-full max-w-[1120px]">
-            <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[48px] leading-[52px] font-bold text-[#EDE8DF]">
+            <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[48px] leading-[52px] font-bold text-[#0c0a08]">
               Say Hello to Our team
             </h2>
           </div>
@@ -99,14 +99,14 @@ export function Team() {
                 <PersonCard key={person.name} {...person} />
               ))}
             </div>
-            <div className="mt-[40px] rounded-[12px] bg-[#EDE8DF] px-[40px] py-[48px]">
+            <div className="mt-[40px] rounded-[12px] bg-[#0c0a08] px-[40px] py-[48px]">
               <div className="grid grid-cols-3 gap-[24px] text-center">
                 {STATS.map((stat) => (
                   <div key={stat.n}>
-                    <div className="font-[family-name:var(--font-pt-serif)] text-[56px] leading-[64px] font-bold text-[#0A0908]">
+                    <div className="font-[family-name:var(--font-pt-serif)] text-[56px] leading-[64px] font-bold text-[#f4f2f0]">
                       {stat.n}
                     </div>
-                    <p className="mt-[12px] font-[family-name:var(--font-inter)] text-[14px] leading-[20px] text-[rgba(10,9,8,0.7)]">
+                    <p className="mt-[12px] font-[family-name:var(--font-inter)] text-[14px] leading-[20px] text-[rgba(244,242,240,0.7)]">
                       {stat.label}
                     </p>
                   </div>
@@ -119,7 +119,7 @@ export function Team() {
 
       <div className="max-[800px]:block min-[801px]:hidden">
         <section className="mt-[65px] px-[5px] py-[20px]">
-          <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[40px] leading-[46px] font-bold text-[#EDE8DF]">
+          <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[40px] leading-[46px] font-bold text-[#0c0a08]">
             Say Hello to
             <br />
             Our Team
@@ -129,14 +129,14 @@ export function Team() {
           {PEOPLE.map((person) => (
             <PersonCard key={person.name} {...person} />
           ))}
-          <div className="rounded-[12px] bg-[#EDE8DF] px-[20px] py-[32px]">
+          <div className="rounded-[12px] bg-[#0c0a08] px-[20px] py-[32px]">
             <div className="flex flex-col gap-[28px] text-center">
               {STATS.map((stat) => (
                 <div key={stat.n}>
-                  <div className="font-[family-name:var(--font-pt-serif)] text-[40px] leading-[48px] font-bold text-[#0A0908]">
+                  <div className="font-[family-name:var(--font-pt-serif)] text-[40px] leading-[48px] font-bold text-[#f4f2f0]">
                     {stat.n}
                   </div>
-                  <p className="mt-[8px] font-[family-name:var(--font-inter)] text-[14px] leading-[20px] text-[rgba(10,9,8,0.7)]">
+                  <p className="mt-[8px] font-[family-name:var(--font-inter)] text-[14px] leading-[20px] text-[rgba(244,242,240,0.7)]">
                     {stat.label}
                   </p>
                 </div>

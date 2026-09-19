@@ -15,8 +15,8 @@ export function LogoMark({
   className,
   style,
   /** Colour of the shallower slot. Matches whatever the mark sits on. */
-  slotColor = "#0A0908",
-  blockColor = "#EDE8DF",
+  slotColor = "#f4f2f0",
+  blockColor = "#0c0a08",
 }: {
   className?: string;
   style?: React.CSSProperties;
@@ -33,7 +33,7 @@ export function LogoMark({
     >
       <rect width="100" height="100" fill={blockColor} />
       <rect x="33" y="0" width="11" height="49" fill={slotColor} />
-      <rect x="53" y="0" width="17" height="64" fill="#C6A660" />
+      <rect x="53" y="0" width="17" height="64" fill="#0c0a08" />
     </svg>
   );
 }
@@ -71,7 +71,7 @@ export function Logo({
       )}
       <span
         className={cn(
-          "font-[family-name:var(--font-pt-serif)] text-[#EDE8DF]",
+          "font-[family-name:var(--font-pt-serif)] text-[#0c0a08]",
           mark && "ml-[0.42em]",
         )}
         style={{ fontSize: size, lineHeight: 1.15 }}

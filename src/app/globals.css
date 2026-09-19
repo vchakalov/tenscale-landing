@@ -118,15 +118,15 @@ body {
 
 .ec-landing {
   /* palette */
-  --ec-cream: #0A0908;          /* page bg, and type on light surfaces */
-  --ec-navy: #EDE8DF;           /* type, light cards, borders */
-  --ec-blue: #C6A660;           /* the one accent, only ever on black */
-  --ec-muted-on-dark: rgba(10, 9, 8, 0.6);
-  --ec-muted-on-dark-mobile: rgba(10, 9, 8, 0.4);
-  --ec-header-pill: rgba(237, 232, 223, 0.03);
-  --ec-notice-bg: #16130D;
-  --ec-notice-border: #322A1B;
-  --ec-notice-border-hover: #4A3E27;
+  --ec-cream: #f4f2f0;          /* page bg, and type on light surfaces */
+  --ec-navy: #0c0a08;           /* type, light cards, borders */
+  --ec-blue: #0c0a08;           /* the one accent, only ever on black */
+  --ec-muted-on-dark: rgba(244, 242, 240, 0.6);
+  --ec-muted-on-dark-mobile: rgba(244, 242, 240, 0.4);
+  --ec-header-pill: rgba(12, 10, 8, 0.03);
+  --ec-notice-bg: #ffffff;
+  --ec-notice-border: #e5e7eb;
+  --ec-notice-border-hover: #0c0a08;
 
   background-color: var(--ec-cream);
   color: var(--ec-navy);
@@ -183,22 +183,4 @@ body {
     opacity: 0.22;
     transform: scale(1.03);
   }
-}
-
-/* ---------------------------------------------------------------------------
- * Film grain over the dark ground.
- *
- * A flat near-black field reads as a switched-off screen. A field with tooth
- * reads as a surface, and that is most of what separates an expensive dark page
- * from a cheap one. The layer is fixed and `pointer-events: none`, so it never
- * repaints while anything scrolls underneath it.
- * ------------------------------------------------------------------------ */
-.ec-landing::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 70;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
 }

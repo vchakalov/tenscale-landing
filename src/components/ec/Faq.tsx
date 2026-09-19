@@ -89,7 +89,7 @@ function FaqAccordion({
                 aria-controls={panelId}
                 onClick={() => onToggle(index)}
                 className={cn(
-                  "flex w-full cursor-pointer items-center justify-between border-0 bg-transparent p-0 text-left text-[#EDE8DF]",
+                  "flex w-full cursor-pointer items-center justify-between border-0 bg-transparent p-0 text-left text-[#0c0a08]",
                   styles.question,
                 )}
               >
@@ -118,7 +118,7 @@ function FaqAccordion({
               >
                 <div
                   className={cn(
-                    "text-left text-[#EDE8DF]",
+                    "text-left text-[#0c0a08]",
                     styles.answer,
                     styles.paragraphGap,
                   )}
@@ -132,7 +132,7 @@ function FaqAccordion({
                         <li key={line} className="flex gap-[10px]">
                           <span
                             aria-hidden
-                            className="mt-[11px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#C6A660] max-[800px]:mt-[8px]"
+                            className="mt-[11px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#0c0a08] max-[800px]:mt-[8px]"
                           />
                           <span>{line}</span>
                         </li>
@@ -143,7 +143,7 @@ function FaqAccordion({
                     <p className="mt-[24px] max-[800px]:mt-[22px]">
                       <Link
                         href={item.footerLink.href}
-                        className="text-[#C6A660] underline underline-offset-[3px]"
+                        className="text-[#0c0a08] underline underline-offset-[3px]"
                       >
                         {item.footerLink.label}
                       </Link>
@@ -184,7 +184,7 @@ const DESKTOP_STYLES: FaqVariantStyles = {
   answer:
     "pt-[51px] font-[family-name:var(--font-inter)] text-[18px] leading-[24px] font-normal",
   paragraphGap: "[&>p+p]:mt-[24px]",
-  divider: "border-[#EDE8DF]",
+  divider: "border-[#0c0a08]",
   itemPadding: "pt-[15px] pr-[15px] pb-[15px] pl-[20px]",
   dividerTop: "mt-[33.5px]",
   dividerBottom: "mb-[58px]",
@@ -230,7 +230,7 @@ export function Faq() {
       <div className="mt-[200px] hidden min-[801px]:block">
         <section className="px-0 pt-[21px] pb-0">
           <div className="mx-auto max-w-[1120px]">
-            <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[42px] leading-[48px] font-normal text-[#EDE8DF]">
+            <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[42px] leading-[48px] font-normal text-[#0c0a08]">
               Frequently Asked Questions
             </h2>
             {/* First item wrapper sits 129px below the heading block (measured 9032 -> 9161) */}
@@ -250,7 +250,7 @@ export function Faq() {
       <div className="max-[800px]:block min-[801px]:hidden">
         <div className="mt-[50px]">
           <section className="px-[5px] py-[10px]">
-            <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[40px] leading-[46px] font-bold text-[#EDE8DF]">
+            <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[40px] leading-[46px] font-bold text-[#0c0a08]">
               Frequently Asked Questions
             </h2>
           </section>
