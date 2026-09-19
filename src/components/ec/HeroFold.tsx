@@ -48,13 +48,16 @@ import { Vsl } from "./Vsl";
  * The accent lands on the revenue band and nowhere else. That range is the
  * single fact that answers the question, so it is what the eye should catch
  * first, and colouring four characters costs almost no visual mass.
+ *
+ * "Marketing" is gone. It said nothing "Lead Gen" was not already saying, and
+ * on a phone it was the word that pushed this line onto a second row.
  */
 function Eyebrow({ className }: { className: string }) {
   return (
     <p className={className}>
       Owners of{" "}
       <span className="text-[#0158ff] whitespace-nowrap">$1M&ndash;$4M</span>{" "}
-      Marketing Lead Gen Agencies
+      Lead Gen Agencies
     </p>
   );
 }
@@ -96,8 +99,7 @@ function SubheadCopy() {
       <strong className="font-semibold text-[#001232]">
         Meta Ads Automation Engine
       </strong>{" "}
-      that handles the creative production, campaign setup, testing,
-      optimization, and scaling.
+      that handles creative production, campaign setup, testing and scaling.
     </>
   );
 }
@@ -145,21 +147,28 @@ export function HeroFold() {
         </div>
       </section>
 
-      {/* Mobile */}
-      <section className="flex flex-col items-center bg-[#f4f1ea] px-[14px] pt-[40px] pb-[12px] text-center min-[801px]:hidden">
-        <Logo size={20} className="mb-[26px]" />
+      {/*
+        Mobile.
 
+        No wordmark. The fold has to carry the promise, the player, the button
+        and the proof above a line that a real phone draws at about 700px, and
+        the mark plus its margin was 49 of those pixels for a brand the visitor
+        has just clicked an ad for. Everything else here is measured against
+        that budget too: the gaps, the two type sizes and the top padding were
+        all cut once the words had been cut as far as they could go.
+      */}
+      <section className="flex flex-col items-center bg-[#f4f1ea] px-[14px] pt-[24px] pb-[12px] text-center min-[801px]:hidden">
         <Eyebrow className="text-balance font-[family-name:var(--font-pt-serif)] text-[18px] leading-[1.4] font-bold text-[#001232]" />
 
-        <Headline className="mt-[18px] text-balance font-[family-name:var(--font-pt-serif)] text-[31px] leading-[1.22] font-bold text-[#001232]" />
+        <Headline className="mt-[14px] text-balance font-[family-name:var(--font-pt-serif)] text-[29px] leading-[1.2] font-bold text-[#001232]" />
 
-        <p className="mt-[28px] text-pretty font-[family-name:var(--font-inter)] text-[18px] leading-[28px] font-normal text-[#001232]">
+        <p className="mt-[20px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] font-normal text-[#001232]">
           <SubheadCopy />
         </p>
 
-        <Vsl className="mt-[26px] w-full text-left" />
+        <Vsl className="mt-[20px] w-full text-left" />
 
-        <div className="mt-[26px]">
+        <div className="mt-[20px]" data-hero-cta>
           <CtaButton
             variant="blueRaised"
             className="rounded-[50px] px-[32px] text-[16px] leading-[24px]"

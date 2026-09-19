@@ -5,6 +5,7 @@ import { CtaBlock } from "@/components/ec/CtaBlock";
 import { HeroFold } from "@/components/ec/HeroFold";
 import { Objections } from "@/components/ec/Objections";
 import { SiteFooter } from "@/components/ec/SiteFooter";
+import { StickyCta } from "@/components/ec/StickyCta";
 
 export const metadata: Metadata = {
   title: "Agentica: We Automate Your Client Fulfillment In 30 Days",
@@ -40,6 +41,9 @@ export default function Page() {
       <Objections />
       <CtaBlock />
       <SiteFooter />
+      {/* The bar is fixed, so the last section needs room to clear it. */}
+      <div aria-hidden="true" className="h-[76px] min-[801px]:hidden" />
+      <StickyCta />
       <BookingModal />
     </div>
   );

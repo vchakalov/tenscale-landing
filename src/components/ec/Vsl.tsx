@@ -10,10 +10,13 @@ import { useEffect, useRef, useState } from "react";
  * invites the unmute; clicking it turns sound on *without* restarting, because
  * the point of the pattern is that the visitor feels mid-watch, not pre-watch.
  *
- * The bar under the video is a chapter bar, not a scrubber. It shows how far
- * through the pitch the visitor is and how much of it is left, split by
- * chapter. It is deliberately not clickable: a VSL that can be skipped through
- * is a VSL nobody watches.
+ * There is no progress bar. A segmented chapter bar sat under the frame and,
+ * with no video loaded, it read as four grey stripes of debris below the only
+ * object in the fold. It also cost about 20px of a phone fold that is already
+ * fighting for every one of them.
+ *
+ * Bringing it back is a small piece of work if the video turns out to need it:
+ * a chapter list, the `timeupdate` listener and one row of flex children.
  */
 
 /** Fill these in when the cut is ready. Empty `src` renders the placeholder. */
@@ -21,26 +24,6 @@ export const VSL_SOURCE = {
   src: "",
   poster: "",
 };
-
-export interface Chapter {
-  /** Seconds from the start of the video. */
-  start: number;
-  label: string;
-}
-
-/**
- * Placeholder chapters. `start` drives both the label and the segment width,
- * so the bar always matches the real cut once the timings are replaced.
- */
-export const VSL_CHAPTERS: Chapter[] = [
-  { start: 0, label: "Why your ads stop scaling" },
-  { start: 180, label: "What a personalized funnel is" },
-  { start: 420, label: "The system, end to end" },
-  { start: 900, label: "What it costs, and what happens next" },
-];
-
-/** Total runtime in seconds, used until the real video reports its duration. */
-const ASSUMED_DURATION = 1080;
 
 function SpeakerIcon({ className }: { className: string }) {
   return (
@@ -60,29 +43,12 @@ function SpeakerIcon({ className }: { className: string }) {
 export function Vsl({ className = "" }: { className?: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
-  const [current, setCurrent] = useState(0);
-  const [duration, setDuration] = useState(ASSUMED_DURATION);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
-    const onTime = () => setCurrent(video.currentTime);
-    const onMeta = () => {
-      if (video.duration && Number.isFinite(video.duration)) {
-        setDuration(video.duration);
-      }
-    };
-
-    video.addEventListener("timeupdate", onTime);
-    video.addEventListener("loadedmetadata", onMeta);
     // Autoplay is only allowed while muted; a rejected play is not an error.
     void video.play().catch(() => {});
-
-    return () => {
-      video.removeEventListener("timeupdate", onTime);
-      video.removeEventListener("loadedmetadata", onMeta);
-    };
   }, []);
 
   function unmute() {
@@ -160,38 +126,6 @@ export function Vsl({ className = "" }: { className?: string }) {
         </div>
       </div>
 
-      {/*
-        Chapter bar. Segment widths are the chapters' real share of runtime.
-        The written labels that sat under it are gone: four of them side by side
-        wrapped into one-word columns at any real width. If the chapter names
-        have to come back, render only the active one as a single line under the
-        bar rather than all four at once.
-      */}
-      <div className="mt-[14px]">
-        <div className="flex h-[6px] w-full gap-[3px]">
-          {VSL_CHAPTERS.map((chapter, i) => {
-            const next = VSL_CHAPTERS[i + 1]?.start ?? duration;
-            const span = next - chapter.start;
-            const played = Math.max(
-              0,
-              Math.min(1, (current - chapter.start) / span),
-            );
-            return (
-              <div
-                key={chapter.start}
-                className="relative h-full overflow-hidden rounded-[999px] bg-[rgba(0,18,50,0.15)]"
-                style={{ flexGrow: span }}
-              >
-                <div
-                  className="absolute inset-y-0 left-0 bg-[#0158ff]"
-                  style={{ width: `${played * 100}%` }}
-                />
-              </div>
-            );
-          })}
-        </div>
-
-      </div>
     </div>
   );
 }
