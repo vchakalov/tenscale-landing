@@ -53,7 +53,7 @@ function Shot({
 }) {
   return (
     <figure>
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[14px] border-[1.5px] border-[#F5F5F5] bg-[#F5F5F5] shadow-[0_10px_0_0_rgba(245,245,245,0.12)]">
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[14px] border-[1.5px] border-[#EDE8DF] bg-[#EDE8DF] shadow-[0_10px_0_0_rgba(237,232,223,0.12)]">
         {src ? (
           <Image
             src={src}
@@ -64,14 +64,14 @@ function Shot({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center px-[24px]">
-            <p className="text-center font-[family-name:var(--font-pt-serif)] text-[15px] leading-[22px] text-[rgba(11,11,11,0.45)]">
+            <p className="text-center font-[family-name:var(--font-pt-serif)] text-[15px] leading-[22px] text-[rgba(10,9,8,0.45)]">
               Screenshot goes here. Drop the file in `public/proof/` and set
               `src` in ResultShots.tsx.
             </p>
           </div>
         )}
       </div>
-      <figcaption className="mt-[14px] font-[family-name:var(--font-inter)] text-[clamp(15px,1.08vw,18px)] leading-[1.55] text-[rgba(245,245,245,0.78)] max-[800px]:text-[15px] max-[800px]:leading-[23px]">
+      <figcaption className="mt-[14px] font-[family-name:var(--font-inter)] text-[clamp(15px,1.08vw,18px)] leading-[1.55] text-[rgba(237,232,223,0.78)] max-[800px]:text-[15px] max-[800px]:leading-[23px]">
         {caption}
       </figcaption>
     </figure>
@@ -82,10 +82,10 @@ export function ResultShots() {
   return (
     <section className="mt-[150px] px-[40px] max-[800px]:mt-[72px] max-[800px]:px-[20px]">
       <div className="mx-auto w-full max-w-[1320px]">
-        <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[clamp(34px,3vw,52px)] leading-[1.18] font-bold text-[#F5F5F5] max-[800px]:text-[34px] max-[800px]:leading-[40px]">
+        <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[clamp(34px,3vw,52px)] leading-[1.18] font-bold text-[#EDE8DF] max-[800px]:text-[34px] max-[800px]:leading-[40px]">
           Accounts We Run Today.
         </h2>
-        <p className="mx-auto mt-[18px] max-w-[720px] text-center text-pretty font-[family-name:var(--font-inter)] text-[clamp(16px,1.1vw,19px)] leading-[1.55] text-[rgba(245,245,245,0.65)] max-[800px]:text-[16px] max-[800px]:leading-[24px]">
+        <p className="mx-auto mt-[18px] max-w-[720px] text-center text-pretty font-[family-name:var(--font-inter)] text-[clamp(16px,1.1vw,19px)] leading-[1.55] text-[rgba(237,232,223,0.65)] max-[800px]:text-[16px] max-[800px]:leading-[24px]">
           Every screenshot below is a live client account the engine runs.
         </p>
 

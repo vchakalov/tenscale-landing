@@ -51,21 +51,21 @@ function ObjectionRow({
   answer: readonly string[];
 }) {
   return (
-    <div className="border-t border-[#F5F5F5] pt-[36px] max-[800px]:pt-[22px]">
+    <div className="border-t border-[#EDE8DF] pt-[36px] max-[800px]:pt-[22px]">
       <div className="flex items-start gap-[28px]">
-        <span className="flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-full bg-[#F5F5F5] font-[family-name:var(--font-pt-serif)] text-[28px] font-bold text-[#0B0B0B] max-[800px]:hidden">
+        <span className="flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-full bg-[#EDE8DF] font-[family-name:var(--font-pt-serif)] text-[28px] font-bold text-[#0A0908] max-[800px]:hidden">
           {String(index + 1).padStart(2, "0")}
         </span>
 
         <div className="min-w-0">
-          <h3 className="font-[family-name:var(--font-pt-serif)] text-[30px] leading-[38px] font-bold text-[#F5F5F5] max-[800px]:text-[24px] max-[800px]:leading-[32px]">
+          <h3 className="font-[family-name:var(--font-pt-serif)] text-[30px] leading-[38px] font-bold text-[#EDE8DF] max-[800px]:text-[24px] max-[800px]:leading-[32px]">
             &ldquo;{question}&rdquo;
           </h3>
 
           {answer.map((paragraph, i) => (
             <p
               key={paragraph}
-              className={`${i === 0 ? "mt-[16px]" : "mt-[14px]"} font-[family-name:var(--font-inter)] text-[17px] leading-[27px] font-normal text-[rgba(245,245,245,0.8)] max-[800px]:text-[17px] max-[800px]:leading-[27px]`}
+              className={`${i === 0 ? "mt-[16px]" : "mt-[14px]"} font-[family-name:var(--font-inter)] text-[17px] leading-[27px] font-normal text-[rgba(237,232,223,0.8)] max-[800px]:text-[17px] max-[800px]:leading-[27px]`}
             >
               {paragraph}
             </p>
@@ -83,7 +83,7 @@ export function Objections() {
       className="mt-[150px] px-[40px] max-[800px]:mt-[70px] max-[800px]:px-[20px]"
     >
       <div className="mx-auto w-full max-w-[905px]">
-        <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[48px] leading-[56px] font-bold text-[#F5F5F5] max-[800px]:text-[36px] max-[800px]:leading-[42px]">
+        <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[48px] leading-[56px] font-bold text-[#EDE8DF] max-[800px]:text-[36px] max-[800px]:leading-[42px]">
           What You Are Probably Thinking:
         </h2>
 

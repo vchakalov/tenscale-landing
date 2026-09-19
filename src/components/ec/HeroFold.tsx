@@ -55,7 +55,7 @@ function Eyebrow({ className }: { className: string }) {
   return (
     <p className={className}>
       Owners of{" "}
-      <span className="text-[#FFD100] whitespace-nowrap">$1M&ndash;$4M</span>{" "}
+      <span className="text-[#C6A660] whitespace-nowrap">$1M&ndash;$4M</span>{" "}
       Lead Gen Agencies
     </p>
   );
@@ -81,7 +81,7 @@ function Headline({ className }: { className: string }) {
       {/* Never allowed to split: the risk reversal is the half of the promise
           that closes the deal, and "Or" alone at the end of a line reads as a
           typo. It fits on one line at every size the clamp produces. */}
-      <span className="text-[#FFD100] whitespace-nowrap">
+      <span className="text-[#C6A660] whitespace-nowrap">
         Or You Don&apos;t Pay.
       </span>
     </h1>
@@ -95,7 +95,7 @@ function SubheadCopy() {
       {/* Navy, not the accent. The blue is spent on the headline's closing
           phrase and on the button; a third mass of it here is what made the
           fold read as busy. */}
-      <strong className="font-semibold text-[#F5F5F5]">
+      <strong className="font-semibold text-[#EDE8DF]">
         Meta Ads Automation Engine
       </strong>{" "}
       that handles creative production, campaign setup, testing and scaling.
@@ -132,13 +132,13 @@ export function HeroFold() {
         The 94vw and 1500px caps only bite on an ultrawide monitor; everywhere
         else the height is what decides.
       */}
-      <section className="hidden bg-[#0B0B0B] px-[40px] pt-[20px] pb-[16px] min-[801px]:block">
+      <section className="hidden bg-[#0A0908] px-[40px] pt-[20px] pb-[16px] min-[801px]:block">
         <div className="relative mx-auto w-full max-w-[1560px] text-center">
-          <Eyebrow className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.78vw,34px)] leading-[1.35] font-bold text-[#F5F5F5]" />
+          <Eyebrow className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.78vw,34px)] leading-[1.35] font-bold text-[#EDE8DF]" />
 
-          <Headline className="mx-auto mt-[18px] max-w-[min(1560px,92vw)] text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.95vw,56px)] leading-[1.18] font-bold text-[#F5F5F5]" />
+          <Headline className="mx-auto mt-[18px] max-w-[min(1560px,92vw)] text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.95vw,56px)] leading-[1.18] font-bold text-[#EDE8DF]" />
 
-          <p className="mx-auto mt-[20px] max-w-[min(1400px,84vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(16px,1.1vw,21px)] leading-[1.55] font-normal text-[#F5F5F5]">
+          <p className="mx-auto mt-[20px] max-w-[min(1400px,84vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(16px,1.1vw,21px)] leading-[1.55] font-normal text-[#EDE8DF]">
             <SubheadCopy />
           </p>
 
@@ -154,8 +154,8 @@ export function HeroFold() {
             <div className="mt-[18px]">
               <ProofStats
                 gapClass="gap-[clamp(48px,5vw,92px)]"
-                valueClass="font-[family-name:var(--font-libre-baskerville)] text-[clamp(22px,1.7vw,31px)] leading-[1.28] font-bold text-[#F5F5F5]"
-                labelClass="mt-[3px] font-[family-name:var(--font-inter)] text-[clamp(12px,0.95vw,16px)] leading-[1.4] text-[rgba(245,245,245,0.65)]"
+                valueClass="font-[family-name:var(--font-libre-baskerville)] text-[clamp(22px,1.7vw,31px)] leading-[1.28] font-bold text-[#EDE8DF]"
+                labelClass="mt-[3px] font-[family-name:var(--font-inter)] text-[clamp(12px,0.95vw,16px)] leading-[1.4] text-[rgba(237,232,223,0.65)]"
               />
             </div>
           </div>
@@ -172,12 +172,12 @@ export function HeroFold() {
         that budget too: the gaps, the two type sizes and the top padding were
         all cut once the words had been cut as far as they could go.
       */}
-      <section className="flex flex-col items-center bg-[#0B0B0B] px-[14px] pt-[24px] pb-[12px] text-center min-[801px]:hidden">
-        <Eyebrow className="text-balance font-[family-name:var(--font-pt-serif)] text-[18px] leading-[1.4] font-bold text-[#F5F5F5]" />
+      <section className="flex flex-col items-center bg-[#0A0908] px-[14px] pt-[24px] pb-[12px] text-center min-[801px]:hidden">
+        <Eyebrow className="text-balance font-[family-name:var(--font-pt-serif)] text-[18px] leading-[1.4] font-bold text-[#EDE8DF]" />
 
-        <Headline className="mt-[14px] text-balance font-[family-name:var(--font-pt-serif)] text-[29px] leading-[1.2] font-bold text-[#F5F5F5]" />
+        <Headline className="mt-[14px] text-balance font-[family-name:var(--font-pt-serif)] text-[29px] leading-[1.2] font-bold text-[#EDE8DF]" />
 
-        <p className="mt-[20px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] font-normal text-[#F5F5F5]">
+        <p className="mt-[20px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] font-normal text-[#EDE8DF]">
           <SubheadCopy />
         </p>
 
@@ -193,8 +193,8 @@ export function HeroFold() {
           <div className="mt-[18px] w-full">
             <ProofStats
               gapClass="gap-[22px]"
-              valueClass="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[25px] font-bold text-[#F5F5F5]"
-              labelClass="mt-[2px] font-[family-name:var(--font-inter)] text-[11px] leading-[15px] text-[rgba(245,245,245,0.65)]"
+              valueClass="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[25px] font-bold text-[#EDE8DF]"
+              labelClass="mt-[2px] font-[family-name:var(--font-inter)] text-[11px] leading-[15px] text-[rgba(237,232,223,0.65)]"
             />
           </div>
         </div>
