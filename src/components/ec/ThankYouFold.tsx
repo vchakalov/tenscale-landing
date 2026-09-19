@@ -1,6 +1,5 @@
 import { AppointmentCard } from "./AppointmentCard";
 import { GmailNotice } from "./GmailNotice";
-import { Logo } from "./Logo";
 import { Vsl } from "./Vsl";
 
 /**
@@ -54,41 +53,51 @@ function SubheadCopy() {
   );
 }
 
+/**
+ * The column width, shared by the player, the card and the notice.
+ *
+ * Same technique as the landing fold: the player is sized by the height left
+ * over rather than by a share of the width, so it is as large as the viewport
+ * allows and gives room back on a short screen instead of pushing the booking
+ * out of reach. The reserve here is smaller, because this fold carries two
+ * lines of type above the player instead of four, and it deliberately leaves
+ * about 60px for the top edge of the card to show under the scroll line. That
+ * edge is what makes anyone scroll to the button.
+ *
+ * The card and the notice take the same width so the three read as one column
+ * rather than as three boxes of different sizes.
+ */
+const COLUMN = "max-w-[min(1080px,94vw,calc((100vh-205px-7.8vw)*16/9))]";
+
 export function ThankYouFold() {
   return (
     <>
       {/* Desktop */}
-      <section className="hidden bg-[#f4f1ea] px-[40px] pt-[38px] pb-[26px] min-[801px]:block">
+      <section className="hidden bg-[#f4f1ea] px-[40px] pt-[22px] pb-[26px] min-[801px]:block">
         <div className="relative mx-auto w-full max-w-[1560px] text-center">
-          <Logo size={28} className="absolute top-0 left-0" />
-
-          <div className="h-[74px]" />
-
           <Headline className="mx-auto text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(29px,2.7vw,50px)] leading-[1.16] font-bold text-[#001232]" />
 
           <p className="mx-auto mt-[24px] max-w-[min(900px,72vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(16px,1.1vw,21px)] leading-[1.55] font-normal text-[#001232]">
             <SubheadCopy />
           </p>
 
-          <Vsl className="mx-auto mt-[40px] w-full max-w-[clamp(560px,40vw,820px)] text-left" />
+          <Vsl className={`mx-auto mt-[34px] w-full text-left ${COLUMN}`} />
 
-          <AppointmentCard className="mx-auto mt-[54px] w-full max-w-[clamp(560px,40vw,820px)]" />
+          <AppointmentCard className={`mx-auto mt-[54px] w-full ${COLUMN}`} />
 
-          <GmailNotice className="mx-auto mt-[46px] w-full max-w-[clamp(560px,40vw,820px)]" />
+          <GmailNotice className={`mx-auto mt-[46px] w-full ${COLUMN}`} />
         </div>
       </section>
 
       {/* Mobile */}
-      <section className="flex flex-col items-center bg-[#f4f1ea] px-[14px] pt-[40px] pb-[12px] text-center min-[801px]:hidden">
-        <Logo size={20} className="mb-[26px]" />
-
+      <section className="flex flex-col items-center bg-[#f4f1ea] px-[14px] pt-[24px] pb-[12px] text-center min-[801px]:hidden">
         <Headline className="text-balance font-[family-name:var(--font-pt-serif)] text-[30px] leading-[1.2] font-bold text-[#001232]" />
 
-        <p className="mt-[18px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] font-normal text-[#001232]">
+        <p className="mt-[16px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] font-normal text-[#001232]">
           <SubheadCopy />
         </p>
 
-        <Vsl className="mt-[24px] w-full text-left" />
+        <Vsl className="mt-[20px] w-full text-left" />
 
         <AppointmentCard className="mt-[36px] w-full" />
 

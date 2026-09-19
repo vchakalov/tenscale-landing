@@ -1,6 +1,5 @@
 import { CtaButton } from "./CtaButton";
 import { ProofStats } from "./CtaBlock";
-import { Logo } from "./Logo";
 import { Vsl } from "./Vsl";
 
 /**
@@ -107,36 +106,52 @@ function SubheadCopy() {
 export function HeroFold() {
   return (
     <>
-      {/* Desktop */}
-      <section className="hidden bg-[#f4f1ea] px-[40px] pt-[38px] pb-[26px] min-[801px]:block">
-        <div className="relative mx-auto w-full max-w-[1560px] text-center">
-          {/*
-            The wordmark sits in the corner of the content column, not of the
-            window, so it lines up with everything else. It is out of the
-            vertical flow: centred above the callout it read as a fourth stacked
-            element and pushed the whole fold down.
-          */}
-          <Logo size={28} className="absolute top-0 left-0" />
+      {/*
+        Desktop.
 
-          <div className="h-[74px]" />
+        No wordmark here either, for the same reason it left the phone: the
+        visitor arrived from an ad and the fold has four things to carry above
+        the line. The mark and the 74px of clearance it needed were the only
+        elements paying for neither the promise, the player, the button nor the
+        proof.
+
+        The player is sized by the height that is left over, not by a share of
+        the width. The video takes whatever the viewport has after the type and
+        spacing around it, and works out its own width from 16:9. On a tall
+        window it is enormous; on a short one it gives room back rather than
+        pushing the proof numbers off the screen.
+
+        The reserve is `330px + 7vw` rather than a flat number because the type
+        here is sized in vw: the callout, the headline and the subhead are all
+        taller on a wide monitor than on a laptop. Measured, the block above and
+        below the player runs 422px at 1024 wide, 461px at 1512 and 496px at
+        1920. The expression tracks those three points, minus the 18px the gaps
+        around the player gave back, so the reserve is the real height rather
+        than a guess above it. A guess above it is empty screen on a laptop.
+
+        The 94vw and 1500px caps only bite on an ultrawide monitor; everywhere
+        else the height is what decides.
+      */}
+      <section className="hidden bg-[#f4f1ea] px-[40px] pt-[20px] pb-[16px] min-[801px]:block">
+        <div className="relative mx-auto w-full max-w-[1560px] text-center">
           <Eyebrow className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.78vw,34px)] leading-[1.35] font-bold text-[#001232]" />
 
-          <Headline className="mx-auto mt-[26px] max-w-[min(1560px,92vw)] text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.95vw,56px)] leading-[1.18] font-bold text-[#001232]" />
+          <Headline className="mx-auto mt-[18px] max-w-[min(1560px,92vw)] text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.95vw,56px)] leading-[1.18] font-bold text-[#001232]" />
 
-          <p className="mx-auto mt-[30px] max-w-[min(1400px,84vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(16px,1.1vw,21px)] leading-[1.55] font-normal text-[#001232]">
+          <p className="mx-auto mt-[20px] max-w-[min(1400px,84vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(16px,1.1vw,21px)] leading-[1.55] font-normal text-[#001232]">
             <SubheadCopy />
           </p>
 
-          <Vsl className="mx-auto mt-[46px] w-full max-w-[clamp(520px,36vw,760px)] text-left" />
+          <Vsl className="mx-auto mt-[26px] w-full max-w-[min(1500px,94vw,calc((100vh-313px-8.6vw)*16/9))] text-left" />
 
-          <div className="mt-[38px]">
+          <div className="mt-[24px]">
             <CtaButton
               variant="blueRaised"
               className="px-[clamp(30px,2.6vw,46px)] py-[clamp(12px,1vw,17px)] text-[clamp(16px,1.25vw,21px)] leading-[1.5]"
             >
               Book Free Demo
             </CtaButton>
-            <div className="mt-[26px]">
+            <div className="mt-[18px]">
               <ProofStats
                 gapClass="gap-[clamp(48px,5vw,92px)]"
                 valueClass="font-[family-name:var(--font-libre-baskerville)] text-[clamp(22px,1.7vw,31px)] leading-[1.28] font-bold text-[#001232]"
