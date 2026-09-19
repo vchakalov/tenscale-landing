@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Benefits } from "@/components/ec-classic/Benefits";
-import { BookingModal } from "@/components/ec-classic/BookingModal";
-import { CtaBlock } from "@/components/ec-classic/CtaBlock";
-import { HeroFold } from "@/components/ec-classic/HeroFold";
-import { Objections } from "@/components/ec-classic/Objections";
-import { SiteFooter } from "@/components/ec-classic/SiteFooter";
-import { StickyCta } from "@/components/ec-classic/StickyCta";
+import { Benefits } from "@/components/ec/Benefits";
+import { BookingModal } from "@/components/ec/BookingModal";
+import { CtaBlock } from "@/components/ec/CtaBlock";
+import { HeroFold } from "@/components/ec/HeroFold";
+import { Objections } from "@/components/ec/Objections";
+import { SiteFooter } from "@/components/ec/SiteFooter";
+import { StickyCta } from "@/components/ec/StickyCta";
 
 export const metadata: Metadata = {
   title: "Agentica: We Automate Your Client Fulfillment In 30 Days",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
  */
 export default function Page() {
   return (
-    <div className="ec-landing ec-classic min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
+    <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
       <HeroFold />
       <Benefits />
       <CtaBlock />

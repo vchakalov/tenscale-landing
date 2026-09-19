@@ -40,10 +40,10 @@ function ProofStats() {
     <div className="mx-auto grid max-w-[900px] grid-cols-3 gap-[24px] max-[800px]:gap-[14px]">
       {PROOF_STATS.map((stat) => (
         <div key={stat.value} className="text-center">
-          <p className="font-[family-name:var(--font-libre-baskerville)] text-[44px] leading-[52px] font-bold text-[#0c0a08] max-[800px]:text-[26px] max-[800px]:leading-[32px]">
+          <p className="font-[family-name:var(--font-libre-baskerville)] text-[44px] leading-[52px] font-bold text-[#001232] max-[800px]:text-[26px] max-[800px]:leading-[32px]">
             {stat.value}
           </p>
-          <p className="mt-[6px] font-[family-name:var(--font-inter)] text-[14px] leading-[21px] text-[rgba(12,10,8,0.7)] max-[800px]:text-[12px] max-[800px]:leading-[17px]">
+          <p className="mt-[6px] font-[family-name:var(--font-inter)] text-[14px] leading-[21px] text-[rgba(0,18,50,0.7)] max-[800px]:text-[12px] max-[800px]:leading-[17px]">
             {stat.label}
           </p>
         </div>
@@ -61,20 +61,20 @@ export function FinalCta() {
       <div className="mx-auto w-full max-w-[1120px]">
         <ProofStats />
 
-        <div className="mt-[56px] rounded-[20px] bg-[#0c0a08] px-[80px] py-[72px] max-[800px]:mt-[40px] max-[800px]:px-[24px] max-[800px]:py-[40px]">
+        <div className="mt-[56px] rounded-[20px] bg-[#001232] px-[80px] py-[72px] max-[800px]:mt-[40px] max-[800px]:px-[24px] max-[800px]:py-[40px]">
           <NoticePill />
 
-          <h2 className="mt-[28px] font-[family-name:var(--font-libre-baskerville)] text-[46px] leading-[58px] font-bold text-[#f4f2f0] max-[800px]:text-[30px] max-[800px]:leading-[38px]">
+          <h2 className="mt-[28px] font-[family-name:var(--font-libre-baskerville)] text-[46px] leading-[58px] font-bold text-[#f4f1ea] max-[800px]:text-[30px] max-[800px]:leading-[38px]">
             See It Run On <span className="underline">Your Own</span> Accounts
           </h2>
 
-          <p className="mt-[20px] max-w-[640px] font-[family-name:var(--font-poppins)] text-[19px] leading-[30px] font-normal text-[rgba(244,242,240,0.6)] max-[800px]:text-[18px] max-[800px]:leading-[28px]">
+          <p className="mt-[20px] max-w-[640px] font-[family-name:var(--font-poppins)] text-[19px] leading-[30px] font-normal text-[rgba(244,241,234,0.6)] max-[800px]:text-[18px] max-[800px]:leading-[28px]">
             Bring one of your own client accounts. We build the angles, the
             creatives and the matching page on it, live, so you are judging the
             engine on your book rather than on a demo account.
           </p>
 
-          <p className="mt-[24px] max-w-[640px] border-l-[3px] border-[#0c0a08] pl-[18px] font-[family-name:var(--font-pt-serif)] text-[18px] leading-[28px] font-bold text-[#f4f2f0] max-[800px]:text-[18px] max-[800px]:leading-[28px]">
+          <p className="mt-[24px] max-w-[640px] border-l-[3px] border-[#0158ff] pl-[18px] font-[family-name:var(--font-pt-serif)] text-[18px] leading-[28px] font-bold text-[#f4f1ea] max-[800px]:text-[18px] max-[800px]:leading-[28px]">
             If the complete system is not live across at least three priority
             accounts after the 30-day install and 30 days of operation, you get
             $12,000 back and you keep everything we built.
@@ -82,7 +82,7 @@ export function FinalCta() {
 
           <div className="mt-[40px]">
             <CtaButton variant="cream">Book Free Demo</CtaButton>
-            <p className="mt-[14px] font-[family-name:var(--font-inter)] text-[13px] leading-[19px] font-bold text-[rgba(244,242,240,0.6)]">
+            <p className="mt-[14px] font-[family-name:var(--font-inter)] text-[13px] leading-[19px] font-bold text-[rgba(244,241,234,0.6)]">
               30 minutes. Built on your account, not a canned deck.
             </p>
           </div>

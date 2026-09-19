@@ -40,7 +40,7 @@ export function StickyCta() {
   return (
     <div
       aria-hidden={!visible}
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-[rgba(12,10,8,0.14)] bg-[#f4f2f0] px-[16px] pt-[12px] transition-transform duration-300 ease-out min-[801px]:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-[rgba(0,18,50,0.14)] bg-[#f4f1ea] px-[16px] pt-[12px] transition-transform duration-300 ease-out min-[801px]:hidden ${
         visible ? "translate-y-0" : "pointer-events-none translate-y-full"
       }`}
       style={{ paddingBottom: "calc(12px + env(safe-area-inset-bottom))" }}

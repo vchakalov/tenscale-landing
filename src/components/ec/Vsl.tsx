@@ -64,7 +64,7 @@ export function Vsl({ className = "" }: { className?: string }) {
 
   return (
     <div className={className}>
-      <div className="relative overflow-hidden rounded-[12px] border border-[#e5e7eb] bg-[#1a1919]">
+      <div className="relative overflow-hidden rounded-[14px] border-[1.5px] border-[#001232] bg-[#001232] shadow-[0_10px_0_0_rgba(0,18,50,0.12)]">
         <div className="relative aspect-video w-full">
           {hasVideo ? (
             <video
@@ -79,8 +79,8 @@ export function Vsl({ className = "" }: { className?: string }) {
             />
           ) : (
             /* No cut yet. The frame still shows so the fold can be judged. */
-            <div className="flex h-full w-full items-center justify-center bg-[#1a1919]">
-              <p className="px-[24px] text-center font-[family-name:var(--font-pt-serif)] text-[15px] leading-[22px] text-[rgba(255,255,255,0.45)]">
+            <div className="flex h-full w-full items-center justify-center bg-[#001232]">
+              <p className="px-[24px] text-center font-[family-name:var(--font-pt-serif)] text-[15px] leading-[22px] text-[rgba(244,241,234,0.45)]">
                 VSL goes here. Set `VSL_SOURCE.src` in Vsl.tsx.
               </p>
             </div>
@@ -103,20 +103,18 @@ export function Vsl({ className = "" }: { className?: string }) {
               type="button"
               onClick={unmute}
               aria-label="Unmute the video"
-              className="group absolute inset-0 flex cursor-pointer items-center justify-center bg-[rgba(12,10,8,0.5)] transition-colors duration-200 hover:bg-[rgba(12,10,8,0.62)]"
+              className="group absolute inset-0 flex cursor-pointer items-center justify-center bg-[rgba(0,18,50,0.45)] transition-colors duration-200 hover:bg-[rgba(0,18,50,0.55)]"
             >
               <span className="relative flex w-[min(76%,290px)] items-center justify-center">
                 {/* Behind the panel, same shape, scaling outward and fading. */}
                 <span
                   aria-hidden="true"
-                  className="ec-pulse-ring absolute inset-0 rounded-[16px] bg-[rgba(255,255,255,0.75)]"
+                  className="ec-pulse-ring absolute inset-0 rounded-[16px] bg-[rgba(244,241,234,0.75)]"
                 />
 
-                <span className="relative flex w-full flex-col items-center gap-[10px] rounded-[16px] border border-[rgba(255,255,255,0.18)] bg-[#1a1919] px-[26px] py-[22px] text-center transition-transform duration-200 group-hover:-translate-y-px group-active:scale-[0.98]">
-                  {/* The one chartreuse mark in the fold, on the one thing that is
-                      an action. Accent policy in a single component. */}
-                  <SpeakerIcon className="h-[34px] w-[34px] text-[#e4f222]" />
-                  <span className="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[26px] font-bold text-[#ffffff] max-[800px]:text-[17px] max-[800px]:leading-[24px]">
+                <span className="relative flex w-full flex-col items-center gap-[10px] rounded-[16px] border border-[rgba(244,241,234,0.28)] bg-[#001232] px-[26px] py-[22px] text-center shadow-[0_8px_1px_0_rgba(0,0,0,0.22)] transition-transform duration-200 group-hover:-translate-y-px group-active:scale-[0.98]">
+                  <SpeakerIcon className="h-[34px] w-[34px] text-[#0158ff]" />
+                  <span className="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[26px] font-bold text-[#f4f1ea] max-[800px]:text-[17px] max-[800px]:leading-[24px]">
                     Your Video Is Playing
                     <br />
                     Click To Unmute
