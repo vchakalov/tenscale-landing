@@ -14,6 +14,19 @@ import {
  * route so nothing is unloaded: the visitor keeps the page, the video keeps its
  * position, and closing costs no navigation.
  *
+ * Closed, the dialog is `visibility: hidden`, not merely transparent and
+ * `pointer-events: none`. It is a full-screen fixed layer holding a
+ * cross-origin iframe, and on mobile Safari `pointer-events: none` does not
+ * reliably stop that iframe from swallowing touches. The symptom is a page
+ * that will not scroll unless the finger starts high on the screen, which is
+ * every scroll a phone visitor tries to make.
+ *
+ * `visibility: hidden` takes the layer out of hit testing for good and still
+ * keeps the iframe loaded and laid out, so nothing is given up: the widget is
+ * warm exactly as before. The transition keeps the fade, because `visibility`
+ * is a discrete property and flips at the end of the transition on the way out
+ * and at the start on the way in.
+ *
  * Speed is the whole design here. Everything up to the iframe was already moved
  * ahead of the click (see `lib/booking.ts`), and the iframe itself belongs to
  * iClosed, so it cannot be made faster. It can only be started earlier: the
@@ -157,7 +170,7 @@ export function BookingModal() {
     <div
       aria-hidden={!open}
       className={`fixed inset-0 z-[80] transition-opacity duration-200 ${
-        open ? "opacity-100" : "pointer-events-none opacity-0"
+        open ? "visible opacity-100" : "invisible pointer-events-none opacity-0"
       }`}
     >
       <button
