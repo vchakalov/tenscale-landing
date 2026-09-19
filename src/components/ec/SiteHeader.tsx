@@ -11,11 +11,11 @@ import { Logo } from "./Logo";
  */
 export function SiteHeader() {
   return (
-    <div className="sticky top-0 z-[3] w-full bg-[#f4f1ea]">
+    <div className="sticky top-0 z-[3] w-full bg-[#0B0B0B]">
       {/* Desktop pill. */}
       <section className="flex max-[1080px]:hidden px-[100px] py-[15px]">
         <div className="mx-auto w-full max-w-[1120px]">
-          <div className="mt-[15px] flex h-[89px] items-center justify-between gap-[24px] rounded-[1000px] bg-[rgba(0,18,50,0.03)] px-[50px]">
+          <div className="mt-[15px] flex h-[89px] items-center justify-between gap-[24px] rounded-[1000px] bg-[rgba(245,245,245,0.03)] px-[50px]">
             <Link href="/" className="shrink-0" aria-label="Agentica, home">
               <Logo size={28} />
             </Link>

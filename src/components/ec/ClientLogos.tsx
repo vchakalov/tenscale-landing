@@ -58,7 +58,7 @@ function Wordmark({
 }) {
   return (
     <span
-      className="font-[family-name:var(--font-pt-serif)] font-bold tracking-[-0.015em] text-[#001232]"
+      className="font-[family-name:var(--font-pt-serif)] font-bold tracking-[-0.015em] text-[#F5F5F5]"
       style={{ fontSize: size, lineHeight: 1 }}
     >
       {name}

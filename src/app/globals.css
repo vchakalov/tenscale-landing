@@ -118,15 +118,15 @@ body {
 
 .ec-landing {
   /* palette */
-  --ec-cream: #f4f1ea;          /* page bg, text on dark */
-  --ec-navy: #001232;           /* ink, dark cards, borders */
-  --ec-blue: #0158ff;           /* primary CTA */
-  --ec-muted-on-dark: rgba(244, 241, 234, 0.6);
-  --ec-muted-on-dark-mobile: rgba(244, 241, 234, 0.4);
-  --ec-header-pill: rgba(0, 18, 50, 0.03);
-  --ec-notice-bg: #fff5f5;
-  --ec-notice-border: #ffe3e3;
-  --ec-notice-border-hover: #ffd1d1;
+  --ec-cream: #0B0B0B;          /* page bg, and type on light surfaces */
+  --ec-navy: #F5F5F5;           /* type, light cards, borders */
+  --ec-blue: #FFD100;           /* the one accent, only ever on black */
+  --ec-muted-on-dark: rgba(11, 11, 11, 0.6);
+  --ec-muted-on-dark-mobile: rgba(11, 11, 11, 0.4);
+  --ec-header-pill: rgba(245, 245, 245, 0.03);
+  --ec-notice-bg: #1A1710;
+  --ec-notice-border: #3A3320;
+  --ec-notice-border-hover: #574C2E;
 
   background-color: var(--ec-cream);
   color: var(--ec-navy);

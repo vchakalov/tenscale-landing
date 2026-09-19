@@ -39,7 +39,7 @@ function Headline({ className }: { className: string }) {
     <h1 className={className}>
       Congratulations.
       <br />
-      <span className="text-[#0158ff]">Your Call Is Booked.</span>
+      <span className="text-[#FFD100]">Your Call Is Booked.</span>
     </h1>
   );
 }
@@ -73,11 +73,11 @@ export function ThankYouFold() {
   return (
     <>
       {/* Desktop */}
-      <section className="hidden bg-[#f4f1ea] px-[40px] pt-[22px] pb-[26px] min-[801px]:block">
+      <section className="hidden bg-[#0B0B0B] px-[40px] pt-[22px] pb-[26px] min-[801px]:block">
         <div className="relative mx-auto w-full max-w-[1560px] text-center">
-          <Headline className="mx-auto text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(29px,2.7vw,50px)] leading-[1.16] font-bold text-[#001232]" />
+          <Headline className="mx-auto text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(29px,2.7vw,50px)] leading-[1.16] font-bold text-[#F5F5F5]" />
 
-          <p className="mx-auto mt-[24px] max-w-[min(900px,72vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(16px,1.1vw,21px)] leading-[1.55] font-normal text-[#001232]">
+          <p className="mx-auto mt-[24px] max-w-[min(900px,72vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(16px,1.1vw,21px)] leading-[1.55] font-normal text-[#F5F5F5]">
             <SubheadCopy />
           </p>
 
@@ -90,10 +90,10 @@ export function ThankYouFold() {
       </section>
 
       {/* Mobile */}
-      <section className="flex flex-col items-center bg-[#f4f1ea] px-[14px] pt-[24px] pb-[12px] text-center min-[801px]:hidden">
-        <Headline className="text-balance font-[family-name:var(--font-pt-serif)] text-[30px] leading-[1.2] font-bold text-[#001232]" />
+      <section className="flex flex-col items-center bg-[#0B0B0B] px-[14px] pt-[24px] pb-[12px] text-center min-[801px]:hidden">
+        <Headline className="text-balance font-[family-name:var(--font-pt-serif)] text-[30px] leading-[1.2] font-bold text-[#F5F5F5]" />
 
-        <p className="mt-[16px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] font-normal text-[#001232]">
+        <p className="mt-[16px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] font-normal text-[#F5F5F5]">
           <SubheadCopy />
         </p>
 

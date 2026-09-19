@@ -36,12 +36,12 @@ function Skeleton() {
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 animate-pulse rounded-[14px] bg-[rgba(0,18,50,0.05)] p-[22px]"
+      className="absolute inset-0 animate-pulse rounded-[14px] bg-[rgba(245,245,245,0.05)] p-[22px]"
     >
-      <div className="h-[34px] w-full rounded-[8px] bg-[rgba(0,18,50,0.06)]" />
-      <div className="mt-[20px] h-[22px] w-[55%] rounded-[6px] bg-[rgba(0,18,50,0.06)]" />
-      <div className="mt-[12px] h-[22px] w-[38%] rounded-[6px] bg-[rgba(0,18,50,0.06)]" />
-      <div className="mt-[28px] h-[44px] w-[62%] rounded-[8px] bg-[rgba(0,18,50,0.06)]" />
+      <div className="h-[34px] w-full rounded-[8px] bg-[rgba(245,245,245,0.06)]" />
+      <div className="mt-[20px] h-[22px] w-[55%] rounded-[6px] bg-[rgba(245,245,245,0.06)]" />
+      <div className="mt-[12px] h-[22px] w-[38%] rounded-[6px] bg-[rgba(245,245,245,0.06)]" />
+      <div className="mt-[28px] h-[44px] w-[62%] rounded-[8px] bg-[rgba(245,245,245,0.06)]" />
     </div>
   );
 }
@@ -90,7 +90,7 @@ export function CallDetails({ className = "" }: { className?: string }) {
       className={
         state === "hidden"
           ? "hidden"
-          : `relative overflow-hidden rounded-[16px] border-[1.5px] border-[#001232] bg-[#ffffff] p-[clamp(10px,1vw,18px)] shadow-[0_10px_0_0_rgba(0,18,50,0.12)] ${className}`
+          : `relative overflow-hidden rounded-[16px] border-[1.5px] border-[#F5F5F5] bg-[#ffffff] p-[clamp(10px,1vw,18px)] shadow-[0_10px_0_0_rgba(245,245,245,0.12)] ${className}`
       }
       style={state === "hidden" ? undefined : { minHeight: WIDGET_HEIGHT }}
     >

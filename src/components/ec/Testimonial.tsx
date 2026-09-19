@@ -45,12 +45,12 @@ function ClientPhoto({
     <figure className={className}>
       {/*
         Navy wash. The photograph is high-key, white shirts, pale wall, and
-        reads as a hot rectangle on the #001232 card without it. Desaturating
+        reads as a hot rectangle on the #F5F5F5 card without it. Desaturating
         and laying navy over at 18% cools the whites into the card while
         leaving skin and kraft readable. Deliberately not a duotone: the whole
         value of this picture is that it looks unstyled.
       */}
-      <div className="relative overflow-hidden rounded-[8px] border border-[rgba(244,241,234,0.15)]">
+      <div className="relative overflow-hidden rounded-[8px] border border-[rgba(11,11,11,0.15)]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={PHOTO_SRC}
@@ -61,7 +61,7 @@ function ClientPhoto({
         />
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[#001232] opacity-[0.18]"
+          className="pointer-events-none absolute inset-0 bg-[#F5F5F5] opacity-[0.18]"
         />
       </div>
       <figcaption className={cn("mt-[16px] text-center", captionClass)}>
@@ -86,7 +86,7 @@ function AttributionMark() {
       />
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[#001232] opacity-[0.18]"
+        className="pointer-events-none absolute inset-0 bg-[#F5F5F5] opacity-[0.18]"
       />
     </span>
   );
@@ -97,32 +97,32 @@ export function Testimonial() {
     <>
       <section className="mt-[170px] hidden p-0 min-[801px]:block">
         <div className="mx-auto w-full max-w-[1120px]">
-          <div className="rounded-[12px] bg-[#001232] py-0 pr-[200px] pl-[100px]">
-            <blockquote className="max-w-[820px] pt-[97px] text-left font-[family-name:var(--font-pt-serif)] text-[68px] leading-[84px] font-bold text-[#f4f1ea]">
+          <div className="rounded-[12px] bg-[#F5F5F5] py-0 pr-[200px] pl-[100px]">
+            <blockquote className="max-w-[820px] pt-[97px] text-left font-[family-name:var(--font-pt-serif)] text-[68px] leading-[84px] font-bold text-[#0B0B0B]">
               {PULL_QUOTE}
             </blockquote>
 
             <ClientPhoto
               className="mt-[67px] w-[820px]"
-              captionClass="font-[family-name:var(--font-inter)] text-[14px] leading-[20px] font-normal text-[rgba(244,241,234,0.6)]"
+              captionClass="font-[family-name:var(--font-inter)] text-[14px] leading-[20px] font-normal text-[rgba(11,11,11,0.6)]"
             />
 
             <div className="mt-[73px] flex max-w-[820px] flex-col gap-[41px]">
               {PARAGRAPHS.map((paragraph) => (
                 <p
                   key={paragraph}
-                  className="text-left font-[family-name:var(--font-poppins)] text-[22px] leading-[36px] font-normal text-[rgba(244,241,234,0.6)]"
+                  className="text-left font-[family-name:var(--font-poppins)] text-[22px] leading-[36px] font-normal text-[rgba(11,11,11,0.6)]"
                 >
                   {paragraph}
                 </p>
               ))}
-              <p className="text-left font-[family-name:var(--font-pt-serif)] text-[28px] leading-[36px] font-bold text-[#f4f1ea]">
+              <p className="text-left font-[family-name:var(--font-pt-serif)] text-[28px] leading-[36px] font-bold text-[#0B0B0B]">
                 {RESULTS_HEADING}
               </p>
               {RESULTS.map((paragraph) => (
                 <p
                   key={paragraph}
-                  className="text-left font-[family-name:var(--font-poppins)] text-[22px] leading-[36px] font-normal text-[rgba(244,241,234,0.6)]"
+                  className="text-left font-[family-name:var(--font-poppins)] text-[22px] leading-[36px] font-normal text-[rgba(11,11,11,0.6)]"
                 >
                   {paragraph}
                 </p>
@@ -130,7 +130,7 @@ export function Testimonial() {
               {CLOSING.map((paragraph) => (
                 <p
                   key={paragraph}
-                  className="text-left font-[family-name:var(--font-poppins)] text-[22px] leading-[36px] font-normal text-[rgba(244,241,234,0.6)]"
+                  className="text-left font-[family-name:var(--font-poppins)] text-[22px] leading-[36px] font-normal text-[rgba(11,11,11,0.6)]"
                 >
                   {paragraph}
                 </p>
@@ -139,7 +139,7 @@ export function Testimonial() {
 
             <div className="mt-[52px] flex items-center gap-[20px] pb-[100px]">
               <AttributionMark />
-              <span className="font-[family-name:var(--font-poppins)] text-[20px] leading-[30px] font-normal text-[rgba(244,241,234,0.6)]">
+              <span className="font-[family-name:var(--font-poppins)] text-[20px] leading-[30px] font-normal text-[rgba(11,11,11,0.6)]">
                 {ATTRIBUTION}
               </span>
             </div>
@@ -149,32 +149,32 @@ export function Testimonial() {
 
       <section className="mt-[75px] p-0 max-[800px]:block min-[801px]:hidden">
         <div className="mx-[15px]">
-          <div className="rounded-[7px] bg-[#001232] px-[20px] py-[50px]">
-            <blockquote className="text-left font-[family-name:var(--font-pt-serif)] text-[28px] leading-[34px] font-bold text-[#f4f1ea]">
+          <div className="rounded-[7px] bg-[#F5F5F5] px-[20px] py-[50px]">
+            <blockquote className="text-left font-[family-name:var(--font-pt-serif)] text-[28px] leading-[34px] font-bold text-[#0B0B0B]">
               {PULL_QUOTE}
             </blockquote>
 
             <ClientPhoto
               className="mx-auto mt-[32px] w-[320px]"
-              captionClass="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-normal text-[rgba(244,241,234,0.5)]"
+              captionClass="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-normal text-[rgba(11,11,11,0.5)]"
             />
 
             <div className="mt-[32px] flex flex-col gap-[24px]">
               {PARAGRAPHS.map((paragraph) => (
                 <p
                   key={paragraph}
-                  className="text-left font-[family-name:var(--font-inter)] text-[16px] leading-[22px] font-normal text-[rgba(244,241,234,0.4)]"
+                  className="text-left font-[family-name:var(--font-inter)] text-[16px] leading-[22px] font-normal text-[rgba(11,11,11,0.4)]"
                 >
                   {paragraph}
                 </p>
               ))}
-              <p className="text-left font-[family-name:var(--font-pt-serif)] text-[20px] leading-[26px] font-bold text-[#f4f1ea]">
+              <p className="text-left font-[family-name:var(--font-pt-serif)] text-[20px] leading-[26px] font-bold text-[#0B0B0B]">
                 {RESULTS_HEADING}
               </p>
               {RESULTS.map((paragraph) => (
                 <p
                   key={paragraph}
-                  className="text-left font-[family-name:var(--font-inter)] text-[16px] leading-[22px] font-normal text-[rgba(244,241,234,0.4)]"
+                  className="text-left font-[family-name:var(--font-inter)] text-[16px] leading-[22px] font-normal text-[rgba(11,11,11,0.4)]"
                 >
                   {paragraph}
                 </p>
@@ -182,7 +182,7 @@ export function Testimonial() {
               {CLOSING.map((paragraph) => (
                 <p
                   key={paragraph}
-                  className="text-left font-[family-name:var(--font-inter)] text-[16px] leading-[22px] font-normal text-[rgba(244,241,234,0.4)]"
+                  className="text-left font-[family-name:var(--font-inter)] text-[16px] leading-[22px] font-normal text-[rgba(11,11,11,0.4)]"
                 >
                   {paragraph}
                 </p>
@@ -191,7 +191,7 @@ export function Testimonial() {
 
             <div className="mt-[32px] flex items-center gap-[14px]">
               <AttributionMark />
-              <span className="font-[family-name:var(--font-inter)] text-[16px] leading-[22px] font-normal text-[rgba(244,241,234,0.6)]">
+              <span className="font-[family-name:var(--font-inter)] text-[16px] leading-[22px] font-normal text-[rgba(11,11,11,0.6)]">
                 {ATTRIBUTION}
               </span>
             </div>

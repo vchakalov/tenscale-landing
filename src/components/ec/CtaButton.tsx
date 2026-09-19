@@ -10,13 +10,13 @@ type CtaVariant = "blue" | "blueRaised" | "cream";
 
 const VARIANTS: Record<CtaVariant, string> = {
   /** Header CTA, flat, no shadow. 16px/500, padding 12px 30px. */
-  blue: "bg-[#0158ff] text-[#f4f1ea] text-[16px] leading-[25px] px-[30px] py-[12px]",
+  blue: "bg-[#FFD100] text-[#0B0B0B] text-[16px] leading-[25px] px-[30px] py-[12px]",
   /** Hero + footer CTA, identical to `blue` plus the hard offset shadow. */
   blueRaised:
-    "bg-[#0158ff] text-[#f4f1ea] text-[16px] leading-[25px] px-[30px] py-[12px] shadow-[0_8px_1px_0_rgba(0,0,0,0.1)]",
+    "bg-[#FFD100] text-[#0B0B0B] text-[16px] leading-[25px] px-[30px] py-[12px] shadow-[0_8px_1px_0_rgba(0,0,0,0.1)]",
   /** CTA inside the dark "Book a Call TODAY" card, inverted. 20px/500, padding 12px 40px. */
   cream:
-    "bg-[#f4f1ea] text-[#001232] text-[20px] leading-[30px] px-[40px] py-[12px]",
+    "bg-[#0B0B0B] text-[#F5F5F5] text-[20px] leading-[30px] px-[40px] py-[12px]",
 };
 
 interface CtaButtonProps {
