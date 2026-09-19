@@ -1,4 +1,4 @@
-import { BookCallButton, WhatsAppButton } from "@/components/agentica/CtaButtons";
+import { BookCallButton } from "@/components/agentica/CtaButtons";
 
 export function Hero() {
   return (
@@ -26,7 +26,6 @@ export function Hero() {
 
         <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
           <BookCallButton size="lg" />
-          <WhatsAppButton size="lg" variant="outline" />
         </div>
 
         {/* Hero product device */}

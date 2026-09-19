@@ -72,9 +72,9 @@ function QuoteMark({ className }: { className: string }) {
           y2="43.136"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#0158ff" />
-          <stop offset="0.55" stopColor="#0158ff" />
-          <stop offset="1" stopColor="#E7E2D6" />
+          <stop stopColor="#8B1120" />
+          <stop offset="0.55" stopColor="#8B1120" />
+          <stop offset="1" stopColor="#E7E3DC" />
         </linearGradient>
       </defs>
     </svg>
@@ -142,15 +142,15 @@ export function Testimonial() {
                 <div className="flex flex-col items-center lg:items-start gap-6 lg:gap-8 flex-1">
                   <div className="flex items-start gap-4 lg:gap-6">
                     <QuoteMark className="flex-grow-0 flex-shrink-0 text-inherit shrink-0 hidden lg:block" />
-                    <p className="font-[family-name:var(--font-pt-serif)] text-[24px] sm:text-[32px] leading-[32px] sm:leading-[40px] text-center lg:text-left font-light">
+                    <p className="font-[family-name:var(--font-gelica)] text-[24px] sm:text-[32px] leading-[32px] sm:leading-[40px] text-center lg:text-left font-light">
                       {item.quote}
                     </p>
                   </div>
                   <div className="flex flex-col items-center lg:items-start lg:pl-14">
-                    <div className="font-[family-name:var(--font-inter)] text-[14px] sm:text-[16px] leading-[18px] sm:leading-[26px] font-medium text-center lg:text-left">
+                    <div className="font-[family-name:var(--font-geist-sans)] text-[14px] sm:text-[16px] leading-[18px] sm:leading-[26px] font-medium text-center lg:text-left">
                       {item.name}
                     </div>
-                    <div className="font-[family-name:var(--font-inter)] font-normal sm:text-[16px] sm:leading-[26px] border-dotted-bottom pb-3 mb-3 text-foreground-tertiary text-sm text-center lg:text-left">
+                    <div className="font-[family-name:var(--font-geist-sans)] font-normal sm:text-[16px] sm:leading-[26px] border-dotted-bottom pb-3 mb-3 text-foreground-tertiary text-sm text-center lg:text-left">
                       {item.role}
                     </div>
                     <div className="inline-flex items-center gap-2 min-h-6">
@@ -179,8 +179,8 @@ export function Testimonial() {
                   onClick={() => goTo(index)}
                   className={`h-2 rounded-full transition-all duration-200 ${
                     index === active
-                      ? 'w-7 bg-[#0158ff]'
-                      : 'w-2 bg-[#071B3D33] hover:bg-[#071B3D66]'
+                      ? 'w-7 bg-[#8B1120]'
+                      : 'w-2 bg-[#2d2d2d33] hover:bg-[#2d2d2d66]'
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
                 />

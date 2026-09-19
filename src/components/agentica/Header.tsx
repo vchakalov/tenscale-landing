@@ -1,4 +1,4 @@
-import { BookCallButton, WhatsAppButton } from "@/components/agentica/CtaButtons";
+import { BookCallButton } from "@/components/agentica/CtaButtons";
 
 const NAV = [
   { label: "How it works", href: "#how" },
@@ -31,7 +31,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2.5">
-          <WhatsAppButton className="hidden sm:inline-flex" size="sm" variant="outline" />
           <BookCallButton size="sm" />
         </div>
       </div>

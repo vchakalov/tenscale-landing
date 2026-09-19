@@ -1,4 +1,4 @@
-import { BookCallButton, WhatsAppButton } from "@/components/agentica/CtaButtons";
+import { BookCallButton } from "@/components/agentica/CtaButtons";
 
 const footerLinks: { label: string; href: string }[] = [
   { label: "How it works", href: "#how" },
@@ -29,11 +29,6 @@ export function FooterCta() {
             </p>
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <BookCallButton size="lg" />
-              <WhatsAppButton
-                size="lg"
-                variant="outline"
-                className="border-white/25 bg-transparent text-white hover:bg-white/10"
-              />
             </div>
           </div>
         </div>

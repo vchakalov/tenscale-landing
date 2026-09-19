@@ -1,4 +1,4 @@
-import { BookCallButton, WhatsAppButton } from "@/components/agentica/CtaButtons";
+import { BookCallButton } from "@/components/agentica/CtaButtons";
 
 export function Header() {
   return (
@@ -10,7 +10,6 @@ export function Header() {
             <span className="text-xl font-bold tracking-tight text-foreground">Agentica</span>
           </a>
           <div className="flex items-center gap-2">
-            <WhatsAppButton size="sm" variant="outline" />
             <BookCallButton size="sm" />
           </div>
         </div>

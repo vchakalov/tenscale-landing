@@ -1,53 +1,48 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Agentica home page.
-
-   jace.ai's structure and spacing, wearing the landing page's clothes:
-   cream #f4f1ea, navy #001232, one accent blue #0158ff, PT Serif over
-   Inter. It was white / black / oxblood with Gelica over Geist, which
-   made the home page and the offer page look like two companies.
-
-   Only colour and type changed. No layout, no spacing, no copy.
+   Agentica — jace.ai's design, recolored to white / black / red.
+   Same structure, spacing, serif headlines. Palette swapped:
+   cream -> white, navy -> black, pastel accents -> one true red.
    ============================================================ */
 @theme {
-  /* Type: the landing's pairing, PT Serif for display over Inter for body. */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-pt-serif), Georgia, serif;
-  --font-gelica: var(--font-pt-serif), Georgia, serif;
+  /* Fonts — jace's pairing: Gelica (serif display) + Geist (body) */
+  --font-sans: var(--font-geist-sans), "GeistSans Fallback", Arial, sans-serif;
+  --font-serif: var(--font-gelica), Georgia, serif;
+  --font-gelica: var(--font-gelica), Georgia, serif;
 
   /* Neutral scale (kept close to jace) */
-  --color-neutral-dark: #5A6780;
-  --color-neutral-darker: #34415C;
-  --color-neutral-darkest: #001232;
-  --color-neutral-light: #C9C2B3;
-  --color-neutral-lighter: #DED8CC;
-  --color-neutral-lightest: #EDE9E0;
+  --color-neutral-dark: #6b6b6b;
+  --color-neutral-darker: #454545;
+  --color-neutral-darkest: #1a1a1a;
+  --color-neutral-light: #d4d4d4;
+  --color-neutral-lighter: #e7e7e7;
+  --color-neutral-lightest: #f6f6f6;
 
   /* Foreground — black instead of jace's navy */
-  --color-foreground: #001232;
-  --color-foreground-secondary: #243352;
-  --color-foreground-tertiary: #5A6780;
-  --color-headline: #001232;
+  --color-foreground: #1a1a1a;
+  --color-foreground-secondary: #3a3a3a;
+  --color-foreground-tertiary: #6b6b6b;
+  --color-headline: #0f0f0f;
 
   /* ONE true red (Agentica crimson) replacing lilac/lemon/pink */
-  --color-brand: #0158ff;
-  --color-brand-hover: #0148d6;
-  --color-brand-soft: #E7EDFB;      /* light red tint for pills/chips */
-  --color-brand-lilac: #E7EDFB;     /* jace token -> red tint */
-  --color-brand-yellow: #E7EDFB;    /* jace token -> red tint */
-  --color-brand-pink: #E7EDFB;      /* jace token -> red tint */
-  --color-brand-purple: #E7EDFB;    /* jace token -> red tint */
-  --color-brand-ember: #0158ff;
-  --color-accent: #0158ff;
-  --color-accent-hover: #0148d6;
-  --color-accent-ring: rgba(1,88,255, 0.35);
+  --color-brand: #8B1120;
+  --color-brand-hover: #000000;
+  --color-brand-soft: #F4F2EE;      /* light red tint for pills/chips */
+  --color-brand-lilac: #F4F2EE;     /* jace token -> red tint */
+  --color-brand-yellow: #F4F2EE;    /* jace token -> red tint */
+  --color-brand-pink: #F4F2EE;      /* jace token -> red tint */
+  --color-brand-purple: #F4F2EE;    /* jace token -> red tint */
+  --color-brand-ember: #8B1120;
+  --color-accent: #8B1120;
+  --color-accent-hover: #6E0B14;
+  --color-accent-ring: rgba(139,17,32, 0.35);
 
   /* Surfaces */
-  --color-sand: #EDE9E0;
-  --color-ink: #001232;             /* dark sections */
-  --color-cream-from: #f4f1ea;      /* page bg, the landing's cream */
-  --color-cream-to: #f4f1ea;
+  --color-sand: #f6f6f6;
+  --color-ink: #0f0f0f;             /* dark sections */
+  --color-cream-from: #ffffff;      /* page bg (was cream) */
+  --color-cream-to: #ffffff;
 
   /* jace custom line-height scale */
   --leading-md: 1.25rem;
@@ -59,26 +54,26 @@
 
 /* Explicit :root mirror so var() + arbitrary utilities always resolve. */
 :root {
-  --color-foreground: #001232;
-  --color-foreground-secondary: #243352;
-  --color-foreground-tertiary: #5A6780;
-  --color-headline: #001232;
-  --color-neutral-darkest: #001232;
-  --color-neutral-darker: #34415C;
-  --color-neutral-dark: #5A6780;
-  --color-neutral-lighter: #DED8CC;
-  --color-neutral-lightest: #EDE9E0;
-  --color-brand: #0158ff;
-  --color-brand-hover: #0148d6;
-  --color-brand-soft: #E7EDFB;
-  --color-accent: #0158ff;
-  --color-accent-hover: #0148d6;
-  --color-accent-ring: rgba(1,88,255, 0.35);
-  --color-ink: #001232;
+  --color-foreground: #1a1a1a;
+  --color-foreground-secondary: #3a3a3a;
+  --color-foreground-tertiary: #6b6b6b;
+  --color-headline: #0f0f0f;
+  --color-neutral-darkest: #1a1a1a;
+  --color-neutral-darker: #454545;
+  --color-neutral-dark: #6b6b6b;
+  --color-neutral-lighter: #e7e7e7;
+  --color-neutral-lightest: #f6f6f6;
+  --color-brand: #8B1120;
+  --color-brand-hover: #000000;
+  --color-brand-soft: #F4F2EE;
+  --color-accent: #8B1120;
+  --color-accent-hover: #6E0B14;
+  --color-accent-ring: rgba(139,17,32, 0.35);
+  --color-ink: #0f0f0f;
 }
 
 body {
-  background: #f4f1ea;
+  background: #FAF9F7;
   color: var(--color-foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

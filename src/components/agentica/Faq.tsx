@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { WHATSAPP_URL } from "@/components/agentica/CtaButtons";
 import { cn } from "@/lib/utils";
 
 type QA = {
@@ -32,7 +31,7 @@ const faqs: QA[] = [
   },
   {
     q: "How do we start?",
-    a: "Book a call or message us on WhatsApp. We look at your offer, your angles and your current funnel, then set up your first personalized funnels so you can see the engine working on your own account.",
+    a: "Book a call. We look at your offer, your angles and your current funnel, then set up your first personalized funnels so you can see the engine working on your own account.",
   },
 ];
 
@@ -107,16 +106,7 @@ export function Faq() {
         </div>
 
         <p className="mx-auto mt-10 max-w-3xl text-center text-sm text-foreground-tertiary">
-          Still have a question?{" "}
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-[var(--color-accent)] underline-offset-4 hover:underline"
-          >
-            Message us on WhatsApp
-          </a>
-          .
+          Still have a question? Ask it on the call.
         </p>
       </div>
     </section>

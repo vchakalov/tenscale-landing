@@ -1,4 +1,4 @@
-import { BookCallButton, WhatsAppButton } from "@/components/agentica/CtaButtons";
+import { BookCallButton } from "@/components/agentica/CtaButtons";
 
 type Step = {
   no: string;
@@ -72,11 +72,9 @@ export function HowWeStart() {
             </h3>
             <p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-foreground-secondary">
               Book a call and we&rsquo;ll map your offer, angles and first funnels,
-              or message us on WhatsApp.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <BookCallButton size="lg" />
-              <WhatsAppButton size="lg" variant="outline" />
             </div>
           </div>
         </div>
