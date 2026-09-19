@@ -184,3 +184,71 @@ body {
     transform: scale(1.03);
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * The highlighter.
+ *
+ * Ink surface, chartreuse type. DESIGN.md reserves that pairing for selected
+ * and active states and warns that the signal dies if the yellow starts
+ * appearing on decoration, so this is used only where the old blue accent was:
+ * the revenue band, the risk reversal, the product name, the one benefit hook,
+ * and the action line in the notice. Six marks across two pages, no more.
+ *
+ * `box-decoration-break: clone` is the whole trick. An earlier attempt drew
+ * this with a pseudo-element, which can only paint one rectangle, so the mark
+ * sat under the first line and abandoned the rest. Cloning the decoration
+ * paints a box per line instead, and the mark survives any wrap at any width.
+ * ------------------------------------------------------------------------ */
+.ec-landing .ec-mark {
+  background-color: #0c0a08;
+  color: #e4f222;
+  padding: 0.04em 0.22em 0.1em;
+  border-radius: 4px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* ---------------------------------------------------------------------------
+ * The classic landing, kept alive beside the Ramp one.
+ *
+ * `/landing` is the cream, navy and blue page; `/landing-v2` is the version on
+ * the system in DESIGN.md. Both are wanted at once so they can be held against
+ * each other, and the colours in each component set are written inline rather
+ * than as tokens, so the two cannot share one stylesheet. This block restores
+ * what the classic set needs and nothing more.
+ *
+ * When one of the two wins, the loser's component set, its route and this
+ * block all go together.
+ * ------------------------------------------------------------------------ */
+.ec-landing.ec-classic {
+  background-color: #f4f1ea;
+  color: #001232;
+}
+
+.ec-landing .ec-classic-notice-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background-color: #fff5f5;
+  border: 1px solid #ffe3e3;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.ec-landing .ec-classic-notice-box:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.12);
+  border-color: #ffd1d1;
+}
+
+.ec-landing .ec-classic-pulse-ring {
+  animation: ec-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ec-landing .ec-classic-pulse-ring {
+    animation: none;
+    opacity: 0.22;
+    transform: scale(1.03);
+  }
+}

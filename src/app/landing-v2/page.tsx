@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Benefits } from "@/components/ec-classic/Benefits";
-import { BookingModal } from "@/components/ec-classic/BookingModal";
-import { CtaBlock } from "@/components/ec-classic/CtaBlock";
-import { HeroFold } from "@/components/ec-classic/HeroFold";
-import { Objections } from "@/components/ec-classic/Objections";
-import { SiteFooter } from "@/components/ec-classic/SiteFooter";
-import { StickyCta } from "@/components/ec-classic/StickyCta";
+import { Benefits } from "@/components/ec/Benefits";
+import { BookingModal } from "@/components/ec/BookingModal";
+import { CtaBlock } from "@/components/ec/CtaBlock";
+import { HeroFold } from "@/components/ec/HeroFold";
+import { Objections } from "@/components/ec/Objections";
+import { SiteFooter } from "@/components/ec/SiteFooter";
+import { StickyCta } from "@/components/ec/StickyCta";
 
 export const metadata: Metadata = {
-  title: "Agentica: We Automate Your Client Fulfillment In 30 Days",
+  title: "Agentica v2: We Automate Your Client Fulfillment In 30 Days",
   description:
     "For owners of $1M to $4M marketing lead gen agencies. We install a Meta Ads Automation Engine that handles creative production, campaign setup, testing, optimization and scaling.",
   // Paid traffic only for now. Remove this line the day the page should also
@@ -17,7 +17,12 @@ export const metadata: Metadata = {
 };
 
 /**
- * The new Agentica landing.
+ * The same landing on the Ramp system from DESIGN.md.
+ *
+ * It exists beside /landing rather than replacing it so the two palettes can be
+ * held against each other. When one wins, the loser's component set and its
+ * route go, and this comment goes with them.
+ *
  *
  * The fold sells; everything below catches whoever did not watch. The ask is
  * repeated after each of those blocks rather than saved for a closing panel,
@@ -34,7 +39,7 @@ export const metadata: Metadata = {
  */
 export default function Page() {
   return (
-    <div className="ec-landing ec-classic min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
+    <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f2f0]">
       <HeroFold />
       <Benefits />
       <CtaBlock />
