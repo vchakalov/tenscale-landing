@@ -184,7 +184,7 @@ export function BookingModal() {
 
             <p className="mx-auto mt-[10px] max-w-[620px] font-[family-name:var(--font-inter)] text-[17px] leading-[26px] text-[rgba(0,18,50,0.72)] max-[800px]:mt-[8px] max-[800px]:text-[15px] max-[800px]:leading-[23px]">
               On the call we show you exactly how your client fulfillment gets
-              automated, on one of your own accounts.
+              automated.
             </p>
 
             <button
