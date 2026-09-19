@@ -49,10 +49,10 @@ export function Faq() {
         <div className="flex-col items-end self-stretch max-w-6xl mx-auto flex relative">
           <div className="flex flex-col lg:flex-row items-start gap-8 md:gap-12 lg:gap-20 relative self-stretch w-full">
             <div className="flex flex-col items-start relative flex-1 self-stretch">
-              <h2 className="font-[family-name:var(--font-gelica)] text-[30px] sm:text-[48px] leading-[38px] sm:leading-[58px] relative self-stretch font-light sm:font-light">
+              <h2 className="font-[family-name:var(--font-pt-serif)] text-[30px] sm:text-[48px] leading-[38px] sm:leading-[58px] relative self-stretch font-light sm:font-light">
                 Questions, answered.
               </h2>
-              <div className="font-[family-name:var(--font-geist-sans)] font-normal text-[14px] sm:text-[16px] leading-[18px] sm:leading-[26px] mt-4 text-foreground-secondary">
+              <div className="font-[family-name:var(--font-inter)] font-normal text-[14px] sm:text-[16px] leading-[18px] sm:leading-[26px] mt-4 text-foreground-secondary">
                 Still have a question?{' '}
                 <a
                   href="https://wa.me/359877895554" target="_blank" rel="noopener noreferrer"
@@ -74,7 +74,7 @@ export function Faq() {
                       className="border-0"
                     >
                       <div className="px-3 md:px-6 py-0">
-                        <div className={`border-t border-[#e5e5e5] ${isOpen ? 'border-b' : ''}`}>
+                        <div className={`border-t border-[#DED8CC] ${isOpen ? 'border-b' : ''}`}>
                           <h3 data-orientation="vertical" data-state={isOpen ? 'open' : 'closed'} className="flex">
                             <button
                               type="button"
@@ -84,7 +84,7 @@ export function Faq() {
                               onClick={() => setOpenIndex(isOpen ? null : index)}
                               className="flex-1 justify-between text-sm font-medium transition-all text-left [&[data-state=open]>svg]:rotate-180 flex items-center gap-6 md:gap-12 px-0 py-6 md:py-8 hover:no-underline"
                             >
-                              <span className="font-[family-name:var(--font-geist-sans)] text-[16px] sm:text-[18px] leading-[20px] sm:leading-[28px] flex-1 text-left text-foreground-secondary font-medium">
+                              <span className="font-[family-name:var(--font-inter)] text-[16px] sm:text-[18px] leading-[20px] sm:leading-[28px] flex-1 text-left text-foreground-secondary font-medium">
                                 {faq.question}
                               </span>
                               <svg
@@ -111,7 +111,7 @@ export function Faq() {
                               className="overflow-hidden text-sm"
                             >
                               <div className="pt-0 pb-3 md:pb-4">
-                                <div className="font-[family-name:var(--font-geist-sans)] font-normal text-[14px] sm:text-[16px] leading-[18px] sm:leading-[26px] [&>*]:inline [&>br]:block [&>strong]:font-semibold [&>a]:text-[#8B1120] [&>a]:hover:text-[#000000] [&>a]:underline">
+                                <div className="font-[family-name:var(--font-inter)] font-normal text-[14px] sm:text-[16px] leading-[18px] sm:leading-[26px] [&>*]:inline [&>br]:block [&>strong]:font-semibold [&>a]:text-[#0158ff] [&>a]:hover:text-[#000000] [&>a]:underline">
                                   {faq.answer}
                                 </div>
                               </div>

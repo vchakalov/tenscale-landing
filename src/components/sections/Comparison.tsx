@@ -11,14 +11,14 @@ export function Comparison() {
             landing-page tool. Agentica is one engine.
           </p>
         </div>
-        <div className="w-full rounded-3xl border border-solid border-[#2d2d2d0d] bg-linear-to-b from-white via-white to-[#F4F2EE] p-6 sm:px-16 sm:py-10">
+        <div className="w-full rounded-3xl border border-solid border-[#071B3D0d] bg-linear-to-b from-white via-white to-[#E7EDFB] p-6 sm:px-16 sm:py-10">
           <div className="max-w-2xl mx-auto flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
             <div className="flex-1 flex flex-col gap-4">
               <div className="flex justify-center flex-1">
                 <img
                   src="/images/agentica/comparison-stack.png"
                   alt="Without Agentica - a whole stack of tools and specialists"
-                  className="w-full h-auto rounded-2xl border border-[#2d2d2d0d]"
+                  className="w-full h-auto rounded-2xl border border-[#071B3D0d]"
                 />
               </div>
               <div className="border-dotted-top pt-4 w-full text-center">
@@ -35,7 +35,7 @@ export function Comparison() {
                 <img
                   src="/images/agentica/comparison-engine.png"
                   alt="With Agentica - one engine, end to end"
-                  className="w-full h-auto rounded-2xl border border-[#2d2d2d0d]"
+                  className="w-full h-auto rounded-2xl border border-[#071B3D0d]"
                 />
               </div>
               <div className="border-dotted-top pt-4 w-full text-center">
@@ -72,9 +72,9 @@ export function Comparison() {
                         y2="16.5272"
                         gradientUnits="userSpaceOnUse"
                       >
-                        <stop stopColor="#8B1120" />
-                        <stop offset="0.55" stopColor="#8B1120" />
-                        <stop offset="1" stopColor="#8B1120" />
+                        <stop stopColor="#0158ff" />
+                        <stop offset="0.55" stopColor="#0158ff" />
+                        <stop offset="1" stopColor="#0158ff" />
                       </linearGradient>
                     </defs>
                   </svg>

@@ -119,7 +119,7 @@ const features: Feature[] = [
       "Each angle gets its own landing variation that mirrors the ad's exact promise. The hero, benefits and CTA are rewritten while facts, prices and structure stay untouched.",
       "Install is one line of code and works with any website. Message-matched pages can lift conversion up to 3× the rate.",
     ],
-    tagBgClass: "bg-[#F4F2EE]",
+    tagBgClass: "bg-[#E7EDFB]",
     tagLabel: "Angle-matched landing variation, one line of code.",
     image: "/images/agentica/features-lp.png",
     icon: ClockIcon,
@@ -131,7 +131,7 @@ const features: Feature[] = [
       "Agentica proposes new angles, tests them, and sorts them into Winning, Testing and Losers by real KPIs. As the pool thins, it auto-generates fresh angles.",
       "You grow on more winning angles, not just more spend on one. And because the engine reacts the second a metric slips, you scale with far less risk.",
     ],
-    tagBgClass: "bg-[#F4F2EE]",
+    tagBgClass: "bg-[#E7EDFB]",
     tagLabel: "Constantly scanning for new angles to test.",
     image: "/images/agentica/features-angles.png",
     icon: MailIcon,
@@ -143,7 +143,7 @@ const features: Feature[] = [
       "The engine starts from proven winning ad structures and produces a fresh creative for every angle and audience, at a volume no human team could keep up with.",
       "Volume × diversity is exactly what Meta's Andromeda rewards.",
     ],
-    tagBgClass: "bg-[#F4F2EE]",
+    tagBgClass: "bg-[#E7EDFB]",
     tagLabel: "Built on proven structures, per angle and audience.",
     image: "/images/agentica/features-creatives.png",
     icon: LockIcon,
@@ -155,7 +155,7 @@ const features: Feature[] = [
       "Set rules once. When spend passes a cap with no results, or cost-per-result climbs, Agentica pauses, scales or recreates the ad automatically.",
       "Constant freshness, which Meta rewards, with no sitting in Ads Manager.",
     ],
-    tagBgClass: "bg-[#F4F2EE]",
+    tagBgClass: "bg-[#E7EDFB]",
     tagLabel: "If-this-then-that on your live metrics.",
     image: "/images/agentica/features-workflows.png",
     icon: EyeIcon,
@@ -167,7 +167,7 @@ const features: Feature[] = [
       "An AI agent chats with leads the moment they land, answers questions and handles objections in their language.",
       "It qualifies interest and books the call straight into your calendar, so no warm lead goes cold.",
     ],
-    tagBgClass: "bg-[#F4F2EE]",
+    tagBgClass: "bg-[#E7EDFB]",
     tagLabel: "Chats leads, handles objections and books calls.",
     image: "/images/agentica/features-messenger.png",
     icon: BrainIcon,
@@ -178,7 +178,7 @@ export function Features() {
   return (
     <section className="section-full overflow-hidden" id="features">
       <div className="container-default">
-        <div className="flex flex-col items-start w-full bg-[#fffaf1] rounded-3xl border border-solid border-[#2d2d2d0d] overflow-hidden">
+        <div className="flex flex-col items-start w-full bg-[#f4f1ea] rounded-3xl border border-solid border-[#071B3D0d] overflow-hidden">
           <div className="flex flex-col gap-12 lg:gap-20 pt-12 lg:pt-28 pb-0 px-4 lg:px-16 items-center w-full">
             <div className="flex flex-col w-full max-w-[864px] items-center gap-6">
               <h2 className="font-serif text-[32px] sm:text-[56px] leading-[105%] text-center">
@@ -205,10 +205,10 @@ export function Features() {
                           </p>
                         </div>
                         <div className="flex flex-col items-start gap-4 w-full min-w-0">
-                          <div className="font-[family-name:var(--font-geist-sans)] font-normal text-[14px] sm:text-[16px] leading-[18px] sm:leading-[26px] text-foreground-secondary break-words">
+                          <div className="font-[family-name:var(--font-inter)] font-normal text-[14px] sm:text-[16px] leading-[18px] sm:leading-[26px] text-foreground-secondary break-words">
                             {feature.paragraphs[0]}
                           </div>
-                          <div className="font-[family-name:var(--font-geist-sans)] font-normal text-[14px] sm:text-[16px] leading-[18px] sm:leading-[26px] text-foreground-secondary break-words">
+                          <div className="font-[family-name:var(--font-inter)] font-normal text-[14px] sm:text-[16px] leading-[18px] sm:leading-[26px] text-foreground-secondary break-words">
                             {feature.paragraphs[1]}
                           </div>
                         </div>
@@ -220,7 +220,7 @@ export function Features() {
                       <div
                         className={`inline-flex items-center gap-[5.82px] p-[2.91px] ${feature.tagBgClass} rounded-lg flex-shrink-0`}
                       >
-                        <div className="w-[26.18px] h-[26.18px] flex items-center justify-center text-[#8B1120]">
+                        <div className="w-[26.18px] h-[26.18px] flex items-center justify-center text-[#0158ff]">
                           {feature.icon}
                         </div>
                       </div>

@@ -1,3 +1,4 @@
+import { BookingModal } from "@/components/ec/BookingModal";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { Logos } from "@/components/sections/Logos";
@@ -30,6 +31,8 @@ export default function Home() {
         </div>
       </main>
       <Footer />
+      {/* Same dialog, same calendar, as the offer page. */}
+      <BookingModal />
     </>
   );
 }

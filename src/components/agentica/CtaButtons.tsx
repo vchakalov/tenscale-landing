@@ -1,10 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { openBooking, warmBooking } from "@/lib/booking";
 import { cn } from "@/lib/utils";
 
 // ── Real links ────────────────────────────────────────────────
+/**
+ * Kept as the anchor's href so the button still works without JavaScript and
+ * so the link is real to a crawler. A click opens the iClosed dialog instead.
+ * The home page and the offer page now book into the same calendar; they used
+ * to point at two different ones, which meant two sets of availability and two
+ * places a lead could be lost.
+ */
 export const BOOK_CALL_URL = "https://zcal.co/venelin/agentica";
 export const WHATSAPP_URL = "https://wa.me/359877895554";
 // ──────────────────────────────────────────────────────────────
@@ -51,81 +57,6 @@ function WhatsAppIcon() {
   );
 }
 
-function CloseIcon() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
-      <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-/** Modal that embeds the zcal booking page (works on mobile + desktop). */
-function BookingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [open, onClose]);
-
-  if (!open || !mounted) return null;
-
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-4 backdrop-blur-sm sm:p-6"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Book a call"
-      onClick={onClose}
-    >
-      <div
-        className="relative flex h-[88vh] max-h-[760px] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between border-b border-border px-5 py-3">
-          <span className="text-sm font-semibold text-foreground">Book a call</span>
-          <div className="flex items-center gap-1">
-            <a
-              href={BOOK_CALL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-md px-2 py-1 text-xs font-medium text-foreground-tertiary transition-colors hover:text-foreground"
-            >
-              Open in new tab ↗
-            </a>
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close"
-              className="grid h-8 w-8 place-items-center rounded-md text-foreground-secondary transition-colors hover:bg-surface-muted hover:text-foreground"
-            >
-              <CloseIcon />
-            </button>
-          </div>
-        </div>
-        <iframe
-          src={BOOK_CALL_URL}
-          title="Book a call with Agentica"
-          className="h-full w-full flex-1 border-0"
-          allow="camera; microphone; fullscreen"
-        />
-      </div>
-    </div>,
-    document.body,
-  );
-}
-
 export function BookCallButton({
   size = "md",
   className,
@@ -135,17 +66,24 @@ export function BookCallButton({
   className?: string;
   children?: React.ReactNode;
 }) {
-  const [open, setOpen] = useState(false);
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
+      <a
+        href={BOOK_CALL_URL}
+        onClick={(event) => {
+          // Let a modified click open the calendar in a new tab as usual.
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+          event.preventDefault();
+          openBooking();
+        }}
+        onPointerEnter={warmBooking}
+        onTouchStart={warmBooking}
+        onFocus={warmBooking}
         className={cn(
           "group inline-flex items-center justify-between whitespace-nowrap rounded-full font-semibold text-white ring-1 ring-white/10",
-          "bg-[linear-gradient(180deg,#242424_0%,#000000_100%)]",
-          "shadow-[0_12px_30px_-12px_rgba(139,17,32,0.40)] transition-shadow duration-200",
-          "hover:shadow-[0_16px_38px_-12px_rgba(139,17,32,0.55)]",
+          "bg-[linear-gradient(180deg,#001232_0%,#000000_100%)]",
+          "shadow-[0_12px_30px_-12px_rgba(1,88,255,0.40)] transition-shadow duration-200",
+          "hover:shadow-[0_16px_38px_-12px_rgba(1,88,255,0.55)]",
           "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-accent-ring)]",
           bookPill[size],
           className,
@@ -155,14 +93,13 @@ export function BookCallButton({
         {/* white chip, oxblood arrow, the one spark of colour */}
         <span
           className={cn(
-            "grid shrink-0 place-items-center rounded-full bg-white text-[#8B1120] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
+            "grid shrink-0 place-items-center rounded-full bg-white text-[#0158ff] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
             bookChip[size],
           )}
         >
           <ArrowUpRight />
         </span>
-      </button>
-      <BookingModal open={open} onClose={() => setOpen(false)} />
+      </a>
     </>
   );
 }

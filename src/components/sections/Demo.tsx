@@ -20,7 +20,7 @@ export function Demo() {
           </div>
         </div>
         <div className="relative w-full max-w-[1078px]">
-          <div className="absolute -inset-4 opacity-70 rounded-3xl bg-linear-to-r from-[#F4F2EE] to-[#F4F2EE] blur-lg" />
+          <div className="absolute -inset-4 opacity-70 rounded-3xl bg-linear-to-r from-[#E7EDFB] to-[#E7EDFB] blur-lg" />
           <div className="relative">
             <img
               src="/images/agentica/demo-funnel.png"
