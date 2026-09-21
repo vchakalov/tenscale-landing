@@ -142,28 +142,22 @@ export function HeroFold() {
             <SubheadCopy />
           </p>
 
-          <Vsl className="mx-auto mt-[26px] w-full max-w-[min(1500px,94vw,calc((100vh-238px-8.6vw)*16/9))] text-left" />
+          <Vsl className="mx-auto mt-[26px] w-full max-w-[min(1500px,94vw,calc((100vh-313px-8.6vw)*16/9))] text-left" />
 
-          {/*
-            The button and the numbers share a row.
-
-            Stacked they cost 135px of a fold whose only scarce dimension is
-            height, while the whole width beside them sat empty. Side by side
-            they cost 60px, and those 75px go straight into the player, which is
-            about 133px of extra width. Nothing was resized to pay for it.
-          */}
-          <div className="mt-[24px] flex flex-wrap items-center justify-center gap-x-[clamp(30px,3.4vw,68px)] gap-y-[16px]">
+          <div className="mt-[24px]">
             <CtaButton
               variant="blueRaised"
               className="px-[clamp(30px,2.6vw,46px)] py-[clamp(12px,1vw,17px)] text-[clamp(16px,1.25vw,21px)] leading-[1.5]"
             >
               Book Free Demo
             </CtaButton>
-            <ProofStats
-              gapClass="gap-[clamp(26px,2.8vw,52px)]"
-              valueClass="font-[family-name:var(--font-libre-baskerville)] text-[clamp(22px,1.7vw,31px)] leading-[1.28] font-bold text-[#001232]"
-              labelClass="mt-[3px] font-[family-name:var(--font-inter)] text-[clamp(12px,0.95vw,16px)] leading-[1.4] text-[rgba(0,18,50,0.65)]"
-            />
+            <div className="mt-[18px]">
+              <ProofStats
+                gapClass="gap-[clamp(48px,5vw,92px)]"
+                valueClass="font-[family-name:var(--font-libre-baskerville)] text-[clamp(22px,1.7vw,31px)] leading-[1.28] font-bold text-[#001232]"
+                labelClass="mt-[3px] font-[family-name:var(--font-inter)] text-[clamp(12px,0.95vw,16px)] leading-[1.4] text-[rgba(0,18,50,0.65)]"
+              />
+            </div>
           </div>
         </div>
       </section>
