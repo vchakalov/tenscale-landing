@@ -17,7 +17,7 @@
  * After the first open the widget stays mounted, so every later open is instant.
  */
 
-export const BOOKING_WIDGET_URL = "https://app.iclosed.io/e/agnt-test/vsl-funnel";
+export const BOOKING_WIDGET_URL = "https://app.iclosed.io/e/agentica/meet";
 export const BOOKING_SCRIPT_URL = "https://app.iclosed.io/assets/widget.js";
 
 type Listener = () => void;

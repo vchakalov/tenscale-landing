@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
  * same one every button on the offer page opens. Two calendars meant two sets
  * of availability and two places a lead could be lost.
  */
-export const BOOK_CALL_URL = "https://zcal.co/venelin/agentica";
+export const BOOK_CALL_URL = "https://app.iclosed.io/e/agentica/meet";
 // ──────────────────────────────────────────────────────────────
 
 type Size = "sm" | "md" | "lg";
@@ -28,12 +28,6 @@ const bookChip: Record<Size, string> = {
   md: "h-9 w-9",
   lg: "h-10 w-10",
 };
-const waCls: Record<Size, string> = {
-  sm: "h-10 px-4 text-sm",
-  md: "h-12 px-5 text-[15px]",
-  lg: "h-14 px-6 text-base",
-};
-
 function ArrowUpRight() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="h-[46%] w-[46%]" aria-hidden="true">

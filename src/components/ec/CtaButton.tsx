@@ -4,7 +4,7 @@ import { openBooking, warmBooking } from "@/lib/booking";
 import { cn } from "@/lib/utils";
 import { LongArrowRightIcon } from "./icons";
 
-export const CALENDAR_URL = "https://zcal.co/venelin/agentica";
+export const CALENDAR_URL = "https://app.iclosed.io/e/agentica/meet";
 
 type CtaVariant = "blue" | "blueRaised" | "cream";
 
