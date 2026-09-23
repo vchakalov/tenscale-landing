@@ -176,12 +176,15 @@ function Lightbox({ shot, onClose }: { shot: Shot; onClose: () => void }) {
  * field of it would take the button's job away.
  */
 export function ResultShots({
+  eyebrow,
   title,
   note = "Click any image to read it full size.",
   tone = "blue",
   columns = 2,
   layout = "masonry",
 }: {
+  /** Small label above the heading. Omitted, nothing is drawn. */
+  eyebrow?: string;
   title?: React.ReactNode;
   note?: string;
   tone?: "blue" | "navy";
@@ -216,6 +219,12 @@ export function ResultShots({
           tone === "navy" ? "bg-[#001232]" : "bg-[#0158ff]"
         }`}
       >
+        {eyebrow && (
+          <p className="mb-[14px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.18em] text-[rgba(244,241,234,0.62)] uppercase">
+            {eyebrow}
+          </p>
+        )}
+
         {/*
           The second line is the whole point of putting this on the thank-you
           page rather than on the landing. The visitor has already booked, so

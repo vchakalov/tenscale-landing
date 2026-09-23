@@ -42,13 +42,15 @@ export default function Page() {
     <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
       <HeroFold />
       {/*
-        The same wall the thank-you page carries, in the same blue panel, with
-        its own heading. On /landing the page earns the benefits and then hopes
+        The same wall the thank-you page carries, in navy rather than blue and
+        under its own label. On /landing the page earns the benefits and then hopes
         they are believed; here the evidence arrives straight off the player, so
         every claim underneath is read by someone who has already seen the
         accounts. That placement is the only difference between the two pages.
       */}
       <ResultShots
+        eyebrow="Wall of success"
+        tone="navy"
         title={
           <>
             What People Are Saying
