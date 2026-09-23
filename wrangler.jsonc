@@ -12,8 +12,15 @@
   "name": "agentica-landing",
   "compatibility_date": "2026-09-18",
 
+  // The Worker answers the HTML routes so it can write the first-party cookie on
+  // the document response. Safari caps a cookie written by JavaScript on an
+  // ad-click landing to 24 hours; one written by the server is not capped.
+  "main": "worker/index.ts",
+
   "assets": {
     "directory": "./out",
+    "binding": "ASSETS",
+    "run_worker_first": ["/", "/landing", "/landing/*", "/thank-you", "/thank-you/*", "/booking/prep"],
 
     // next.config.ts sets `trailingSlash: true`, so every route is a directory
     // with an index.html. This is the matching behaviour.

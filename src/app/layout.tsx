@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MetaPixel } from "@/components/MetaPixel";
 import localFont from "next/font/local";
 import { Inter, Libre_Baskerville, PT_Serif, Poppins } from "next/font/google";
 import "./globals.css";
@@ -70,7 +71,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://app.iclosed.io" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://app.iclosed.io" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <MetaPixel />
+      </body>
     </html>
   );
 }

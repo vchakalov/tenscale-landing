@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   BOOKING_WIDGET_URL,
+  bookingUrlWithContext,
+  injectedContext,
   loadBookingWidget,
   onOpenBooking,
 } from "@/lib/booking";
@@ -94,6 +96,9 @@ export function BookingModal() {
   const [ready, setReady] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const widgetRef = useRef<HTMLDivElement>(null);
+
+  // The Worker stamps utm/fbc/fbp onto the page; carry them into the booking.
+  const [widgetUrl] = useState(() => bookingUrlWithContext(BOOKING_WIDGET_URL, injectedContext()));
   const openerRef = useRef<Element | null>(null);
 
   const close = useCallback(() => setOpen(false), []);
@@ -227,7 +232,7 @@ export function BookingModal() {
             <div
               ref={widgetRef}
               className="iclosed-widget h-full w-full"
-              data-url={BOOKING_WIDGET_URL}
+              data-url={widgetUrl}
               title="Book Free Demo"
             />
           </div>

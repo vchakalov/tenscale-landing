@@ -62,3 +62,29 @@ export function loadBookingWidget(): void {
   script.async = true;
   document.body.appendChild(script);
 }
+
+export interface InjectedContext {
+  fbc: string | null;
+  fbp: string | null;
+  utm: Record<string, string>;
+  firstUtm: Record<string, string>;
+  externalId: string;
+  pageViewEventId: string;
+  pixelId: string | null;
+}
+
+/** The Worker stamps the stored tracking values onto the page; iClosed reads them from the URL. */
+export function bookingUrlWithContext(base: string, context: InjectedContext | null): string {
+  if (!context) return base;
+  const url = new URL(base);
+  for (const [key, value] of Object.entries(context.utm)) url.searchParams.set(key, value);
+  if (context.fbc) url.searchParams.set("fbc", context.fbc);
+  if (context.fbp) url.searchParams.set("fbp", context.fbp);
+  url.searchParams.set("external_id", context.externalId);
+  return url.toString();
+}
+
+export function injectedContext(): InjectedContext | null {
+  if (typeof window === "undefined") return null;
+  return (window as unknown as { __ag?: InjectedContext }).__ag ?? null;
+}
