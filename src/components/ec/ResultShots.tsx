@@ -42,7 +42,6 @@ interface Shot {
 const SHOTS: Shot[] = [
   { src: "/proof/cpl-before-after.webp", width: 1400, height: 1165, alt: "Ads Manager before and after: cost per lead from $24.48 to $14.69 on the same budget" },
   { src: "/proof/onboarded-before-lunch.webp", width: 1236, height: 724, alt: "Slack: client signed at 9am, 112 ads live by 1:40pm, every ad with its own landing page" },
-  { src: "/proof/client-roas.webp", width: 1400, height: 797, alt: "Return on ad spend for a client account" },
   { src: "/proof/record-spend.webp", width: 1400, height: 685, alt: "Record ad spend day in the account" },
   { src: "/proof/client-a.webp", width: 1400, height: 434, alt: "Results in a client account" },
   { src: "/proof/ctr-three-months.webp", width: 1400, height: 1382, alt: "Click-through rate across three consecutive months" },
@@ -65,6 +64,37 @@ const SHOTS: Shot[] = [
   { src: "/proof/ctr.webp", width: 1400, height: 470, alt: "Click-through rate after the install" },
   { src: "/proof/scaled-overnight.webp", width: 478, height: 63, alt: "Scaled overnight" },
 ];
+
+/**
+ * The columns are packed here, not by the browser.
+ *
+ * CSS multi-column balances by measuring, and with twenty-four blocks whose
+ * heights range from a 63px strip to a 1382px table it gave up: one column ran
+ * to the bottom while the other ended a third of the way down, leaving a blue
+ * void beside the evidence.
+ *
+ * Every tile in a column is the same width, so its height is simply its aspect
+ * ratio. Walking the list and dropping each tile into whichever column is
+ * currently shortest keeps the two within one tile of each other, always, at
+ * any width. It runs once at build time and never again.
+ */
+function packColumns(shots: Shot[], count: number): Shot[][] {
+  const columns: Shot[][] = Array.from({ length: count }, () => []);
+  const heights = new Array<number>(count).fill(0);
+
+  for (const shot of shots) {
+    let shortest = 0;
+    for (let i = 1; i < count; i += 1) {
+      if (heights[i] < heights[shortest]) shortest = i;
+    }
+    columns[shortest].push(shot);
+    heights[shortest] += shot.height / shot.width;
+  }
+
+  return columns;
+}
+
+const COLUMNS = packColumns(SHOTS, 2);
 
 /**
  * A screenshot is worth looking at closely or not at all. Most of these are
@@ -129,14 +159,16 @@ export function ResultShots() {
         rectangles from dissolving into the cream.
       */}
       <div className="mx-auto w-full max-w-[1320px] rounded-[28px] bg-[#0158ff] px-[clamp(20px,3.4vw,64px)] py-[clamp(44px,4.6vw,88px)] max-[800px]:rounded-[18px]">
-        <p className="text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.18em] text-[rgba(244,241,234,0.7)] uppercase">
-          Wall of success
-        </p>
-
-        <h2 className="mt-[14px] text-center text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(32px,2.9vw,50px)] leading-[1.18] font-bold text-[#f4f1ea]">
+        {/*
+          The second line is the whole point of putting this on the thank-you
+          page rather than on the landing. The visitor has already booked, so
+          the wall is not persuading them to buy; it is showing them where they
+          are about to be.
+        */}
+        <h2 className="text-center text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(32px,2.9vw,50px)] leading-[1.18] font-bold text-[#f4f1ea]">
           Don&apos;t Take Our Word For It.
           <br />
-          Here Are The Receipts.
+          You&apos;ll Be On This Wall Next.
         </h2>
 
         <p className="mt-[16px] text-center font-[family-name:var(--font-inter)] text-[clamp(15px,1.05vw,18px)] leading-[1.55] text-[rgba(244,241,234,0.72)]">
@@ -148,26 +180,33 @@ export function ResultShots() {
 
           Three packed the same twenty-four tiles into a third less height, and
           the section was over before it had made its point. The argument here
-          is volume, and volume is felt as scroll: a wall you are still scrolling
-          through is a wall you believe.
+          is volume, and volume is felt as scroll: a wall you are still
+          scrolling through is a wall you believe.
         */}
-        <div className="mt-[clamp(32px,3.4vw,56px)] columns-2 gap-[18px] max-[700px]:columns-1 max-[800px]:gap-[12px]">
-          {SHOTS.map((shot) => (
-            <button
-              key={shot.src}
-              type="button"
-              onClick={() => setOpen(shot)}
-              className="mb-[18px] block w-full cursor-zoom-in overflow-hidden rounded-[10px] bg-[#ffffff] shadow-[0_2px_10px_-2px_rgba(0,18,50,0.28)] transition-transform duration-200 hover:-translate-y-px max-[800px]:mb-[12px]"
+        <div className="mt-[clamp(32px,3.4vw,56px)] flex gap-[18px] max-[800px]:gap-[12px] max-[700px]:flex-col">
+          {COLUMNS.map((column, index) => (
+            <div
+              key={index}
+              className="flex min-w-0 flex-1 flex-col gap-[18px] max-[800px]:gap-[12px]"
             >
-              <Image
-                src={shot.src}
-                alt={shot.alt}
-                width={shot.width}
-                height={shot.height}
-                sizes="(max-width: 700px) 100vw, 46vw"
-                className="h-auto w-full"
-              />
-            </button>
+              {column.map((shot) => (
+                <button
+                  key={shot.src}
+                  type="button"
+                  onClick={() => setOpen(shot)}
+                  className="block w-full cursor-zoom-in overflow-hidden rounded-[10px] bg-[#ffffff] shadow-[0_2px_10px_-2px_rgba(0,18,50,0.28)] transition-transform duration-200 hover:-translate-y-px"
+                >
+                  <Image
+                    src={shot.src}
+                    alt={shot.alt}
+                    width={shot.width}
+                    height={shot.height}
+                    sizes="(max-width: 700px) 100vw, 46vw"
+                    className="h-auto w-full"
+                  />
+                </button>
+              ))}
+            </div>
           ))}
         </div>
       </div>
