@@ -184,3 +184,44 @@ body {
     transform: scale(1.03);
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * The success wall's two scrolling rows.
+ *
+ * Each track holds its tiles twice, so translating by exactly half its width
+ * lands on an identical frame and the loop has no seam. The animation is on a
+ * transform only, which the compositor handles without touching layout.
+ *
+ * It pauses on hover and on keyboard focus, because every tile is a button and
+ * a target that is still moving is a target nobody hits.
+ * ------------------------------------------------------------------------ */
+@keyframes ec-wall-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes ec-wall-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.ec-landing .ec-wall-track {
+  width: max-content;
+  animation: ec-wall-left 90s linear infinite;
+}
+.ec-landing .ec-wall-track--reverse {
+  animation-name: ec-wall-right;
+}
+.ec-landing .ec-wall-row:hover .ec-wall-track,
+.ec-landing .ec-wall-row:focus-within .ec-wall-track {
+  animation-play-state: paused;
+}
+
+/* Standing still, the rows become two ordinary scrollable strips. */
+@media (prefers-reduced-motion: reduce) {
+  .ec-landing .ec-wall-row {
+    overflow-x: auto;
+  }
+  .ec-landing .ec-wall-track {
+    animation: none;
+  }
+}

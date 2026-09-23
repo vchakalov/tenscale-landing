@@ -20,11 +20,9 @@ export const metadata: Metadata = {
 /**
  * The same landing, with the proof moved above the argument.
  *
- * /landing makes its case and then asks to be believed. This one puts the wall
- * of client accounts directly under the player, so a visitor reads the
- * benefits and the objections having already seen the evidence. Everything
- * else on the two pages is identical, which is the point: when one of them
- * converts better, the difference is that one section and nothing else.
+ * Everything else on the two pages is identical, which is the point: when one
+ * of them converts better, the difference is that one section and nothing
+ * else.
  *
  * The fold sells; everything below catches whoever did not watch. The ask is
  * repeated after each of those blocks rather than saved for a closing panel,
@@ -44,24 +42,21 @@ export default function Page() {
     <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
       <HeroFold />
       {/*
-        Proof before the argument.
-
-        On /landing the page earns the benefits and then hopes they are
-        believed. Here the evidence arrives first, straight off the player, so
+        The same wall the thank-you page carries, in the same blue panel, with
+        its own heading. On /landing the page earns the benefits and then hopes
+        they are believed; here the evidence arrives straight off the player, so
         every claim underneath is read by someone who has already seen the
-        accounts. It is the only structural difference between the two.
+        accounts. That placement is the only difference between the two pages.
       */}
       <ResultShots
-        tone="navy"
-        columns={3}
         title={
           <>
-            Some Of What The Engine
+            What People Are Saying
             <br />
-            Has Been Doing Lately.
+            About Us.
           </>
         }
-        note="Screenshots straight out of client accounts. Click any one to read it full size."
+        note="Messages and screenshots, straight out of client accounts. Click any one to read it full size."
       />
       <Benefits />
       <CtaBlock />

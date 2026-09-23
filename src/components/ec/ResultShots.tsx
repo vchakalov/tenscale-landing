@@ -94,6 +94,22 @@ function packColumns(shots: Shot[], count: number): Shot[][] {
   return columns;
 }
 
+/**
+ * The marquee's two rows.
+ *
+ * Alternating the list rather than cutting it in half keeps each row mixed:
+ * split down the middle, one row would have been every Ads Manager table and
+ * the other every Slack message.
+ *
+ * The 63px strip is left out of this arrangement only. At row height it would
+ * stretch to more than three times its source width and read as a smear.
+ */
+const MARQUEE = SHOTS.filter((shot) => shot.width / shot.height < 5);
+const ROWS: Shot[][] = [
+  MARQUEE.filter((_, i) => i % 2 === 0),
+  MARQUEE.filter((_, i) => i % 2 === 1),
+];
+
 /** The two arrangements the site uses, packed once at module load. */
 const COLUMN_SETS: Record<number, Shot[][]> = {
   2: packColumns(SHOTS, 2),
@@ -164,11 +180,20 @@ export function ResultShots({
   note = "Click any image to read it full size.",
   tone = "blue",
   columns = 2,
+  layout = "masonry",
 }: {
   title?: React.ReactNode;
   note?: string;
   tone?: "blue" | "navy";
   columns?: 2 | 3;
+  /**
+   * `masonry` stacks everything and runs long, which is what the thank-you
+   * page wants. `marquee` puts the tiles on two rows that scroll past at a
+   * size worth reading, which is what a section in the middle of a sales page
+   * wants: fixed height, and the sense that the wall continues past the edge
+   * of the screen in both directions.
+   */
+  layout?: "masonry" | "marquee";
 } = {}) {
   const [open, setOpen] = useState<Shot | null>(null);
   const close = useCallback(() => setOpen(null), []);
@@ -211,15 +236,51 @@ export function ResultShots({
           {note}
         </p>
 
-        {/*
-          Two columns, not three.
-
-          Three packed the same twenty-four tiles into a third less height, and
-          the section was over before it had made its point. The argument here
-          is volume, and volume is felt as scroll: a wall you are still
-          scrolling through is a wall you believe.
-        */}
-        <div className="mt-[clamp(32px,3.4vw,56px)] flex gap-[18px] max-[800px]:gap-[12px] max-[700px]:flex-col">
+        {layout === "marquee" ? (
+          <div className="mt-[clamp(30px,3vw,52px)] flex flex-col gap-[clamp(14px,1.4vw,22px)]">
+            {ROWS.map((row, index) => (
+              <div
+                key={index}
+                className="ec-wall-row relative overflow-hidden"
+                /* The edges fade instead of cutting, so the rows read as a
+                   wall continuing past the screen rather than as a box. */
+                style={{
+                  maskImage:
+                    "linear-gradient(to right, transparent, #000 4%, #000 96%, transparent)",
+                  WebkitMaskImage:
+                    "linear-gradient(to right, transparent, #000 4%, #000 96%, transparent)",
+                }}
+              >
+                <div
+                  className={`ec-wall-track flex gap-[clamp(14px,1.4vw,22px)] ${
+                    index % 2 === 1 ? "ec-wall-track--reverse" : ""
+                  }`}
+                >
+                  {[...row, ...row].map((shot, i) => (
+                    <button
+                      key={`${shot.src}-${i}`}
+                      type="button"
+                      onClick={() => setOpen(shot)}
+                      aria-hidden={i >= row.length}
+                      tabIndex={i >= row.length ? -1 : 0}
+                      className="block h-[clamp(190px,17vw,280px)] shrink-0 cursor-zoom-in overflow-hidden rounded-[10px] bg-[#ffffff] shadow-[0_2px_10px_-2px_rgba(0,18,50,0.28)] transition-transform duration-200 hover:-translate-y-px"
+                    >
+                      <Image
+                        src={shot.src}
+                        alt={shot.alt}
+                        width={shot.width}
+                        height={shot.height}
+                        sizes="40vw"
+                        className="h-full w-auto max-w-none"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-[clamp(32px,3.4vw,56px)] flex gap-[18px] max-[800px]:gap-[12px] max-[700px]:flex-col">
           {packed.map((column, index) => (
             <div
               key={index}
@@ -244,7 +305,8 @@ export function ResultShots({
               ))}
             </div>
           ))}
-        </div>
+          </div>
+        )}
       </div>
 
       {open && <Lightbox shot={open} onClose={close} />}
