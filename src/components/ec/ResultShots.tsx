@@ -20,6 +20,12 @@ import { useCallback, useEffect, useState } from "react";
  * No captions. Every one of these already carries its own annotation, and a
  * line underneath would only restate a number the image is circling in red.
  *
+ * The order is interleaved rather than grouped. Four client accounts and three
+ * CTR months are near-identical shapes, and listed together they read as one
+ * repeated tile; spread through the wall they read as more accounts. The
+ * composites sit beside their own parts on purpose: the wall is not an index,
+ * and a visitor scanning it is counting, not cross-referencing.
+ *
  * CSS columns rather than a grid or a JavaScript masonry: the browser does the
  * packing, it reflows for free at any width, and there is no layout pass to go
  * wrong. The cost is reading order going down each column instead of across,
@@ -36,19 +42,27 @@ interface Shot {
 const SHOTS: Shot[] = [
   { src: "/proof/cpl-before-after.webp", width: 1400, height: 1165, alt: "Ads Manager before and after: cost per lead from $24.48 to $14.69 on the same budget" },
   { src: "/proof/onboarded-before-lunch.webp", width: 1236, height: 724, alt: "Slack: client signed at 9am, 112 ads live by 1:40pm, every ad with its own landing page" },
-  { src: "/proof/ctr-three-months.webp", width: 1400, height: 1382, alt: "Click-through rate across three consecutive months" },
+  { src: "/proof/client-roas.webp", width: 1400, height: 797, alt: "Return on ad spend for a client account" },
   { src: "/proof/record-spend.webp", width: 1400, height: 685, alt: "Record ad spend day in the account" },
-  { src: "/proof/month-one-report.webp", width: 1292, height: 1112, alt: "First month report for a new client account" },
-  { src: "/proof/multiple-clients.webp", width: 1400, height: 493, alt: "Results across several client accounts side by side" },
+  { src: "/proof/client-a.webp", width: 1400, height: 434, alt: "Results in a client account" },
+  { src: "/proof/ctr-three-months.webp", width: 1400, height: 1382, alt: "Click-through rate across three consecutive months" },
   { src: "/proof/80k-day.webp", width: 1328, height: 342, alt: "An $80k day in the account" },
+  { src: "/proof/month-one-report.webp", width: 1292, height: 1112, alt: "First month report for a new client account" },
+  { src: "/proof/client-b.webp", width: 1400, height: 470, alt: "Results in a second client account" },
   { src: "/proof/shopify-mobile.webp", width: 419, height: 831, alt: "Shopify on a phone, showing the day's revenue" },
-  { src: "/proof/cpl-compare.webp", width: 1400, height: 541, alt: "Cost per lead compared before and after the install" },
+  { src: "/proof/multiple-clients.webp", width: 1400, height: 493, alt: "Results across several client accounts side by side" },
+  { src: "/proof/ctr-jun.webp", width: 1400, height: 470, alt: "Click-through rate in June" },
   { src: "/proof/ops-before-after.webp", width: 786, height: 657, alt: "The team's workload before and after the engine" },
+  { src: "/proof/cpl-compare.webp", width: 1400, height: 541, alt: "Cost per lead compared before and after the install" },
+  { src: "/proof/client-c.webp", width: 1400, height: 470, alt: "Results in a third client account" },
   { src: "/proof/best-sales-day.webp", width: 1146, height: 457, alt: "Best sales day on record for the account" },
+  { src: "/proof/ctr-jul.webp", width: 1400, height: 470, alt: "Click-through rate in July" },
   { src: "/proof/ads-manager.webp", width: 1186, height: 489, alt: "Ads Manager with the campaigns the engine runs" },
-  { src: "/proof/ctr.webp", width: 1400, height: 470, alt: "Click-through rate after the install" },
+  { src: "/proof/client-d.webp", width: 1400, height: 434, alt: "Results in a fourth client account" },
   { src: "/proof/owner-thanks.webp", width: 1152, height: 304, alt: "An agency owner's message after the first month" },
+  { src: "/proof/ctr-aug.webp", width: 1400, height: 470, alt: "Click-through rate in August" },
   { src: "/proof/client-channel.webp", width: 1377, height: 394, alt: "A client channel reacting to the week's numbers" },
+  { src: "/proof/ctr.webp", width: 1400, height: 470, alt: "Click-through rate after the install" },
   { src: "/proof/scaled-overnight.webp", width: 478, height: 63, alt: "Scaled overnight" },
 ];
 
@@ -103,36 +117,54 @@ export function ResultShots() {
   const close = useCallback(() => setOpen(null), []);
 
   return (
-    <section className="mt-[150px] px-[40px] max-[800px]:mt-[72px] max-[800px]:px-[16px]">
-      <div className="mx-auto w-full max-w-[1320px]">
-        <p className="text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.16em] text-[rgba(0,18,50,0.5)] uppercase">
-          Wall of wins
+    <section className="mt-[150px] px-[40px] max-[800px]:mt-[72px] max-[800px]:px-[14px]">
+      {/*
+        One blue panel holding the whole wall.
+
+        Everywhere else the accent is four characters at a time. Here it is the
+        ground, because this section is doing something the rest of the page is
+        not: it is not making an argument, it is producing evidence, and it
+        should read as a different kind of object. The screenshots are all pale
+        Ads Manager and Slack, so a blue field also stops twenty-four white
+        rectangles from dissolving into the cream.
+      */}
+      <div className="mx-auto w-full max-w-[1320px] rounded-[28px] bg-[#0158ff] px-[clamp(20px,3.4vw,64px)] py-[clamp(44px,4.6vw,88px)] max-[800px]:rounded-[18px]">
+        <p className="text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.18em] text-[rgba(244,241,234,0.7)] uppercase">
+          Wall of success
         </p>
 
-        <h2 className="mt-[14px] text-center text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(32px,2.9vw,50px)] leading-[1.18] font-bold text-[#001232]">
+        <h2 className="mt-[14px] text-center text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(32px,2.9vw,50px)] leading-[1.18] font-bold text-[#f4f1ea]">
           Don&apos;t Take Our Word For It.
           <br />
-          <span className="text-[#0158ff]">Here Are The Receipts.</span>
+          Here Are The Receipts.
         </h2>
 
-        <p className="mt-[16px] text-center font-[family-name:var(--font-inter)] text-[clamp(15px,1.05vw,18px)] leading-[1.55] text-[rgba(0,18,50,0.6)]">
+        <p className="mt-[16px] text-center font-[family-name:var(--font-inter)] text-[clamp(15px,1.05vw,18px)] leading-[1.55] text-[rgba(244,241,234,0.72)]">
           Click any image to read it full size.
         </p>
 
-        <div className="mt-[48px] columns-3 gap-[18px] max-[1100px]:columns-2 max-[700px]:columns-1 max-[800px]:mt-[30px] max-[800px]:gap-[14px]">
+        {/*
+          Two columns, not three.
+
+          Three packed the same twenty-four tiles into a third less height, and
+          the section was over before it had made its point. The argument here
+          is volume, and volume is felt as scroll: a wall you are still scrolling
+          through is a wall you believe.
+        */}
+        <div className="mt-[clamp(32px,3.4vw,56px)] columns-2 gap-[18px] max-[700px]:columns-1 max-[800px]:gap-[12px]">
           {SHOTS.map((shot) => (
             <button
               key={shot.src}
               type="button"
               onClick={() => setOpen(shot)}
-              className="mb-[18px] block w-full cursor-zoom-in overflow-hidden rounded-[10px] border border-[rgba(0,18,50,0.14)] bg-[#ffffff] transition-[transform,border-color] duration-200 hover:-translate-y-px hover:border-[rgba(0,18,50,0.4)] max-[800px]:mb-[14px]"
+              className="mb-[18px] block w-full cursor-zoom-in overflow-hidden rounded-[10px] bg-[#ffffff] shadow-[0_2px_10px_-2px_rgba(0,18,50,0.28)] transition-transform duration-200 hover:-translate-y-px max-[800px]:mb-[12px]"
             >
               <Image
                 src={shot.src}
                 alt={shot.alt}
                 width={shot.width}
                 height={shot.height}
-                sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                sizes="(max-width: 700px) 100vw, 46vw"
                 className="h-auto w-full"
               />
             </button>
