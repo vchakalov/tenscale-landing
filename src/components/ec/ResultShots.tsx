@@ -94,7 +94,11 @@ function packColumns(shots: Shot[], count: number): Shot[][] {
   return columns;
 }
 
-const COLUMNS = packColumns(SHOTS, 2);
+/** The two arrangements the site uses, packed once at module load. */
+const COLUMN_SETS: Record<number, Shot[][]> = {
+  2: packColumns(SHOTS, 2),
+  3: packColumns(SHOTS, 3),
+};
 
 /**
  * A screenshot is worth looking at closely or not at all. Most of these are
@@ -142,9 +146,33 @@ function Lightbox({ shot, onClose }: { shot: Shot; onClose: () => void }) {
   );
 }
 
-export function ResultShots() {
+/**
+ * The wall is used twice, and the two uses want different things.
+ *
+ * On the thank-you page it is the whole point of the scroll: a blue field, two
+ * columns, as long as it can be, because the visitor has booked and the only
+ * job left is to make the slot feel worth keeping.
+ *
+ * On the landing it sits between the player and the benefits, where the same
+ * twenty-three tiles in two columns would bury everything under them. Three
+ * columns cut its height by a third, and navy rather than blue because the
+ * landing spends its blue on the button and the risk reversal, and a second
+ * field of it would take the button's job away.
+ */
+export function ResultShots({
+  title,
+  note = "Click any image to read it full size.",
+  tone = "blue",
+  columns = 2,
+}: {
+  title?: React.ReactNode;
+  note?: string;
+  tone?: "blue" | "navy";
+  columns?: 2 | 3;
+} = {}) {
   const [open, setOpen] = useState<Shot | null>(null);
   const close = useCallback(() => setOpen(null), []);
+  const packed = COLUMN_SETS[columns] ?? COLUMN_SETS[2];
 
   return (
     <section className="mt-[150px] px-[40px] max-[800px]:mt-[72px] max-[800px]:px-[14px]">
@@ -158,7 +186,11 @@ export function ResultShots() {
         Ads Manager and Slack, so a blue field also stops twenty-four white
         rectangles from dissolving into the cream.
       */}
-      <div className="mx-auto w-full max-w-[1320px] rounded-[28px] bg-[#0158ff] px-[clamp(20px,3.4vw,64px)] py-[clamp(44px,4.6vw,88px)] max-[800px]:rounded-[18px]">
+      <div
+        className={`mx-auto w-full max-w-[1320px] rounded-[28px] px-[clamp(20px,3.4vw,64px)] py-[clamp(44px,4.6vw,88px)] max-[800px]:rounded-[18px] ${
+          tone === "navy" ? "bg-[#001232]" : "bg-[#0158ff]"
+        }`}
+      >
         {/*
           The second line is the whole point of putting this on the thank-you
           page rather than on the landing. The visitor has already booked, so
@@ -166,13 +198,17 @@ export function ResultShots() {
           are about to be.
         */}
         <h2 className="text-center text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(32px,2.9vw,50px)] leading-[1.18] font-bold text-[#f4f1ea]">
-          Don&apos;t Take Our Word For It.
-          <br />
-          You&apos;ll Be On This Wall Next.
+          {title ?? (
+            <>
+              Don&apos;t Take Our Word For It.
+              <br />
+              You&apos;ll Be On This Wall Next.
+            </>
+          )}
         </h2>
 
         <p className="mt-[16px] text-center font-[family-name:var(--font-inter)] text-[clamp(15px,1.05vw,18px)] leading-[1.55] text-[rgba(244,241,234,0.72)]">
-          Click any image to read it full size.
+          {note}
         </p>
 
         {/*
@@ -184,7 +220,7 @@ export function ResultShots() {
           scrolling through is a wall you believe.
         */}
         <div className="mt-[clamp(32px,3.4vw,56px)] flex gap-[18px] max-[800px]:gap-[12px] max-[700px]:flex-col">
-          {COLUMNS.map((column, index) => (
+          {packed.map((column, index) => (
             <div
               key={index}
               className="flex min-w-0 flex-1 flex-col gap-[18px] max-[800px]:gap-[12px]"
