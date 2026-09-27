@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
  * The mark.
  *
  * Geometry is still the design source's, recoloured only by its props. Replace
- * the shapes when the real Agentica mark is ready; the wordmark below is the
+ * the shapes when the real Tenscale mark is ready; the wordmark below is the
  * part that already reads as ours.
  *
  * Inline SVG rather than an <img> so it stays crisp at any size, inherits no
@@ -40,7 +40,7 @@ export function LogoMark({
 
 /**
  * Wordmark, with the mark optional. The name is set in one weight because
- * "Agentica" is a single word; the source split its two words across bold and
+ * "Tenscale" is a single word; the source split its two words across bold and
  * regular, which has nothing to split here.
  *
  * `mark={false}` drops the square and leaves the wordmark alone. Kept for
@@ -76,7 +76,7 @@ export function Logo({
         )}
         style={{ fontSize: size, lineHeight: 1.15 }}
       >
-        <span className="font-bold">Agentica</span>
+        <span className="font-bold">Tenscale</span>
       </span>
     </span>
   );

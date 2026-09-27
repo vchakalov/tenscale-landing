@@ -29,7 +29,7 @@ const FEATURES: Feature[] = [
     kicker: "ANGLE & PERSONA ENGINE",
     heading: "Scale with angles, not budget.",
     paragraphs: [
-      "Agentica proposes new angles, tests them, and sorts them into Winning, Testing and Losers by real ROAS, then auto-generates fresh angles as the pool thins.",
+      "Tenscale proposes new angles, tests them, and sorts them into Winning, Testing and Losers by real ROAS, then auto-generates fresh angles as the pool thins.",
       "This is horizontal scaling: 50 angles in 50 funnels beats pouring budget into one. You expand reach by variety, not by spending more on the same message.",
     ],
     checks: [
@@ -59,7 +59,7 @@ const FEATURES: Feature[] = [
     kicker: "24/7 AD AUTOMATION",
     heading: "An operator that never sleeps.",
     paragraphs: [
-      "Set the rules once: when spend passes a cap with no results, or cost-per-result climbs, Agentica pauses, scales or recreates the ad automatically.",
+      "Set the rules once: when spend passes a cap with no results, or cost-per-result climbs, Tenscale pauses, scales or recreates the ad automatically.",
       "That means constant freshness without anyone sitting in Ads Manager, which is exactly the kind of consistent activity Meta rewards.",
     ],
     checks: [

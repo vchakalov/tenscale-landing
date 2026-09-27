@@ -9,7 +9,7 @@ import { SiteFooter } from "@/components/ec/SiteFooter";
 import { StickyCta } from "@/components/ec/StickyCta";
 
 export const metadata: Metadata = {
-  title: "Agentica: We Automate Your Client Fulfillment In 30 Days",
+  title: "Tenscale: We Automate Your Client Fulfillment In 30 Days",
   description:
     "For owners of $1M to $4M marketing lead gen agencies. We install a Meta Ads Automation Engine that handles creative production, campaign setup, testing, optimization and scaling.",
   // Paid traffic only for now. Remove this line the day the page should also

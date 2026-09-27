@@ -19,7 +19,7 @@ const LINKS = [
 ] as const;
 
 const DISCLAIMER =
-  "This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc. Results shown are from real Agentica customers; individual results will vary depending on your offer, traffic and sales process.";
+  "This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc. Results shown are from real Tenscale customers; individual results will vary depending on your offer, traffic and sales process.";
 
 export function SiteFooter() {
   return (

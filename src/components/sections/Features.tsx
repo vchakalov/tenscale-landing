@@ -128,7 +128,7 @@ const features: Feature[] = [
     title: "Angle & persona engine",
     subtitle: "Optimize and scale, angle by angle.",
     paragraphs: [
-      "Agentica proposes new angles, tests them, and sorts them into Winning, Testing and Losers by real KPIs. As the pool thins, it auto-generates fresh angles.",
+      "Tenscale proposes new angles, tests them, and sorts them into Winning, Testing and Losers by real KPIs. As the pool thins, it auto-generates fresh angles.",
       "You grow on more winning angles, not just more spend on one. And because the engine reacts the second a metric slips, you scale with far less risk.",
     ],
     tagBgClass: "bg-[#F4F2EE]",
@@ -152,7 +152,7 @@ const features: Feature[] = [
     title: "24/7 ad automation",
     subtitle: "An operator that never sleeps.",
     paragraphs: [
-      "Set rules once. When spend passes a cap with no results, or cost-per-result climbs, Agentica pauses, scales or recreates the ad automatically.",
+      "Set rules once. When spend passes a cap with no results, or cost-per-result climbs, Tenscale pauses, scales or recreates the ad automatically.",
       "Constant freshness, which Meta rewards, with no sitting in Ads Manager.",
     ],
     tagBgClass: "bg-[#F4F2EE]",

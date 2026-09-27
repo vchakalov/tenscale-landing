@@ -8,7 +8,7 @@ export function Reclaim() {
           </p>
           <div className="w-full flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-end">
             <p className="text-neutral-dark leading-[1.55] sm:max-w-[416px]">
-              Agentica turns your offer into many personalized funnels, then runs and optimizes them.
+              Tenscale turns your offer into many personalized funnels, then runs and optimizes them.
             </p>
             <div className="grid grid-cols-1 max-sm:w-full">
               <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-neutral-lightest bg-gradient-to-b from-[#2D2D2D] from-10% to-[#000000] hover:from-100% h-11 px-6 rounded-full">
@@ -25,7 +25,7 @@ export function Reclaim() {
                   Describe your offer
                 </h3>
                 <p className="w-full text-foreground-tertiary leading-[160%] tracking-tight">
-                  Describe your offer once. Agentica maps it into dozens of angles and sorts them into losing, testing and winning branches.
+                  Describe your offer once. Tenscale maps it into dozens of angles and sorts them into losing, testing and winning branches.
                 </p>
               </div>
               <div className="relative">

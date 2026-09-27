@@ -8,11 +8,11 @@ export function Demo() {
       <div className="container-small flex flex-col gap-12">
         <div className="flex flex-col lg:items-start lg:justify-between gap-6">
           <p className="text-black sm:text-5xl sm:leading-5xl text-4xl leading-4xl font-serif">
-            See Agentica in action
+            See Tenscale in action
           </p>
           <div className="w-full flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-end">
             <p className="text-neutral-dark leading-[1.55] sm:max-w-[416px]">
-              Watch how Agentica turns one angle into a personalized, message-matched funnel.
+              Watch how Tenscale turns one angle into a personalized, message-matched funnel.
             </p>
             <div className="grid grid-cols-1 max-sm:w-full">
               <BookCallButton>Book a personal demo</BookCallButton>
@@ -24,7 +24,7 @@ export function Demo() {
           <div className="relative">
             <img
               src="/images/agentica/demo-funnel.png"
-              alt="Agentica funnel builder"
+              alt="Tenscale funnel builder"
               width={2752}
               height={1536}
               className="w-full h-auto rounded-md"

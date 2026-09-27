@@ -15,7 +15,7 @@ export function Header() {
           <span className="grid h-7 w-7 place-items-center rounded-[8px] bg-[var(--color-ink)] text-white">
             <span className="mono text-[15px] font-bold leading-none">a</span>
           </span>
-          <span className="text-[17px] font-bold tracking-tight text-foreground">Agentica</span>
+          <span className="text-[17px] font-bold tracking-tight text-foreground">Tenscale</span>
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">

@@ -25,7 +25,7 @@
  */
 
 /** The address the invitation is sent from. Must match the real sender. */
-const SENDER_ADDRESS = "team@agenticalab.io";
+const SENDER_ADDRESS = "team@tenscale.ai";
 
 function WarningIcon({ className }: { className: string }) {
   return (

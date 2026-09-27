@@ -27,7 +27,7 @@ const BENEFITS = [
     title: "Better Delivery.",
     hook: "Lower cost per result.",
     body: (
-      <>Andromeda rewards variety and volume. Agentica gives it both, at 30% lower CPRs on average.</>
+      <>Andromeda rewards variety and volume. Tenscale gives it both, at 30% lower CPRs on average.</>
     ),
   },
   {

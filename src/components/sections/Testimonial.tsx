@@ -18,7 +18,7 @@ interface TestimonialItem {
 const testimonials: TestimonialItem[] = [
   {
     quote:
-      'We stopped scaling budget and started scaling angles. Agentica shipped 30+ personalized funnels and our blended CPA dropped by a third.',
+      'We stopped scaling budget and started scaling angles. Tenscale shipped 30+ personalized funnels and our blended CPA dropped by a third.',
     name: 'Marta K.',
     role: 'Performance Lead, DTC skincare',
     image: '/images/stacey-helbig.webp',

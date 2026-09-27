@@ -6,8 +6,8 @@ export function Header() {
       <nav aria-label="Global" className="mx-auto flex items-center justify-center">
         <div className="w-auto max-w-full flex items-center justify-between gap-3 sm:gap-5 p-2 pl-6 bg-white rounded-full border border-gray-300">
           <a className="shrink-0" href="/">
-            <span className="sr-only">Agentica</span>
-            <span className="text-xl font-bold tracking-tight text-foreground">Agentica</span>
+            <span className="sr-only">Tenscale</span>
+            <span className="text-xl font-bold tracking-tight text-foreground">Tenscale</span>
           </a>
           <div className="flex items-center gap-2">
             <BookCallButton size="sm" />

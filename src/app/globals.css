@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Agentica — jace.ai's design, recolored to white / black / red.
+   Tenscale — jace.ai's design, recolored to white / black / red.
    Same structure, spacing, serif headlines. Palette swapped:
    cream -> white, navy -> black, pastel accents -> one true red.
    ============================================================ */
@@ -25,7 +25,7 @@
   --color-foreground-tertiary: #6b6b6b;
   --color-headline: #0f0f0f;
 
-  /* ONE true red (Agentica crimson) replacing lilac/lemon/pink */
+  /* ONE true red (Tenscale crimson) replacing lilac/lemon/pink */
   --color-brand: #8B1120;
   --color-brand-hover: #000000;
   --color-brand-soft: #F4F2EE;      /* light red tint for pills/chips */
@@ -105,7 +105,7 @@ body {
 .w-icon-md { width: 1.5rem;  } .h-icon-md { height: 1.5rem; }
 
 /* ---------------------------------------------------------------------------
- * Eleven Cloud landing, ported 1:1 as the base for the new Agentica page.
+ * Eleven Cloud landing, ported 1:1 as the base for the new Tenscale page.
  * Scoped to `.ec-landing` so none of it touches the existing jace-derived home
  * page. Palette and type are the source's; swapping them is the next step.
  * ------------------------------------------------------------------------ */

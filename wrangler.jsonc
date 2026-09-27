@@ -20,7 +20,18 @@
   "assets": {
     "directory": "./out",
     "binding": "ASSETS",
-    "run_worker_first": ["/", "/landing", "/landing/*", "/thank-you", "/thank-you/*", "/booking/prep"],
+    // Every page an ad can land on must be listed. A page left out is served
+    // straight from the asset edge, the Worker never runs, and the first-party
+    // cookie is never written — so the fbclid is lost on Safari and behind an
+    // ad blocker, which is the one failure this Worker exists to prevent.
+    "run_worker_first": [
+      "/",
+      "/landing", "/landing/*",
+      "/landing-sp", "/landing-sp/*",
+      "/landing-v2", "/landing-v2/*",
+      "/thank-you", "/thank-you/*",
+      "/booking/prep"
+    ],
 
     // next.config.ts sets `trailingSlash: true`, so every route is a directory
     // with an index.html. This is the matching behaviour.
@@ -36,12 +47,21 @@
     "head_sampling_rate": 1
   },
 
-  // The live domain. A custom domain, not a redirect: agenticalab.io *is* this
-  // Worker, so a visitor pays for one request and sees our own name in the bar.
+  // The live domains. Custom domains, not redirects: each one *is* this Worker,
+  // so a visitor pays for one request and sees our own name in the bar.
   // Rolling back means pointing the apex record at the old host again, which
-  // now takes seconds, because the zone is in Cloudflare rather than at the
+  // takes seconds, because the zone is in Cloudflare rather than at the
   // registrar.
+  //
+  // tenscale.ai is the brand from Sep 2026. agenticalab.io stays live and
+  // serving: the tracked iClosed link we tested with still points at it, and
+  // nothing is gained by breaking a URL that already works.
+  //
+  // tenscale.ai only works once its nameservers move from Porkbun to
+  // Cloudflare; until then `wrangler deploy` will reject these two patterns.
   "routes": [
+    { "pattern": "tenscale.ai", "custom_domain": true },
+    { "pattern": "www.tenscale.ai", "custom_domain": true },
     { "pattern": "agenticalab.io", "custom_domain": true },
     { "pattern": "www.agenticalab.io", "custom_domain": true }
   ]

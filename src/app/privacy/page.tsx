@@ -3,9 +3,9 @@ import Link from "next/link";
 import { SiteFooter } from "@/components/ec/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Agentica: privacy policy",
+  title: "Tenscale: privacy policy",
   description:
-    "What Agentica collects when you visit this site or book a call, why, who we share it with, and how to opt out.",
+    "What Tenscale collects when you visit this site or book a call, why, who we share it with, and how to opt out.",
 };
 
 /**
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
  * reader nothing about when the terms changed.
  */
 const LAST_UPDATED = "23 September 2026";
-const CONTACT_EMAIL = "team@agenticalab.io";
+const CONTACT_EMAIL = "team@tenscale.ai";
 
 type Section = { heading: string; body: React.ReactNode };
 
@@ -30,7 +30,7 @@ const SECTIONS: Section[] = [
     heading: "Who we are",
     body: (
       <p>
-        Agentica builds and runs Meta advertising systems for agencies. This site
+        Tenscale builds and runs Meta advertising systems for agencies. This site
         presents that service and lets you book a call with us. Questions about
         this policy or about your data go to{" "}
         <a className="underline" href={`mailto:${CONTACT_EMAIL}`}>
@@ -200,7 +200,7 @@ export default function Page() {
           href="/"
           className="font-[family-name:var(--font-inter)] text-[15px] text-[rgba(0,18,50,0.6)] underline transition-colors hover:text-[#001232]"
         >
-          ← Back to Agentica
+          ← Back to Tenscale
         </Link>
 
         <h1 className="mt-[24px] font-[family-name:var(--font-gelica)] text-[44px] leading-[52px] text-[#001232] max-[800px]:text-[32px] max-[800px]:leading-[40px]">

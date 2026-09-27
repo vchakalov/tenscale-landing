@@ -50,9 +50,9 @@ const gelica = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Agentica: Personalized AI funnels for Meta ads",
+  title: "Tenscale: Personalized AI funnels for Meta ads",
   description:
-    "Agentica builds a personalized AI funnel for every angle and audience: winning creatives, message-matched landing pages, and 24/7 ad automation.",
+    "Tenscale builds a personalized AI funnel for every angle and audience: winning creatives, message-matched landing pages, and 24/7 ad automation.",
 };
 
 export default function RootLayout({

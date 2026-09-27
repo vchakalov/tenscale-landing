@@ -8,7 +8,7 @@ export function Comparison() {
           </p>
           <p className="text-center text-neutral-dark max-w-xl mx-auto leading-[1.55]">
             Stop juggling a media buyer, a designer, a CRO specialist and a
-            landing-page tool. Agentica is one engine.
+            landing-page tool. Tenscale is one engine.
           </p>
         </div>
         <div className="w-full rounded-3xl border border-solid border-[#2d2d2d0d] bg-linear-to-b from-white via-white to-[#F4F2EE] p-6 sm:px-16 sm:py-10">
@@ -17,7 +17,7 @@ export function Comparison() {
               <div className="flex justify-center flex-1">
                 <img
                   src="/images/agentica/comparison-stack.png"
-                  alt="Without Agentica - a whole stack of tools and specialists"
+                  alt="Without Tenscale - a whole stack of tools and specialists"
                   className="w-full h-auto rounded-2xl border border-[#2d2d2d0d]"
                 />
               </div>
@@ -34,7 +34,7 @@ export function Comparison() {
               <div className="flex justify-center flex-1">
                 <img
                   src="/images/agentica/comparison-engine.png"
-                  alt="With Agentica - one engine, end to end"
+                  alt="With Tenscale - one engine, end to end"
                   className="w-full h-auto rounded-2xl border border-[#2d2d2d0d]"
                 />
               </div>

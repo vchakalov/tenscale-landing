@@ -9,19 +9,19 @@ interface FaqItem {
 
 const faqs: FaqItem[] = [
   {
-    question: 'What exactly does Agentica do?',
+    question: 'What exactly does Tenscale do?',
     answer:
-      "Agentica builds a personalized ad funnel for each angle: fresh creatives plus a landing page that matches the ad's exact promise. Then it runs and optimizes the ads for you, so the same message carries from the first impression all the way to checkout.",
+      "Tenscale builds a personalized ad funnel for each angle: fresh creatives plus a landing page that matches the ad's exact promise. Then it runs and optimizes the ads for you, so the same message carries from the first impression all the way to checkout.",
   },
   {
     question: 'How is this different from an agency?',
     answer:
-      "It's an engine, not hours. Instead of one team working one funnel, Agentica scales across many angles at once and never stops testing and optimizing.",
+      "It's an engine, not hours. Instead of one team working one funnel, Tenscale scales across many angles at once and never stops testing and optimizing.",
   },
   {
     question: 'Do I need to rebuild my landing page?',
     answer:
-      'No. One line of code lets Agentica read your existing page and rewrite only the persuasion copy for each angle. It never changes your facts, prices or page structure.',
+      'No. One line of code lets Tenscale read your existing page and rewrite only the persuasion copy for each angle. It never changes your facts, prices or page structure.',
   },
   {
     question: 'Does it touch my ad account directly?',

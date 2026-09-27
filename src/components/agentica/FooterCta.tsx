@@ -38,7 +38,7 @@ export function FooterCta() {
           <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
             <div className="max-w-sm">
               <span className="text-lg font-extrabold tracking-[-0.02em] text-white">
-                Agentica
+                Tenscale
               </span>
               <p className="mt-2 text-sm leading-relaxed text-zinc-500">
                 A different funnel for every buyer: personalized AI funnels for Meta.
@@ -58,7 +58,7 @@ export function FooterCta() {
             </nav>
           </div>
 
-          <p className="mono mt-8 text-xs text-zinc-600">© 2026 Agentica</p>
+          <p className="mono mt-8 text-xs text-zinc-600">© 2026 Tenscale</p>
         </footer>
       </div>
     </section>

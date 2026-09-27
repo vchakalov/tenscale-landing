@@ -31,10 +31,10 @@ export interface Appointment {
   location?: string;
 }
 
-export const EVENT_TITLE = "Agentica demo call";
+export const EVENT_TITLE = "Tenscale demo call";
 
 export const EVENT_DETAILS =
-  "Your call with Agentica. We look at one of your client accounts and show you how its fulfillment gets automated.";
+  "Your call with Tenscale. We look at one of your client accounts and show you how its fulfillment gets automated.";
 
 /** Used when the scheduler sends a start but no end. */
 const DEFAULT_DURATION_MINUTES = 30;
@@ -237,11 +237,11 @@ export function icsFile(appointment: Appointment): string {
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Agentica//Booking//EN",
+    "PRODID:-//Tenscale//Booking//EN",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "BEGIN:VEVENT",
-    `UID:${appointment.start.getTime()}-agentica@agenticalab.io`,
+    `UID:${appointment.start.getTime()}-tenscale@tenscale.ai`,
     `DTSTAMP:${toUtcStamp(new Date())}`,
     `DTSTART:${toUtcStamp(appointment.start)}`,
     `DTEND:${toUtcStamp(appointment.end)}`,
@@ -268,7 +268,7 @@ export function downloadIcs(appointment: Appointment): void {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "agentica-call.ics";
+  link.download = "tenscale-call.ics";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

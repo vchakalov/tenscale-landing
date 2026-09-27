@@ -94,7 +94,7 @@ const points: TrustPoint[] = [
   },
   {
     title: "Deploys to Shopify, Webflow & more",
-    body: "One line of install lets Agentica publish message-matched pages straight into the tools you already use.",
+    body: "One line of install lets Tenscale publish message-matched pages straight into the tools you already use.",
     icon: DeployIcon,
   },
 ];
@@ -116,7 +116,7 @@ export function Trust() {
             Meta&rsquo;s Andromeda decides who sees each creative. You don&rsquo;t hand-pick
             audiences anymore. The job is to feed it{" "}
             <span className="font-semibold text-white">volume × diversity</span> and match the
-            landing page to whatever the ad promised. That&rsquo;s the whole engine Agentica
+            landing page to whatever the ad promised. That&rsquo;s the whole engine Tenscale
             automates: many angles, many creatives, a page rewritten for each one.
           </p>
         </div>

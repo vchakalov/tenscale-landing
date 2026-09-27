@@ -19,7 +19,7 @@ export function Hero() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-foreground-secondary">
-          Agentica writes your angles, generates the winning creatives, and builds a
+          Tenscale writes your angles, generates the winning creatives, and builds a
           message-matched landing page for each one, then runs the ads 24/7. You scale with
           more angles, not more budget.
         </p>
@@ -32,7 +32,7 @@ export function Hero() {
         <div className="device-frame mt-14 w-full max-w-[1120px]">
           <img
             src="/images/agentica/funnel-builder.png"
-            alt="Agentica funnel builder: an ad, a personalized landing page and an instant form, with live funnel performance"
+            alt="Tenscale funnel builder: an ad, a personalized landing page and an instant form, with live funnel performance"
             width={2752}
             height={1536}
             className="block h-auto w-full"

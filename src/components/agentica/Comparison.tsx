@@ -54,7 +54,7 @@ export function Comparison() {
     <section className="section-full py-24 sm:py-32">
       <div className="container-default">
         <div className="max-w-2xl">
-          <p className="eyebrow mb-4">Why Agentica</p>
+          <p className="eyebrow mb-4">Why Tenscale</p>
           <h2 className="text-balance text-3xl font-extrabold leading-[1.1] tracking-[-0.03em] text-foreground sm:text-[2.5rem]">
             One engine instead of a whole stack.
           </h2>
@@ -91,7 +91,7 @@ export function Comparison() {
             </span>
           </div>
 
-          {/* With Agentica */}
+          {/* With Tenscale */}
           <div
             className={cn(
               "lift flex flex-1 flex-col rounded-[14px] border border-border bg-surface p-7",
@@ -100,7 +100,7 @@ export function Comparison() {
             )}
           >
             <p className="mono text-[0.68rem] uppercase tracking-[0.14em] text-[var(--color-accent)]">
-              With Agentica
+              With Tenscale
             </p>
             <h3 className="mt-2 text-xl font-bold tracking-[-0.01em] text-foreground">
               One engine, end to end

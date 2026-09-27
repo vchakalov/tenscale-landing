@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/ec/SiteFooter";
 import { ThankYouFold } from "@/components/ec/ThankYouFold";
 
 export const metadata: Metadata = {
-  title: "Agentica: your call is booked",
+  title: "Tenscale: your call is booked",
   description: "Your demo call is booked. Watch the video before we speak.",
   // Stays out of search permanently. A confirmation page reached from a search
   // result has no booking behind it and would show an empty card.

@@ -15,7 +15,7 @@ const LINKS = [
   { href: "/", label: "Home" },
   { href: "/privacy/", label: "Privacy Policy" },
   { href: "#", label: "Terms of Service" },
-  { href: "mailto:team@agenticalab.io", label: "Contact" },
+  { href: "mailto:team@tenscale.ai", label: "Contact" },
 ] as const;
 
 // Meta's Business Tools terms ask for a plain notice that these tools are in
@@ -41,7 +41,7 @@ const TRACKING_NOTICE = (
 );
 
 const DISCLAIMER =
-  "This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc. Results shown are from real Agentica customers; individual results will vary depending on your offer, traffic and sales process.";
+  "This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc. Results shown are from real Tenscale customers; individual results will vary depending on your offer, traffic and sales process.";
 
 export function SiteFooter() {
   return (
