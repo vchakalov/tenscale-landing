@@ -11,10 +11,13 @@ import Link from "next/link";
  * The Facebook disclaimer is not decoration. Meta requires advertisers not to
  * imply endorsement, and a results claim needs its own qualifier.
  */
+// "Terms of Service" used to sit here pointing at "#". A dead link in the
+// footer of a page Meta reviews is worse than no link, and the terms that
+// actually bind anyone are in the install agreement, not on the site. Put it
+// back when there is a real page to point at.
 const LINKS = [
   { href: "/", label: "Home" },
   { href: "/privacy/", label: "Privacy Policy" },
-  { href: "#", label: "Terms of Service" },
   { href: "mailto:team@tenscale.ai", label: "Contact" },
 ] as const;
 

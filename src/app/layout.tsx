@@ -49,10 +49,34 @@ const gelica = localFont({
   ],
 });
 
+const SITE = "https://tenscale.ai";
+const TITLE = "Tenscale: Personalized AI funnels for Meta ads";
+const DESCRIPTION =
+  "Tenscale builds a personalized AI funnel for every angle and audience: winning creatives, message-matched landing pages, and 24/7 ad automation.";
+
+/**
+ * `metadataBase` makes the relative image below resolve to an absolute URL,
+ * which is the only form a scraper accepts. Without the card image, a link
+ * pasted into Slack, iMessage or a Meta ad preview renders as bare text.
+ */
 export const metadata: Metadata = {
-  title: "Tenscale: Personalized AI funnels for Meta ads",
-  description:
-    "Tenscale builds a personalized AI funnel for every angle and audience: winning creatives, message-matched landing pages, and 24/7 ad automation.",
+  metadataBase: new URL(SITE),
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: SITE,
+    siteName: "Tenscale",
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Tenscale" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({
