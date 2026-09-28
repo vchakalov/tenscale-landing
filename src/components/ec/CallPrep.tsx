@@ -1,11 +1,16 @@
 import type { ReactNode } from "react";
 
 /**
- * What to bring, in three lines.
+ * What we will go through on the call, in the four parts Ben's own emails use:
+ * onboarding, month-to-month work, who does what, and what has to grow. The
+ * page and the emails say the same thing in the same words.
  *
  * Not objections: the visitor has already booked, so there is nothing left to
- * argue. This is expectation setting, and it is here because a call where the
- * owner has Ads Manager open is a different call from one where they do not.
+ * argue. This is expectation setting for the first call, which is about the
+ * agency, not about an ad account. The owner walks Ben through how the agency
+ * delivers today; logins and Ads Manager come on the second call, if there is
+ * one. Asking for account access here would ask for trust the first call has
+ * not earned yet.
  *
  * Numbered discs instead of the landing's icons. Three drawn marks would be
  * three more things to read; a numeral says "this is a short list, in order"
@@ -13,31 +18,42 @@ import type { ReactNode } from "react";
  */
 const STEPS = [
   {
-    id: "account",
-    title: "Bring one account.",
+    id: "onboarding",
+    title: "How a new client gets onboarded.",
     body: (
       <>
-        Pick the client that costs your team the most hours. We look at that one,
-        not at a demo account.
+        From signed contract to first ads live: who does it, and how long it
+        takes.
       </>
     ),
   },
   {
-    id: "ads-manager",
-    title: "Have Ads Manager open.",
+    id: "monthly",
+    title: "How the work runs month to month.",
     body: (
       <>
-        We show you the install on your own numbers, live, while you watch.
+        New creatives, launches, testing and reports, and who on the team owns
+        each one.
       </>
     ),
   },
   {
-    id: "cost",
-    title: "Know your cost to fulfil.",
+    id: "team",
+    title: "Who does what.",
     body: (
       <>
-        What one account costs you per month in people. That number decides
-        whether any of this is worth doing.
+        Your people, your freelancers and the tools they use. Nothing has to
+        change for the call.
+      </>
+    ),
+  },
+  {
+    id: "growth",
+    title: "What has to grow when you add clients.",
+    body: (
+      <>
+        Usually it&apos;s more people or more of your own time. That&apos;s
+        where we look first.
       </>
     ),
   },
@@ -71,7 +87,7 @@ function StepCard({
       <p className="mt-[26px] font-[family-name:var(--font-pt-serif)] text-[clamp(20px,1.55vw,28px)] leading-[1.28] font-bold text-[#001232]">
         {title}
       </p>
-      <p className="mt-[12px] font-[family-name:var(--font-inter)] text-[clamp(15px,1.12vw,19px)] leading-[1.6] font-normal text-[rgba(0,18,50,0.78)]">
+      <p className="mt-[12px] font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] font-normal text-[rgba(0,18,50,0.78)]">
         {body}
       </p>
     </div>
@@ -97,7 +113,7 @@ function StepRow({
         <p className="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[26px] font-bold text-[#001232]">
           {title}
         </p>
-        <p className="mt-[5px] font-[family-name:var(--font-inter)] text-[16px] leading-[24px] font-normal text-[rgba(0,18,50,0.78)]">
+        <p className="mt-[5px] font-[family-name:var(--font-inter)] text-[17px] leading-[26px] font-normal text-[rgba(0,18,50,0.78)]">
           {body}
         </p>
       </div>
@@ -110,11 +126,11 @@ export function CallPrep() {
     <>
       <div className="mt-[150px] hidden min-[801px]:block">
         <section className="bg-[#f4f1ea] px-[40px] py-0">
-          <div className="mx-auto w-full max-w-[1320px]">
+          <div className="mx-auto w-full max-w-[1080px]">
             <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[clamp(34px,3vw,52px)] leading-[1.18] font-bold text-[#001232]">
-              How To Get The Most Out Of It.
+              How To Get The Most Out Of Our Call.
             </h2>
-            <div className="mt-[64px] grid grid-cols-3 items-start gap-[clamp(32px,3.8vw,72px)]">
+            <div className="mt-[64px] grid grid-cols-4 items-start gap-[clamp(24px,2.8vw,48px)]">
               {STEPS.map((step, index) => (
                 <StepCard
                   key={step.id}
@@ -133,7 +149,7 @@ export function CallPrep() {
           <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[34px] leading-[40px] font-bold text-[#001232]">
             How To Get The Most
             <br />
-            Out Of It.
+            Out Of Our Call.
           </h2>
         </section>
         <section className="mt-[28px] flex flex-col gap-[22px] px-[20px] pb-[10px]">

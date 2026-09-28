@@ -20,6 +20,11 @@
 /videos/*
   Cache-Control: public, max-age=604800
 
+# The contact card on the thank-you page. With nosniff below, a wrong type
+# would make the phone show text instead of offering "Add to Contacts".
+/contact/*
+  Content-Type: text/vcard; charset=utf-8
+
 # Cheap, and none of it touches how the page behaves.
 /*
   X-Content-Type-Options: nosniff

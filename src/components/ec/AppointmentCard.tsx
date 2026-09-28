@@ -165,7 +165,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
           <p className="font-[family-name:var(--font-pt-serif)] text-[clamp(21px,1.7vw,30px)] leading-[1.28] font-bold text-[#001232]">
             The invite is in your inbox.
           </p>
-          <p className="mt-[10px] font-[family-name:var(--font-inter)] text-[clamp(15px,1.1vw,18px)] leading-[1.6] text-[rgba(0,18,50,0.7)]">
+          <p className="mt-[10px] font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(0,18,50,0.7)]">
             Open the confirmation email and accept the invitation. That puts the
             call in your calendar with the meeting link attached.
           </p>
@@ -181,7 +181,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
           <p className="mt-[10px] font-[family-name:var(--font-pt-serif)] text-[clamp(23px,2vw,36px)] leading-[1.22] font-bold text-[#001232]">
             {formatDay(state.appointment)}
           </p>
-          <p className="mt-[6px] font-[family-name:var(--font-inter)] text-[clamp(15px,1.15vw,19px)] leading-[1.5] text-[rgba(0,18,50,0.7)]">
+          <p className="mt-[6px] font-[family-name:var(--font-inter)] text-[clamp(17px,1.3vw,20px)] leading-[1.5] text-[rgba(0,18,50,0.7)]">
             {formatTimeRange(state.appointment)}
             {timeZoneLabel(state.appointment) &&
               ` \u00b7 ${timeZoneLabel(state.appointment)}`}
@@ -259,7 +259,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
               <p className="mt-[5px] font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.45vw,24px)] leading-[1.3] font-bold text-[#001232]">
                 {HOST.name}
               </p>
-              <p className="mt-[10px] text-pretty font-[family-name:var(--font-inter)] text-[15px] leading-[23px] text-[rgba(0,18,50,0.65)] max-[800px]:text-[14px] max-[800px]:leading-[22px]">
+              <p className="mt-[10px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] text-[rgba(0,18,50,0.7)] max-[800px]:text-[16px] max-[800px]:leading-[24px]">
                 {HOST.bio}
               </p>
             </div>

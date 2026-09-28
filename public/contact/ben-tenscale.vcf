@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:;Ben;;;
+FN:Ben (Tenscale)
+ORG:Tenscale
+TITLE:Founder
+TEL;TYPE=CELL:+13055892275
+EMAIL;TYPE=INTERNET:ben@tenscale.ai
+URL:https://tenscale.ai
+END:VCARD
