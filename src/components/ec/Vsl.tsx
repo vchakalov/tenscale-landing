@@ -43,6 +43,23 @@ function SpeakerIcon({ className }: { className: string }) {
 /** A chapter mark: where it starts, in seconds, and what it is called. */
 export type Chapter = { at: number; label: string };
 
+/**
+ * The landing VSL's chapters, one per part of the script. The times are an
+ * estimate from the script's word count at about 150 words a minute, for a
+ * cut of roughly 12 minutes; move them to the real edit when it is ready.
+ */
+export const VSL_CHAPTERS: readonly Chapter[] = [
+  { at: 0, label: "Why agencies get stuck" },
+  { at: 170, label: "Meta changed the game" },
+  { at: 205, label: "What it could look like" },
+  { at: 280, label: "Angles" },
+  { at: 370, label: "Creatives" },
+  { at: 430, label: "The engine" },
+  { at: 475, label: "The page" },
+  { at: 530, label: "Results" },
+  { at: 610, label: "How we work" },
+];
+
 function formatAt(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = Math.floor(seconds % 60);

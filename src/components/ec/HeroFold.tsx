@@ -1,6 +1,6 @@
 import { CtaButton } from "./CtaButton";
 import { ProofStats } from "./CtaBlock";
-import { Vsl } from "./Vsl";
+import { VSL_CHAPTERS, Vsl } from "./Vsl";
 
 /**
  * The first fold: callout, headline, subhead, VSL, CTA, proof.
@@ -142,7 +142,11 @@ export function HeroFold() {
             <SubheadCopy />
           </p>
 
-          <Vsl className="mx-auto mt-[26px] w-full max-w-[min(1500px,94vw,calc((100vh-313px-8.6vw)*16/9))] text-left" />
+          <Vsl
+            className="mx-auto mt-[26px] w-full max-w-[min(1500px,94vw,calc((100vh-313px-8.6vw)*16/9))] text-left"
+            chapters={VSL_CHAPTERS}
+            estimatedDuration={720}
+          />
 
           <div className="mt-[24px]">
             <CtaButton
@@ -181,7 +185,11 @@ export function HeroFold() {
           <SubheadCopy />
         </p>
 
-        <Vsl className="mt-[20px] w-full text-left" />
+        <Vsl
+          className="mt-[20px] w-full text-left"
+          chapters={VSL_CHAPTERS}
+          estimatedDuration={720}
+        />
 
         <div className="mt-[20px]" data-hero-cta>
           <CtaButton

@@ -2,8 +2,7 @@
  * Short answers to the four things Ben wants every owner to know before the
  * call, each asked the way an owner would ask it.
  *
- * The first is the reason to buy at all (better results, from angles), so it
- * takes the full width. The other three are the fears that most often stop an
+ * The first is the reason to buy at all (better results, from angles). The other three are the fears that most often stop an
  * owner: another tool nobody uses, losing control to the AI, and whether it
  * works on small local budgets.
  *
@@ -33,9 +32,9 @@ const BREAKOUTS: readonly Breakout[] = [
   },
   {
     id: "adoption",
-    question: "We've bought AI tools before. Nobody on the team used them. Why is this different?",
+    question: "We've used AI tools before. Nobody on the team stuck with them. Why is this different?",
     answer:
-      "You don't have to adopt it, because we install it: over 30 days our team moves your accounts into Tenscale while your CRM stays where it is. Then we train your whole team and record the videos, courses and materials they'll need to run it.",
+      "Because we don't hand you a tool. We install a complete system that automates as much of your fulfillment as possible, with every part working together as one ecosystem, then train your team on it and keep it updated every month with 24/7 support.",
     minutes: "3 min",
     src: "",
     poster: "",
@@ -61,17 +60,13 @@ const BREAKOUTS: readonly Breakout[] = [
 ];
 
 /**
- * The first question is the one that decides whether a busy owner shows up,
- * so its card is filled navy and spans the row. The rest stay cream. Every
- * card carries its number in the accent, large, so the grid reads as a short
- * ordered list rather than as five equal boxes.
+ * Four equal cards in a 2x2 grid. A featured first card left the grid with an
+ * empty cell once the list went from five questions to four, so every card now
+ * has the same weight and the numbers carry the order.
  */
 function BreakoutCard({ item, index }: { item: Breakout; index: number }) {
-  const featured = index === 0;
   return (
-    <article
-      className={`flex flex-col overflow-hidden rounded-[16px] border-[1.5px] border-[#001232] shadow-[0_10px_0_0_rgba(0,18,50,0.12)] ${featured ? "bg-[#001232] min-[801px]:col-span-2" : "bg-[#f4f1ea]"}`}
-    >
+    <article className="flex flex-col overflow-hidden rounded-[16px] border-[1.5px] border-[#001232] bg-[#f4f1ea] shadow-[0_10px_0_0_rgba(0,18,50,0.12)]">
       {item.src !== "" && (
         <div className="aspect-video w-full border-b-[1.5px] border-[#001232] bg-[#001232]">
           <video
@@ -84,12 +79,8 @@ function BreakoutCard({ item, index }: { item: Breakout; index: number }) {
           />
         </div>
       )}
-      <div
-        className={`flex flex-1 gap-[clamp(16px,1.8vw,28px)] px-[clamp(20px,2.2vw,36px)] py-[clamp(22px,2.2vw,32px)] text-left ${featured ? "items-center max-[800px]:items-start" : "items-start"}`}
-      >
-        <span
-          className={`shrink-0 font-[family-name:var(--font-libre-baskerville)] leading-none font-bold tabular-nums ${featured ? "text-[clamp(44px,4vw,68px)] text-[#f4f1ea]" : "text-[clamp(30px,2.4vw,40px)] text-[#0158ff]"}`}
-        >
+      <div className="flex flex-1 items-start gap-[clamp(16px,1.8vw,28px)] px-[clamp(20px,2.2vw,36px)] py-[clamp(22px,2.2vw,32px)] text-left">
+        <span className="shrink-0 font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.4vw,40px)] leading-none font-bold text-[#0158ff] tabular-nums">
           {String(index + 1).padStart(2, "0")}
         </span>
         <div className="min-w-0">
@@ -98,14 +89,10 @@ function BreakoutCard({ item, index }: { item: Breakout; index: number }) {
               Video · {item.minutes}
             </p>
           )}
-          <h3
-            className={`font-[family-name:var(--font-pt-serif)] leading-[1.28] font-bold ${featured ? "text-[clamp(21px,1.8vw,30px)] text-[#f4f1ea]" : "text-[clamp(19px,1.5vw,26px)] text-[#001232]"}`}
-          >
+          <h3 className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.5vw,26px)] leading-[1.28] font-bold text-[#001232]">
             {item.question}
           </h3>
-          <p
-            className={`mt-[10px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] ${featured ? "text-[rgba(244,241,234,0.8)]" : "text-[rgba(0,18,50,0.75)]"}`}
-          >
+          <p className="mt-[10px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(0,18,50,0.75)]">
             {item.answer}
           </p>
         </div>
