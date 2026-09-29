@@ -30,6 +30,8 @@
       "/landing-sp", "/landing-sp/*",
       "/landing-v2", "/landing-v2/*",
       "/thank-you", "/thank-you/*",
+      "/privacy", "/privacy/*",
+      "/robots.txt", "/sitemap.xml",
       "/booking/prep"
     ],
 

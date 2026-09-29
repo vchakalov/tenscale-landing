@@ -4,6 +4,7 @@ import { SiteFooter } from "@/components/ec/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Tenscale: privacy policy",
+  alternates: { canonical: "/privacy/" },
   description:
     "What Tenscale collects when you visit this site or book a call, why, who we share it with, and how to opt out.",
 };

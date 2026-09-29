@@ -13,9 +13,28 @@ export interface Env {
 /** Our own endpoint name: /collect, /track and /api/events are all in blocklists. */
 const EVENT_PATH = '/booking/prep';
 
+/**
+ * The one address the site lives at. www and the old agenticalab.io served
+ * the same pages with a 200, which search engines read as three copies of one
+ * site splitting the same authority. They now answer a permanent redirect to
+ * the same path and query here, so an old ad link keeps its fbclid and UTMs.
+ * Only GET and HEAD move: a POST that got a redirect would lose its body.
+ */
+export const CANONICAL_HOST = 'tenscale.ai';
+
+export function canonicalRedirect(request: Request, url: URL): Response | null {
+  if (url.hostname === CANONICAL_HOST) return null;
+  if (request.method !== 'GET' && request.method !== 'HEAD') return null;
+  const target = new URL(url.pathname + url.search, `https://${CANONICAL_HOST}`);
+  return Response.redirect(target.toString(), 301);
+}
+
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
+
+    const redirect = canonicalRedirect(request, url);
+    if (redirect) return redirect;
 
     if (request.method === 'POST' && url.pathname === EVENT_PATH) {
       return Response.json({ ok: true });

@@ -1,0 +1,14 @@
+# tenscale.ai
+#
+# Search engines and AI assistants may index and quote this site, and ground
+# their answers in it. Training is allowed too: a new brand wants the models
+# to know it exists. Change ai-train to "no" to opt out of training only.
+#
+# The landing and thank-you pages carry a noindex tag. They are not blocked
+# here on purpose: a crawler has to fetch a page to see its noindex.
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+Sitemap: https://tenscale.ai/sitemap.xml
