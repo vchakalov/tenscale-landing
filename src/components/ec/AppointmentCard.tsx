@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import { pollBookingLinks } from "@/lib/booking-links";
 import {
   downloadIcs,
   formatDay,
@@ -112,9 +113,25 @@ function CalendarIcon({ className }: { className: string }) {
 const SECONDARY_LINK =
   "font-[family-name:var(--font-inter)] text-[15px] leading-[22px] text-[rgba(0,18,50,0.6)] underline decoration-[rgba(0,18,50,0.25)] underline-offset-[4px] transition-colors duration-200 hover:text-[#001232] hover:decoration-[rgba(0,18,50,0.6)] max-[800px]:text-[14px]";
 
+/** How long a click waits for the Meet link before adding the call without it. */
+const CLICK_WAIT_MS = 4000;
+
+type Lookup = "idle" | "pending" | "done";
+
 export function AppointmentCard({ className = "" }: { className?: string }) {
   const [state, setState] = useState<State>({ status: "pending" });
   const [added, setAdded] = useState(false);
+  const [lookup, setLookup] = useState<Lookup>("idle");
+  const [waiting, setWaiting] = useState(false);
+
+  /* The click handlers are async, so they read the latest appointment and
+     lookup state through refs rather than through the closure they started in. */
+  const appointmentRef = useRef<Appointment | null>(null);
+  const lookupRef = useRef<Lookup>("idle");
+  useEffect(() => {
+    appointmentRef.current = state.status === "known" ? state.appointment : null;
+    lookupRef.current = lookup;
+  }, [state, lookup]);
 
   useEffect(() => {
     /* One frame later, not in the effect body. Reading the URL is a read of an
@@ -137,6 +154,50 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
     return () => cancelAnimationFrame(frame);
   }, []);
 
+  /*
+    The Meet link is not in iClosed's redirect. The bridge has it a few seconds
+    after the booking (see lib/booking-links.ts), so the card asks in the
+    background and folds it into the calendar entry when it arrives. Nothing
+    on screen waits for this: date, time and button are all there already.
+  */
+  const knownEmail = state.status === "known" ? state.appointment.email : undefined;
+  const knownCallId = state.status === "known" ? state.appointment.callId : undefined;
+  useEffect(() => {
+    if (!knownEmail || !knownCallId) return;
+    const controller = new AbortController();
+    const frame = requestAnimationFrame(() => setLookup("pending"));
+    void pollBookingLinks(knownEmail, knownCallId, controller.signal).then((links) => {
+      if (controller.signal.aborted) return;
+      if (links) {
+        setState((current) =>
+          current.status === "known"
+            ? {
+                status: "known",
+                appointment: {
+                  ...current.appointment,
+                  location: links.meetingLink ?? current.appointment.location,
+                  rescheduleLink: links.rescheduleLink ?? undefined,
+                },
+              }
+            : current,
+        );
+      }
+      setLookup("done");
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      controller.abort();
+    };
+  }, [knownEmail, knownCallId]);
+
+  /** Resolves once the lookup has finished, or after `CLICK_WAIT_MS` either way. */
+  const linkSettled = useCallback(async () => {
+    const deadline = Date.now() + CLICK_WAIT_MS;
+    while (lookupRef.current === "pending" && Date.now() < deadline) {
+      await new Promise((resolve) => setTimeout(resolve, 150));
+    }
+  }, []);
+
   const remember = useCallback((appointment: Appointment) => {
     setAdded(true);
     try {
@@ -145,6 +206,49 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
       // See above.
     }
   }, []);
+
+  /*
+    A click that lands before the link has arrived opens the new tab at once,
+    inside the click, and points it at the calendar a moment later. Opening the
+    tab after an await would lose the click and the browser would block it.
+  */
+  const openCalendar = useCallback(
+    async (event: MouseEvent<HTMLAnchorElement>, build: (a: Appointment) => string) => {
+      const current = appointmentRef.current;
+      if (!current) return;
+      if (lookupRef.current !== "pending") {
+        remember(current);
+        return; // the href already carries everything there is
+      }
+      event.preventDefault();
+      const tab = window.open("", "_blank");
+      setWaiting(true);
+      await linkSettled();
+      setWaiting(false);
+      const latest = appointmentRef.current ?? current;
+      const url = build(latest);
+      if (tab) {
+        tab.opener = null;
+        tab.location.href = url;
+      } else {
+        window.location.href = url;
+      }
+      remember(latest);
+    },
+    [linkSettled, remember],
+  );
+
+  const saveIcs = useCallback(async () => {
+    if (lookupRef.current === "pending") {
+      setWaiting(true);
+      await linkSettled();
+      setWaiting(false);
+    }
+    const latest = appointmentRef.current;
+    if (!latest) return;
+    downloadIcs(latest);
+    remember(latest);
+  }, [linkSettled, remember]);
 
   return (
     <div
@@ -200,11 +304,12 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
                 href={googleCalendarUrl(state.appointment)}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => remember(state.appointment)}
+                onClick={(event) => void openCalendar(event, googleCalendarUrl)}
+                aria-busy={waiting}
                 className="inline-flex items-center gap-[12px] rounded-[100px] bg-[#0158ff] px-[clamp(26px,2.2vw,38px)] py-[clamp(12px,1vw,15px)] font-[family-name:var(--font-inter)] text-[clamp(16px,1.15vw,19px)] leading-[25px] font-medium whitespace-nowrap text-[#f4f1ea] shadow-[0_8px_1px_0_rgba(0,0,0,0.1)] transition-transform duration-200 hover:-translate-y-px active:scale-[0.98]"
               >
                 <CalendarIcon className="h-[20px] w-[20px] shrink-0" />
-                Add To Google Calendar
+                {waiting ? "Getting your meeting link\u2026" : "Add To Google Calendar"}
               </a>
             )}
 
@@ -214,7 +319,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
                 href={outlookCalendarUrl(state.appointment)}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => remember(state.appointment)}
+                onClick={(event) => void openCalendar(event, outlookCalendarUrl)}
                 className={SECONDARY_LINK}
               >
                 Outlook
@@ -222,10 +327,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
               or{" "}
               <button
                 type="button"
-                onClick={() => {
-                  downloadIcs(state.appointment);
-                  remember(state.appointment);
-                }}
+                onClick={() => void saveIcs()}
                 className={`cursor-pointer ${SECONDARY_LINK}`}
               >
                 Apple Calendar

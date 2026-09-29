@@ -29,12 +29,37 @@ export interface Appointment {
   timeZone?: string;
   /** Meeting link or place, when the scheduler passes one. */
   location?: string;
+  /**
+   * iClosed's id for this call (`previewId` in the redirect). With the email it
+   * is the key the bridge wants before it hands over the Meet link.
+   */
+  callId?: string;
+  /** Where the invitee can move the call; arrives from the bridge, not the URL. */
+  rescheduleLink?: string;
 }
 
-export const EVENT_TITLE = "Tenscale demo call";
+export const EVENT_TITLE = "Call with Ben (Tenscale)";
 
-export const EVENT_DETAILS =
-  "Your call with Tenscale. We look at one of your client accounts and show you how its fulfillment gets automated.";
+/**
+ * What the calendar entry says. Call 1 is about the agency, not an ad account,
+ * so the text is the same four points Ben's emails and the page's prep use.
+ * The Meet link goes in when the bridge has found it; without it the entry
+ * says where the link is instead of leaving the visitor to guess.
+ */
+export function eventDetails(appointment: Appointment): string {
+  const lines = [
+    "30 minutes with Ben. Walk me through how your agency delivers today: onboarding, month-to-month work, who does what, and what has to grow when you add clients.",
+    "",
+    appointment.location
+      ? `Join: ${appointment.location}`
+      : "The Google Meet link is in the invitation from team@tenscale.ai.",
+    "Texts come from +1 (305) 589-2275.",
+  ];
+  if (appointment.rescheduleLink) {
+    lines.push("", `Need another time? ${appointment.rescheduleLink}`);
+  }
+  return lines.join("\n");
+}
 
 /** Used when the scheduler sends a start but no end. */
 const DEFAULT_DURATION_MINUTES = 30;
@@ -71,7 +96,10 @@ const NAME_KEYS = [
   "invitee",
 ];
 
-const EMAIL_KEYS = ["invitee_email", "inviteeEmail", "email"];
+// iClosed capitalises this one: `Invitee_email`.
+const EMAIL_KEYS = ["Invitee_email", "invitee_email", "inviteeEmail", "email"];
+
+const CALL_ID_KEYS = ["previewId", "call_id", "callId"];
 
 const HOST_KEYS = ["assigned_to", "assignedTo", "host", "host_name"];
 
@@ -133,6 +161,7 @@ export function readAppointment(search: string): Appointment | null {
     host: firstValue(params, HOST_KEYS) ?? undefined,
     timeZone: usableTimeZone(firstValue(params, TIMEZONE_KEYS)),
     location: firstValue(params, LOCATION_KEYS) ?? undefined,
+    callId: firstValue(params, CALL_ID_KEYS) ?? undefined,
   };
 }
 
@@ -201,7 +230,7 @@ export function googleCalendarUrl(appointment: Appointment): string {
     action: "TEMPLATE",
     text: EVENT_TITLE,
     dates: `${toUtcStamp(appointment.start)}/${toUtcStamp(appointment.end)}`,
-    details: EVENT_DETAILS,
+    details: eventDetails(appointment),
   });
   if (appointment.location) params.set("location", appointment.location);
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
@@ -216,7 +245,7 @@ export function outlookCalendarUrl(appointment: Appointment): string {
     path: "/calendar/action/compose",
     rru: "addevent",
     subject: EVENT_TITLE,
-    body: EVENT_DETAILS,
+    body: eventDetails(appointment),
     startdt: appointment.start.toISOString(),
     enddt: appointment.end.toISOString(),
   });
@@ -246,7 +275,7 @@ export function icsFile(appointment: Appointment): string {
     `DTSTART:${toUtcStamp(appointment.start)}`,
     `DTEND:${toUtcStamp(appointment.end)}`,
     `SUMMARY:${escapeIcsText(EVENT_TITLE)}`,
-    `DESCRIPTION:${escapeIcsText(EVENT_DETAILS)}`,
+    `DESCRIPTION:${escapeIcsText(eventDetails(appointment))}`,
   ];
   if (appointment.location) {
     lines.push(`LOCATION:${escapeIcsText(appointment.location)}`);
