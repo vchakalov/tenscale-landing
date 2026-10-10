@@ -7,8 +7,10 @@ import { useEffect, useRef, useState } from "react";
  *
  * Behaviour is the CRO pattern: the video is already running, muted, when the
  * visitor arrives, so the page never shows a cold play button. One overlay
- * invites the unmute; clicking it turns sound on *without* restarting, because
- * the point of the pattern is that the visitor feels mid-watch, not pre-watch.
+ * invites the unmute, and clicking it starts the video again from 0:00 with
+ * sound. The muted run is a preview; the hook only works if it is heard, so
+ * the click has to take the visitor back to it. A chapter click is the
+ * exception: it unmutes where the visitor asked to go.
  *
  * There is no progress bar. A segmented chapter bar sat under the frame and,
  * with no video loaded, it read as four grey stripes of debris below the only
@@ -20,9 +22,17 @@ import { useEffect, useRef, useState } from "react";
  */
 
 /** Fill these in when the cut is ready. Empty `src` renders the placeholder. */
+/**
+ * The cut, served from R2 at media.tenscale.ai: one 1080p file, its index at
+ * the front (faststart) so playback starts from the first bytes, cached at
+ * Cloudflare's edge and fetched by range, so a chapter jump only downloads
+ * from where it lands.
+ */
+export const VSL_ORIGIN = "https://media.tenscale.ai";
+
 export const VSL_SOURCE = {
-  src: "",
-  poster: "",
+  src: `${VSL_ORIGIN}/Tenscale_corrected_2%20(1).mp4`,
+  poster: "/images/vsl-poster.webp",
 };
 
 function SpeakerIcon({ className }: { className: string }) {
@@ -44,20 +54,22 @@ function SpeakerIcon({ className }: { className: string }) {
 export type Chapter = { at: number; label: string };
 
 /**
- * The landing VSL's chapters, one per part of the script. The times are an
- * estimate from the script's word count at about 150 words a minute, for a
- * cut of roughly 12 minutes; move them to the real edit when it is ready.
+ * The landing VSL's chapters, one per part of the script. Each time is the
+ * first word of that section in the final cut (8:07), taken from a word-level
+ * transcript and rounded down a beat, so a click never lands mid-sentence.
  */
 export const VSL_CHAPTERS: readonly Chapter[] = [
-  { at: 0, label: "Why agencies get stuck" },
-  { at: 170, label: "Meta changed the game" },
-  { at: 205, label: "What it could look like" },
-  { at: 280, label: "Angles" },
-  { at: 370, label: "Creatives" },
-  { at: 430, label: "The engine" },
-  { at: 475, label: "The page" },
-  { at: 530, label: "Results" },
-  { at: 610, label: "How we work" },
+  { at: 0, label: "What you'll get" },
+  { at: 72, label: "Where agencies get stuck" },
+  { at: 112, label: "Meta changed the game" },
+  { at: 134, label: "What it could look like" },
+  { at: 191, label: "Angles" },
+  { at: 250, label: "Creatives" },
+  { at: 293, label: "The engine" },
+  { at: 314, label: "The page" },
+  { at: 354, label: "Results" },
+  { at: 413, label: "How we work" },
+  { at: 445, label: "The guarantee" },
 ];
 
 function formatAt(seconds: number): string {
@@ -249,9 +261,10 @@ export function Vsl({
     void video.play().catch(() => {});
   }, []);
 
-  function unmute() {
+  function unmute({ restart }: { restart: boolean }) {
     const video = videoRef.current;
     if (!video) return;
+    if (restart) video.currentTime = 0;
     video.muted = false;
     video.volume = 1;
     setMuted(false);
@@ -262,7 +275,7 @@ export function Vsl({
     const video = videoRef.current;
     if (!video) return;
     video.currentTime = at;
-    unmute();
+    unmute({ restart: false });
   }
 
   const hasVideo = source.src !== "";
@@ -313,7 +326,7 @@ export function Vsl({
             */
             <button
               type="button"
-              onClick={unmute}
+              onClick={() => unmute({ restart: true })}
               aria-label="Unmute the video"
               className={`group absolute inset-0 flex cursor-pointer items-center justify-center bg-[rgba(0,18,50,0.45)] transition-colors duration-200 hover:bg-[rgba(0,18,50,0.55)] ${hasChapters ? "pb-[60px] max-[800px]:pb-[48px]" : ""}`}
             >

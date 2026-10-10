@@ -1,6 +1,6 @@
 import { CtaButton } from "./CtaButton";
 import { ProofStats } from "./CtaBlock";
-import { VSL_CHAPTERS, Vsl } from "./Vsl";
+import { VSL_CHAPTERS, VSL_ORIGIN, Vsl } from "./Vsl";
 
 /**
  * The first fold: callout, headline, subhead, VSL, CTA, proof.
@@ -104,8 +104,13 @@ function SubheadCopy() {
 }
 
 export function HeroFold() {
+
   return (
     <>
+      {/* React hoists this into <head>, so the connection to the video host
+          opens while the page is still parsing, not when it reaches the
+          player. The poster needs no hint: it is in the first screen of HTML. */}
+      <link rel="preconnect" href={VSL_ORIGIN} />
       {/*
         Desktop.
 
@@ -145,7 +150,7 @@ export function HeroFold() {
           <Vsl
             className="mx-auto mt-[26px] w-full max-w-[min(1500px,94vw,calc((100vh-313px-8.6vw)*16/9))] text-left"
             chapters={VSL_CHAPTERS}
-            estimatedDuration={720}
+            estimatedDuration={488}
           />
 
           <div className="mt-[24px]">
@@ -188,7 +193,7 @@ export function HeroFold() {
         <Vsl
           className="mt-[20px] w-full text-left"
           chapters={VSL_CHAPTERS}
-          estimatedDuration={720}
+          estimatedDuration={488}
         />
 
         <div className="mt-[20px]" data-hero-cta>
