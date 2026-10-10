@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { track, trackMeta } from "@/lib/analytics";
 
 /**
  * The VSL player.
@@ -297,6 +298,7 @@ export function Vsl({
   chapters,
   estimatedDuration,
   placeholder = "VSL goes here. Set `VSL_SOURCE.src` in Vsl.tsx.",
+  trackAs,
 }: {
   className?: string;
   source?: { src: string; poster: string };
@@ -310,6 +312,11 @@ export function Vsl({
   /** Used to lay the chapters out until the video's own length is known. */
   estimatedDuration?: number;
   placeholder?: string;
+  /**
+   * The name this video reports under in analytics ("landing", "thank_you").
+   * Without it the player reports nothing.
+   */
+  trackAs?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   /* `started` is the unmute overlay's state, not the sound's: once the visitor
@@ -319,6 +326,49 @@ export function Vsl({
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [rate, setRate] = useState<number>(1);
+
+  /*
+    Analytics. Progress is reported once per 10% step, separately for the
+    muted preview and for watching with sound, so the drop-off curve in
+    PostHog counts only people who chose to listen. The Meta pixel gets the
+    25/50/75% marks with sound, for "watched half the VSL" audiences.
+  */
+  const fired = useRef(new Set<string>());
+  const lastChapter = useRef(-1);
+  function report(event: string, properties: Record<string, unknown> = {}) {
+    if (trackAs) track(event, { video: trackAs, ...properties });
+  }
+  function reportOnce(key: string, event: string, properties: Record<string, unknown> = {}) {
+    if (fired.current.has(key)) return;
+    fired.current.add(key);
+    report(event, properties);
+  }
+  function reportProgress(video: HTMLVideoElement) {
+    if (!trackAs || !(video.duration > 0)) return;
+    const share = video.currentTime / video.duration;
+    const sound = started && !video.muted;
+    for (let step = 10; step <= Math.floor(share * 10 + 1e-6) * 10; step += 10) {
+      reportOnce(`p:${sound}:${step}`, "vsl_progress", { percent: step, sound, seconds: Math.round(video.currentTime) });
+    }
+    if (sound) {
+      for (const mark of [25, 50, 75]) {
+        if (share * 100 >= mark && !fired.current.has(`meta:${mark}`)) {
+          fired.current.add(`meta:${mark}`);
+          trackMeta(`VSL_${mark}`, { video: trackAs });
+        }
+      }
+    }
+    if (started && chapters && chapters.length > 0) {
+      let index = 0;
+      chapters.forEach((chapter, i) => {
+        if (video.currentTime >= chapter.at) index = i;
+      });
+      if (index !== lastChapter.current) {
+        lastChapter.current = index;
+        report("vsl_chapter", { chapter: chapters[index].label, index });
+      }
+    }
+  }
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -329,9 +379,10 @@ export function Vsl({
     void video.play().catch(() => {});
   }, []);
 
-  function unmute({ restart }: { restart: boolean }) {
+  function unmute({ restart, via }: { restart: boolean; via: string }) {
     const video = videoRef.current;
     if (!video) return;
+    if (!started) report("vsl_unmute", { via, seconds_muted: Math.round(video.currentTime) });
     if (restart) video.currentTime = 0;
     video.muted = false;
     video.volume = 1;
@@ -344,14 +395,17 @@ export function Vsl({
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) void video.play().catch(() => {});
-    else video.pause();
+    else {
+      video.pause();
+      report("vsl_pause", { seconds: Math.round(video.currentTime) });
+    }
   }
 
   function toggleMute() {
     const video = videoRef.current;
     if (!video) return;
     if (!started) {
-      unmute({ restart: true });
+      unmute({ restart: true, via: "mute_button" });
       return;
     }
     video.muted = !video.muted;
@@ -363,6 +417,7 @@ export function Vsl({
     const next = RATES[(RATES.indexOf(rate as (typeof RATES)[number]) + 1) % RATES.length];
     if (video) video.playbackRate = next;
     setRate(next);
+    report("vsl_speed", { rate: next });
   }
 
   /* The video itself goes full screen, not the frame: the browser then shows
@@ -371,7 +426,8 @@ export function Vsl({
   function fullscreen() {
     const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullscreen?: () => void }) | null;
     if (!video) return;
-    if (!started) unmute({ restart: true });
+    if (!started) unmute({ restart: true, via: "fullscreen" });
+    report("vsl_fullscreen");
     if (video.requestFullscreen) void video.requestFullscreen().catch(() => {});
     else video.webkitEnterFullscreen?.(); // iPhone Safari
   }
@@ -379,8 +435,9 @@ export function Vsl({
   function seek(at: number) {
     const video = videoRef.current;
     if (!video) return;
+    report("vsl_seek", { to: Math.round(at), from: Math.round(video.currentTime) });
     video.currentTime = at;
-    unmute({ restart: false });
+    unmute({ restart: false, via: "chapter" });
   }
 
   const hasVideo = source.src !== "";
@@ -404,9 +461,14 @@ export function Vsl({
               preload="metadata"
               onClick={started ? togglePlay : undefined}
               onPlay={() => setPlaying(true)}
+              onPlaying={() => reportOnce("preview", "vsl_preview")}
+              onEnded={(event) => reportProgress(event.currentTarget)}
               onPause={() => setPlaying(false)}
               onRateChange={(event) => setRate(event.currentTarget.playbackRate)}
-              onTimeUpdate={(event) => setTime(event.currentTarget.currentTime)}
+              onTimeUpdate={(event) => {
+                setTime(event.currentTarget.currentTime);
+                reportProgress(event.currentTarget);
+              }}
               onLoadedMetadata={(event) =>
                 setDuration(event.currentTarget.duration)
               }
@@ -435,7 +497,7 @@ export function Vsl({
             */
             <button
               type="button"
-              onClick={() => unmute({ restart: true })}
+              onClick={() => unmute({ restart: true, via: "overlay" })}
               aria-label="Unmute the video"
               className={`group absolute inset-0 flex cursor-pointer items-center justify-center bg-[rgba(0,18,50,0.45)] transition-colors duration-200 hover:bg-[rgba(0,18,50,0.55)] ${hasChapters ? "pb-[60px] max-[800px]:pb-[48px]" : ""}`}
             >

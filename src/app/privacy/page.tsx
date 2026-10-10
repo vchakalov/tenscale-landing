@@ -113,6 +113,13 @@ const SECTIONS: Section[] = [
             <strong>iClosed</strong> runs the booking calendar and the questions.
           </li>
           <li>
+            <strong>PostHog</strong> measures how the site is used: which pages
+            you open, how far you scroll, what you click, how much of our videos
+            you watch, and a replay of the visit with anything you type hidden.
+            We use it to see where the page is unclear. If you book a call, your
+            email is attached to your visit so we can see what you read before it.
+          </li>
+          <li>
             <strong>GoHighLevel</strong> is the system where we keep your contact
             details, your booking and our notes.
           </li>

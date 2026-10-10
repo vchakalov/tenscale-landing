@@ -32,6 +32,7 @@
       "/thank-you", "/thank-you/*",
       "/privacy", "/privacy/*",
       "/robots.txt", "/sitemap.xml",
+      "/relay", "/relay/*",
       "/booking/prep"
     ],
 

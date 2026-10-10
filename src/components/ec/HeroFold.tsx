@@ -150,6 +150,7 @@ export function HeroFold() {
           <Vsl
             className="mx-auto mt-[26px] w-full max-w-[min(1500px,94vw,calc((100vh-313px-8.6vw)*16/9))] text-left"
             chapters={VSL_CHAPTERS}
+            trackAs="landing"
             estimatedDuration={488}
           />
 
@@ -193,6 +194,7 @@ export function HeroFold() {
         <Vsl
           className="mt-[20px] w-full text-left"
           chapters={VSL_CHAPTERS}
+            trackAs="landing"
           estimatedDuration={488}
         />
 

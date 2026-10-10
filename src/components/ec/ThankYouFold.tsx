@@ -133,6 +133,7 @@ export function ThankYouFold() {
             className={`mx-auto mt-[30px] w-full text-left ${COLUMN}`}
             source={THANK_YOU_VIDEO}
             chapters={THANK_YOU_CHAPTERS}
+            trackAs="thank_you"
             estimatedDuration={480}
             placeholder={VIDEO_PLACEHOLDER}
           />
@@ -169,6 +170,7 @@ export function ThankYouFold() {
           className="mt-[20px] w-full text-left"
           source={THANK_YOU_VIDEO}
           chapters={THANK_YOU_CHAPTERS}
+            trackAs="thank_you"
             estimatedDuration={480}
           placeholder={VIDEO_PLACEHOLDER}
         />

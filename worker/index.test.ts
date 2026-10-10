@@ -68,3 +68,36 @@ describe('canonical host', () => {
     expect(res.status).toBe(200);
   });
 });
+
+describe('PostHog relay', () => {
+  it('forwards /relay/* to PostHog without our cookies, with the visitor IP', async () => {
+    const seen: { url: string; cookie: string | null; xff: string | null; body: string }[] = [];
+    const original = globalThis.fetch;
+    globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
+      const h = new Headers(init?.headers);
+      seen.push({
+        url: String(input),
+        cookie: h.get('cookie'),
+        xff: h.get('x-forwarded-for'),
+        body: init?.body ? new TextDecoder().decode(init.body as ArrayBuffer) : '',
+      });
+      return new Response('ok');
+    }) as typeof fetch;
+    try {
+      await worker.fetch(
+        new Request('https://tenscale.ai/relay/e/?ver=1', {
+          method: 'POST',
+          body: '{"event":"x"}',
+          headers: { cookie: 'ag_ctx=secret', 'cf-connecting-ip': '1.2.3.4' },
+        }),
+        envWith(html),
+        ctx,
+      );
+      await worker.fetch(new Request('https://tenscale.ai/relay/static/recorder.js'), envWith(html), ctx);
+    } finally {
+      globalThis.fetch = original;
+    }
+    expect(seen[0]).toEqual({ url: 'https://us.i.posthog.com/e/?ver=1', cookie: null, xff: '1.2.3.4', body: '{"event":"x"}' });
+    expect(seen[1].url).toBe('https://us-assets.i.posthog.com/static/recorder.js');
+  });
+});

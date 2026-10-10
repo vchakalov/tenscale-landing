@@ -22,6 +22,30 @@ const EVENT_PATH = '/booking/prep';
  */
 export const CANONICAL_HOST = 'tenscale.ai';
 
+/**
+ * PostHog, reached through our own domain. Ad blockers drop requests to
+ * posthog.com, and a path called /track or /analytics is in their lists too,
+ * so the browser talks to tenscale.ai/relay and the Worker forwards it.
+ * Static files (the recorder, the toolbar) come from PostHog's asset host.
+ */
+export const RELAY_PREFIX = '/relay';
+const POSTHOG_API_HOST = 'us.i.posthog.com';
+const POSTHOG_ASSET_HOST = 'us-assets.i.posthog.com';
+
+export async function relayToPosthog(request: Request, url: URL): Promise<Response> {
+  const path = url.pathname.slice(RELAY_PREFIX.length) || '/';
+  const host = path.startsWith('/static/') ? POSTHOG_ASSET_HOST : POSTHOG_API_HOST;
+  const headers = new Headers(request.headers);
+  // Our cookies are none of PostHog's business; the visitor's address is,
+  // for the country breakdown, and would otherwise be the Worker's.
+  headers.delete('cookie');
+  const ip = request.headers.get('cf-connecting-ip');
+  if (ip) headers.set('X-Forwarded-For', ip);
+  const init: RequestInit = { method: request.method, headers, redirect: 'manual' };
+  if (request.method !== 'GET' && request.method !== 'HEAD') init.body = await request.arrayBuffer();
+  return fetch(`https://${host}${path}${url.search}`, init);
+}
+
 export function canonicalRedirect(request: Request, url: URL): Response | null {
   if (url.hostname === CANONICAL_HOST) return null;
   if (request.method !== 'GET' && request.method !== 'HEAD') return null;
@@ -32,6 +56,10 @@ export function canonicalRedirect(request: Request, url: URL): Response | null {
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
+
+    if (url.pathname === RELAY_PREFIX || url.pathname.startsWith(`${RELAY_PREFIX}/`)) {
+      return relayToPosthog(request, url);
+    }
 
     const redirect = canonicalRedirect(request, url);
     if (redirect) return redirect;

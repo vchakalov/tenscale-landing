@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@/components/Analytics";
 import { MetaPixel } from "@/components/MetaPixel";
 import localFont from "next/font/local";
 import { Inter, Libre_Baskerville, PT_Serif, Poppins } from "next/font/google";
@@ -98,6 +99,7 @@ export default function RootLayout({
       <body>
         {children}
         <MetaPixel />
+        <Analytics />
       </body>
     </html>
   );

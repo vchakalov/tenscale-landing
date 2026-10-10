@@ -17,6 +17,8 @@
  * After the first open the widget stays mounted, so every later open is instant.
  */
 
+import { track } from "./analytics";
+
 export const BOOKING_WIDGET_URL = "https://app.iclosed.io/e/agentica/meet";
 export const BOOKING_SCRIPT_URL = "https://app.iclosed.io/assets/widget.js";
 
@@ -32,6 +34,7 @@ export function onOpenBooking(listener: Listener): () => void {
 }
 
 export function openBooking(): void {
+  track("booking_open");
   listeners.forEach((listener) => listener());
 }
 

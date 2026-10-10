@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import { pollBookingLinks } from "@/lib/booking-links";
+import { identifyLead, track } from "@/lib/analytics";
 import {
   downloadIcs,
   formatDay,
@@ -113,6 +114,30 @@ function CalendarIcon({ className }: { className: string }) {
 const SECONDARY_LINK =
   "font-[family-name:var(--font-inter)] text-[15px] leading-[22px] text-[rgba(0,18,50,0.6)] underline decoration-[rgba(0,18,50,0.25)] underline-offset-[4px] transition-colors duration-200 hover:text-[#001232] hover:decoration-[rgba(0,18,50,0.6)] max-[800px]:text-[14px]";
 
+/**
+ * The conversion. Reported once per call, not once per page load, so a
+ * refresh of this page does not count a second booking. Analytics starts
+ * after the page mounts, so the report waits a beat for it.
+ */
+function reportBooked(appointment: Appointment): void {
+  const key = `ec-booked:${appointment.callId ?? appointment.start.toISOString()}`;
+  try {
+    if (window.localStorage.getItem(key) === "1") return;
+    window.localStorage.setItem(key, "1");
+  } catch {
+    // Without storage a refresh may report twice; PostHog dedupes nothing,
+    // but one extra event is better than none.
+  }
+  window.setTimeout(() => {
+    if (appointment.email) identifyLead(appointment.email, { name: appointment.name ?? null });
+    track("booked", {
+      call_start: appointment.start.toISOString(),
+      call_id: appointment.callId ?? null,
+      time_zone: appointment.timeZone ?? null,
+    });
+  }, 300);
+}
+
 /** How long a click waits for the Meet link before adding the call without it. */
 const CLICK_WAIT_MS = 4000;
 
@@ -144,6 +169,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
         return;
       }
       setState({ status: "known", appointment });
+      reportBooked(appointment);
       try {
         setAdded(window.localStorage.getItem(addedKey(appointment)) === "1");
       } catch {
