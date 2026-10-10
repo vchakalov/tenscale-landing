@@ -92,16 +92,48 @@ function formatAt(seconds: number): string {
  * start, because that is what a progress bar has always done. Picking from the
  * list goes to the start.
  */
+/** The speeds a viewer can step through; 1.2x is the one most people pick. */
+const RATES = [1, 1.2, 1.5] as const;
+
+export interface PlayerControls {
+  playing: boolean;
+  muted: boolean;
+  rate: number;
+  onTogglePlay: () => void;
+  onToggleMute: () => void;
+  onCycleRate: () => void;
+  onFullscreen: () => void;
+}
+
+function ControlIcon({ name }: { name: "play" | "pause" | "sound" | "muted" | "fullscreen" }) {
+  const common = { fill: "none", stroke: "currentColor", strokeWidth: 1.9, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  return (
+    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden="true">
+      {name === "play" && <path d="M8 5.5v13l10-6.5z" fill="currentColor" />}
+      {name === "pause" && <path d="M8 5.5v13M16 5.5v13" {...common} strokeWidth={2.6} />}
+      {(name === "sound" || name === "muted") && <path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" />}
+      {name === "sound" && <path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" {...common} />}
+      {name === "muted" && <path d="M16.5 9.5l5 5M21.5 9.5l-5 5" {...common} />}
+      {name === "fullscreen" && <path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" {...common} />}
+    </svg>
+  );
+}
+
+const CONTROL_BUTTON =
+  "flex h-[30px] min-w-[30px] shrink-0 cursor-pointer items-center justify-center rounded-[100px] px-[6px] transition-colors duration-200 hover:bg-[rgba(244,241,234,0.14)]";
+
 function ChapterBar({
   chapters,
   duration,
   time,
   onSeek,
+  controls,
 }: {
   chapters: readonly Chapter[];
   duration: number;
   time: number;
   onSeek: (at: number) => void;
+  controls: PlayerControls;
 }) {
   const [hover, setHover] = useState<number | null>(null);
   const [listOpen, setListOpen] = useState(false);
@@ -171,8 +203,16 @@ function ChapterBar({
           })}
         </div>
 
-        <div className="mt-[6px] flex items-center gap-[12px] font-[family-name:var(--font-inter)] text-[13px] leading-[18px] text-[#f4f1ea] max-[800px]:text-[12px]">
-          <span className="tabular-nums text-[rgba(244,241,234,0.75)]">
+        <div className="mt-[6px] flex items-center gap-[10px] font-[family-name:var(--font-inter)] text-[13px] leading-[18px] text-[#f4f1ea] max-[800px]:gap-[4px] max-[800px]:text-[12px]">
+          <button
+            type="button"
+            onClick={controls.onTogglePlay}
+            aria-label={controls.playing ? "Pause" : "Play"}
+            className={CONTROL_BUTTON}
+          >
+            <ControlIcon name={controls.playing ? "pause" : "play"} />
+          </button>
+          <span className="shrink-0 tabular-nums text-[rgba(244,241,234,0.75)]">
             {formatAt(time)} / {formatAt(duration)}
           </span>
           <button
@@ -186,6 +226,28 @@ function ChapterBar({
             <span className="truncate">{segments[current]?.label}</span>
             <span aria-hidden="true">&rsaquo;</span>
           </button>
+
+          <div className="ml-auto flex shrink-0 items-center gap-[4px]">
+            <button
+              type="button"
+              onClick={controls.onCycleRate}
+              aria-label={`Playback speed ${controls.rate}x`}
+              className={`${CONTROL_BUTTON} font-semibold tabular-nums`}
+            >
+              {controls.rate}&times;
+            </button>
+            <button
+              type="button"
+              onClick={controls.onToggleMute}
+              aria-label={controls.muted ? "Unmute" : "Mute"}
+              className={CONTROL_BUTTON}
+            >
+              <ControlIcon name={controls.muted ? "muted" : "sound"} />
+            </button>
+            <button type="button" onClick={controls.onFullscreen} aria-label="Full screen" className={CONTROL_BUTTON}>
+              <ControlIcon name="fullscreen" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -250,7 +312,13 @@ export function Vsl({
   placeholder?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  /* `started` is the unmute overlay's state, not the sound's: once the visitor
+     has chosen to watch, muting from the controls must not bring the overlay
+     back. */
+  const [started, setStarted] = useState(false);
   const [muted, setMuted] = useState(true);
+  const [playing, setPlaying] = useState(false);
+  const [rate, setRate] = useState<number>(1);
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -268,7 +336,44 @@ export function Vsl({
     video.muted = false;
     video.volume = 1;
     setMuted(false);
+    setStarted(true);
     void video.play().catch(() => {});
+  }
+
+  function togglePlay() {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) void video.play().catch(() => {});
+    else video.pause();
+  }
+
+  function toggleMute() {
+    const video = videoRef.current;
+    if (!video) return;
+    if (!started) {
+      unmute({ restart: true });
+      return;
+    }
+    video.muted = !video.muted;
+    setMuted(video.muted);
+  }
+
+  function cycleRate() {
+    const video = videoRef.current;
+    const next = RATES[(RATES.indexOf(rate as (typeof RATES)[number]) + 1) % RATES.length];
+    if (video) video.playbackRate = next;
+    setRate(next);
+  }
+
+  /* The video itself goes full screen, not the frame: the browser then shows
+     the whole picture letterboxed with its own controls, where the frame
+     would have cropped it to fill the screen. */
+  function fullscreen() {
+    const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullscreen?: () => void }) | null;
+    if (!video) return;
+    if (!started) unmute({ restart: true });
+    if (video.requestFullscreen) void video.requestFullscreen().catch(() => {});
+    else video.webkitEnterFullscreen?.(); // iPhone Safari
   }
 
   function seek(at: number) {
@@ -297,6 +402,10 @@ export function Vsl({
               autoPlay
               playsInline
               preload="metadata"
+              onClick={started ? togglePlay : undefined}
+              onPlay={() => setPlaying(true)}
+              onPause={() => setPlaying(false)}
+              onRateChange={(event) => setRate(event.currentTarget.playbackRate)}
               onTimeUpdate={(event) => setTime(event.currentTarget.currentTime)}
               onLoadedMetadata={(event) =>
                 setDuration(event.currentTarget.duration)
@@ -311,7 +420,7 @@ export function Vsl({
             </div>
           )}
 
-          {muted && (
+          {!started && (
             /*
               The unmute prompt is a panel in the middle of the frame, not a
               pill in a corner. It is the only thing the visitor is asked to do
@@ -359,6 +468,15 @@ export function Vsl({
               }
               time={time}
               onSeek={seek}
+              controls={{
+                playing,
+                muted,
+                rate,
+                onTogglePlay: togglePlay,
+                onToggleMute: toggleMute,
+                onCycleRate: cycleRate,
+                onFullscreen: fullscreen,
+              }}
             />
           )}
         </div>
