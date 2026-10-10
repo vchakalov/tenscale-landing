@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { buildSetCookie } from './cookie.js';
-import { parseCookie, readContext, serializeCookie } from './context.js';
+import { newFbp, parseCookie, readContext, serializeCookie } from './context.js';
 
 const NOW = 1_758_600_000_000;
 const ids = () => 'rand-1';
-const ctxFor = (url: string, cookie: string | null = null) => readContext(new URL(url), cookie, NOW, ids);
+const fbpFor = (now: number) => `fb.1.${now}.1234567890`;
+const ctxFor = (url: string, cookie: string | null = null) => readContext(new URL(url), cookie, NOW, ids, fbpFor);
 
 describe('readContext: first visit from an ad', () => {
   const ctx = ctxFor('https://agenticalab.io/landing/?utm_source=facebook&utm_medium=paid&utm_campaign=123&utm_term=456&utm_content=789&fbclid=AbC123');
@@ -44,6 +45,35 @@ describe('readContext: return visit', () => {
   it('replaces the click id when a new ad click arrives', () => {
     const later = readContext(new URL('https://agenticalab.io/landing/?fbclid=NEW'), cookie, NOW + 1000, ids);
     expect(later.fbc).toBe(`fb.1.${NOW + 1000}.NEW`);
+  });
+});
+
+describe('readContext: Meta ids', () => {
+  it('makes an fbp on the first visit, in Meta format', () => {
+    expect(ctxFor('https://tenscale.ai/landing/').fbp).toBe(`fb.1.${NOW}.1234567890`);
+    expect(newFbp(NOW)).toMatch(new RegExp(`^fb\\.1\\.${NOW}\\.\\d{10}$`));
+  });
+
+  it("reuses the pixel's own _fbp and _fbc cookies", () => {
+    const ctx = ctxFor('https://tenscale.ai/landing/', '_fbp=fb.1.111.222; _fbc=fb.1.333.PixelClick');
+    expect(ctx.fbp).toBe('fb.1.111.222');
+    expect(ctx.fbc).toBe('fb.1.333.PixelClick');
+  });
+
+  it('keeps the first-seen time when the same click id comes back', () => {
+    const ctx = ctxFor('https://tenscale.ai/landing/?fbclid=Same', '_fbc=fb.1.333.Same');
+    expect(ctx.fbc).toBe('fb.1.333.Same');
+  });
+
+  it('starts a new fbc when a different click id arrives', () => {
+    const ctx = ctxFor('https://tenscale.ai/landing/?fbclid=New', '_fbc=fb.1.333.Old');
+    expect(ctx.fbc).toBe(`fb.1.${NOW}.New`);
+  });
+
+  it('keeps the same fbp across visits', () => {
+    const first = ctxFor('https://tenscale.ai/landing/');
+    const later = readContext(new URL('https://tenscale.ai/'), `ag_ctx=${serializeCookie(first)}`, NOW + 5000, ids, fbpFor);
+    expect(later.fbp).toBe(first.fbp);
   });
 });
 

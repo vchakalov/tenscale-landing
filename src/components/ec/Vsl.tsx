@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { track, trackMeta } from "@/lib/analytics";
+import { metaEvent, track } from "@/lib/analytics";
 
 /**
  * The VSL player.
@@ -95,6 +95,21 @@ function formatAt(seconds: number): string {
  */
 /** The speeds a viewer can step through; 1.2x is the one most people pick. */
 const RATES = [1, 1.2, 1.5] as const;
+
+/** The `video_id` each player reports to Meta under, by its analytics name. */
+const META_VIDEO_IDS: Record<string, "vsl" | "thank_you"> = { landing: "vsl", thank_you: "thank_you" };
+
+/** "Watched half the VSL with sound", once per visitor however many times they watch. */
+function viewContentOnce() {
+  const key = "meta-viewcontent-vsl";
+  try {
+    if (localStorage.getItem(key)) return;
+    localStorage.setItem(key, "1");
+  } catch {
+    // Storage blocked: sending once per page view is the next best thing.
+  }
+  metaEvent("ViewContent", { content_name: "vsl" });
+}
 
 export interface PlayerControls {
   playing: boolean;
@@ -330,8 +345,9 @@ export function Vsl({
   /*
     Analytics. Progress is reported once per 10% step, separately for the
     muted preview and for watching with sound, so the drop-off curve in
-    PostHog counts only people who chose to listen. The Meta pixel gets the
-    25/50/75% marks with sound, for "watched half the VSL" audiences.
+    PostHog counts only people who chose to listen. Meta gets the 25/50/75/95%
+    marks with sound as VideoProgress, and half the landing VSL with sound as
+    ViewContent, once per visitor, for "watched the VSL" audiences.
   */
   const fired = useRef(new Set<string>());
   const lastChapter = useRef(-1);
@@ -350,11 +366,13 @@ export function Vsl({
     for (let step = 10; step <= Math.floor(share * 10 + 1e-6) * 10; step += 10) {
       reportOnce(`p:${sound}:${step}`, "vsl_progress", { percent: step, sound, seconds: Math.round(video.currentTime) });
     }
-    if (sound) {
-      for (const mark of [25, 50, 75]) {
+    const metaVideo = META_VIDEO_IDS[trackAs];
+    if (sound && metaVideo) {
+      for (const mark of [25, 50, 75, 95]) {
         if (share * 100 >= mark && !fired.current.has(`meta:${mark}`)) {
           fired.current.add(`meta:${mark}`);
-          trackMeta(`VSL_${mark}`, { video: trackAs });
+          metaEvent("VideoProgress", { video_id: metaVideo, percent: mark });
+          if (mark === 50 && metaVideo === "vsl") viewContentOnce();
         }
       }
     }

@@ -31,6 +31,7 @@ describe('buildPayload', () => {
     const u = payload.data[0].user_data;
     expect(u.em).toBe(await sha256Hex('john_smith@gmail.com'));
     expect(u.ph).toBe(await sha256Hex('6505551212'));
+    expect(u.external_id).toBe(await sha256Hex('rand-1'));
     expect(u.fbc).toBe('fb.1.1758600000000.AbC123');
     expect(u.fbp).toBe('fb.1.1758600000000.999');
     expect(u.client_ip_address).toBe('1.2.3.4');
@@ -64,7 +65,7 @@ describe('sendCapi', () => {
     const res = await sendCapi('PIX1', 'TOK1', event, fn);
 
     expect(res.ok).toBe(true);
-    expect(calls[0].url).toBe('https://graph.facebook.com/v23.0/PIX1/events?access_token=TOK1');
+    expect(calls[0].url).toBe('https://graph.facebook.com/v26.0/PIX1/events?access_token=TOK1');
     expect(JSON.parse(calls[0].init.body as string).data[0].event_id).toBe('ev-1');
   });
 

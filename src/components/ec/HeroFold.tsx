@@ -156,6 +156,7 @@ export function HeroFold() {
 
           <div className="mt-[24px]">
             <CtaButton
+              trackId="hero_desktop"
               variant="blueRaised"
               className="px-[clamp(30px,2.6vw,46px)] py-[clamp(12px,1vw,17px)] text-[clamp(16px,1.25vw,21px)] leading-[1.5]"
             >
@@ -200,6 +201,7 @@ export function HeroFold() {
 
         <div className="mt-[20px]" data-hero-cta>
           <CtaButton
+            trackId="hero_mobile"
             variant="blueRaised"
             className="rounded-[50px] px-[32px] text-[16px] leading-[24px]"
           >

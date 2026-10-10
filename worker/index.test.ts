@@ -27,6 +27,25 @@ describe('page requests', () => {
     expect(body).toContain('"utm_campaign":"42"');
   });
 
+  it('writes _fbp and _fbc as readable cookies on the site domain, for the pixel to reuse', async () => {
+    const res = await worker.fetch(new Request('https://tenscale.ai/landing/?fbclid=AbC123'), envWith(html), ctx);
+    const cookies = res.headers.getSetCookie();
+    const fbp = cookies.find((c) => c.startsWith('_fbp='))!;
+    const fbc = cookies.find((c) => c.startsWith('_fbc='))!;
+    expect(fbp).toMatch(/^_fbp=fb\.1\.\d+\.\d{10};/);
+    expect(fbc).toMatch(/^_fbc=fb\.1\.\d+\.AbC123;/);
+    for (const c of [fbp, fbc]) {
+      expect(c).toContain('Max-Age=7776000');
+      expect(c).toContain('Domain=tenscale.ai');
+      expect(c).not.toContain('HttpOnly');
+    }
+  });
+
+  it('gives the pixel a hashed external id', async () => {
+    const res = await worker.fetch(new Request('https://tenscale.ai/landing/'), envWith(html), ctx);
+    expect(await res.text()).toMatch(/"externalIdHash":"[0-9a-f]{64}"/);
+  });
+
   it('leaves a non-HTML asset untouched', async () => {
     const env = { ASSETS: { fetch: async () => new Response('body{}', { headers: { 'content-type': 'text/css' } }) } } as never;
     const res = await worker.fetch(new Request('https://tenscale.ai/style.css'), env, ctx);
@@ -46,6 +65,70 @@ describe('POST /booking/prep', () => {
     const res = await worker.fetch(new Request('https://tenscale.ai/booking/prep', { method: 'POST', body: '{"step":"open"}' }), envWith(html), ctx);
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true });
+  });
+});
+
+describe('engagement events to Meta', () => {
+  const meta = { META_PIXEL_ID: 'PIX1', META_CAPI_TOKEN: 'TOK1' };
+  async function post(body: unknown, headers: Record<string, string> = {}) {
+    const sent: Record<string, unknown>[] = [];
+    const original = globalThis.fetch;
+    const pending: Promise<unknown>[] = [];
+    const waitCtx = { waitUntil: (p: Promise<unknown>) => void pending.push(p), passThroughOnException: () => {} } as never;
+    globalThis.fetch = (async (_input: RequestInfo | URL, init?: RequestInit) => {
+      sent.push(JSON.parse(init!.body as string).data[0]);
+      return new Response('{}');
+    }) as typeof fetch;
+    try {
+      const res = await worker.fetch(
+        new Request('https://tenscale.ai/booking/prep', { method: 'POST', body: JSON.stringify(body), headers }),
+        envWith(html, meta),
+        waitCtx,
+      );
+      await Promise.all(pending);
+      expect(res.status).toBe(200);
+    } finally {
+      globalThis.fetch = original;
+    }
+    return sent;
+  }
+  const video = {
+    event_name: 'VideoProgress',
+    event_id: 'b7f0c2de-1111-4a2b-9c3d-123456789abc',
+    params: { video_id: 'vsl', percent: 50 },
+    url: 'https://tenscale.ai/thank-you/?Invitee_email=a%40b.com',
+  };
+
+  it('forwards an allowed event with the stored ids, the visitor address and a clean URL', async () => {
+    const [event] = await post(video, {
+      cookie: '_fbp=fb.1.1.2222222222; _fbc=fb.1.1.Click',
+      'cf-connecting-ip': '1.2.3.4',
+      'user-agent': 'UA',
+    });
+    expect(event).toMatchObject({
+      event_name: 'VideoProgress',
+      event_id: video.event_id,
+      action_source: 'website',
+      event_source_url: 'https://tenscale.ai/thank-you/',
+      custom_data: { video_id: 'vsl', percent: 50 },
+      user_data: { fbp: 'fb.1.1.2222222222', fbc: 'fb.1.1.Click', client_ip_address: '1.2.3.4', client_user_agent: 'UA' },
+    });
+  });
+
+  it('drops names and values that are not on the list, and other origins', async () => {
+    expect(await post({ ...video, event_name: 'Purchase' })).toEqual([]);
+    expect(await post({ ...video, params: { video_id: 'vsl', percent: 33 } })).toEqual([]);
+    expect(await post({ ...video, params: { button_id: 'nope' }, event_name: 'ButtonClick' })).toEqual([]);
+    expect(await post({ ...video, url: 'https://evil.example/' })).toEqual([]);
+    expect(await post(video, { origin: 'https://evil.example' })).toEqual([]);
+    expect(await post('not json')).toEqual([]);
+  });
+
+  it('accepts ButtonClick and ViewContent', async () => {
+    const [click] = await post({ ...video, event_name: 'ButtonClick', params: { button_id: 'sticky_mobile' } });
+    expect(click.custom_data).toEqual({ button_id: 'sticky_mobile' });
+    const [view] = await post({ ...video, event_name: 'ViewContent', params: { content_name: 'vsl' } });
+    expect(view.custom_data).toEqual({ content_name: 'vsl' });
   });
 });
 

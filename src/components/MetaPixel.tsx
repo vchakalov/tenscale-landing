@@ -8,7 +8,8 @@ import Script from "next/script";
  * It only runs when a pixel id exists in `window.__ag`, so the site behaves
  * exactly as before until one is configured. The PageView carries the same
  * `eventID` the Worker sent server-side, which is how Meta merges the two
- * copies instead of counting the visit twice.
+ * copies instead of counting the visit twice. The external id is the hash the
+ * server also sends, so both copies name the same visitor.
  */
 export function MetaPixel() {
   return (
@@ -21,7 +22,7 @@ export function MetaPixel() {
   n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
   t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
   document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', ag.pixelId, { external_id: ag.externalId });
+  fbq('init', ag.pixelId, { external_id: ag.externalIdHash });
   fbq('track', 'PageView', {}, { eventID: ag.pageViewEventId });
 })();`}
     </Script>

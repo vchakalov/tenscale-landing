@@ -1,13 +1,25 @@
 /// <reference types="@cloudflare/workers-types" />
-import { sendCapi } from './capi.js';
-import { readContext, serializeCookie } from './context.js';
-import { buildSetCookie } from './cookie.js';
+import { sendCapi, sha256Hex } from './capi.js';
+import { parseCookie, readContext, serializeCookie } from './context.js';
+import { buildMetaCookie, buildSetCookie, readRawCookie } from './cookie.js';
+import { parseEngagement } from './events.js';
 
 export interface Env {
   ASSETS: Fetcher;
   META_PIXEL_ID?: string;
   META_CAPI_TOKEN?: string;
   META_TEST_EVENT_CODE?: string;
+}
+
+/** Meta's answer, one line per event, so `wrangler tail` shows what was accepted. */
+function logCapi(eventName: string, result: { ok: boolean; status: number; body: string }): void {
+  console.log(
+    JSON.stringify({
+      level: result.ok ? 'info' : 'error',
+      message: `capi ${eventName} -> ${result.status}`,
+      ...(result.ok ? {} : { body: result.body.slice(0, 300) }),
+    }),
+  );
 }
 
 /** Our own endpoint name: /collect, /track and /api/events are all in blocklists. */
@@ -65,6 +77,8 @@ export default {
     if (redirect) return redirect;
 
     if (request.method === 'POST' && url.pathname === EVENT_PATH) {
+      await forwardEngagement(request, url, env, ctx).catch(() => undefined);
+      // The same answer whatever came in: a caller learns nothing from it.
       return Response.json({ ok: true });
     }
 
@@ -78,6 +92,48 @@ export default {
     }
   },
 };
+
+/**
+ * A video milestone or a button click from the page, sent on to Meta with what
+ * only the server knows: the visitor's address, browser and stored ids.
+ */
+async function forwardEngagement(request: Request, url: URL, env: Env, ctx: ExecutionContext): Promise<void> {
+  if (!env.META_PIXEL_ID || !env.META_CAPI_TOKEN) return;
+  const origin = request.headers.get('origin');
+  if (origin && origin !== url.origin) return;
+  const text = await request.text();
+  if (text.length > 2048) return;
+  const event = parseEngagement(JSON.parse(text), url.origin);
+  if (!event) return;
+
+  const cookie = request.headers.get('cookie');
+  const stored = parseCookie(cookie);
+  ctx.waitUntil(
+    sendCapi(
+      env.META_PIXEL_ID,
+      env.META_CAPI_TOKEN,
+      {
+        eventName: event.eventName,
+        eventId: event.eventId,
+        eventTime: Math.floor(Date.now() / 1000),
+        eventSourceUrl: event.sourceUrl,
+        actionSource: 'website',
+        userData: {
+          externalId: stored?.externalId,
+          fbc: readRawCookie(cookie, '_fbc') ?? stored?.fbc ?? null,
+          fbp: readRawCookie(cookie, '_fbp') ?? stored?.fbp ?? null,
+          clientIp: request.headers.get('cf-connecting-ip'),
+          clientUserAgent: request.headers.get('user-agent'),
+        },
+        customData: event.customData,
+      },
+      fetch,
+      env.META_TEST_EVENT_CODE,
+    )
+      .then((result) => logCapi(event.eventName, result))
+      .catch(() => undefined),
+  );
+}
 
 async function withTracking(request: Request, url: URL, asset: Response, env: Env, ctx: ExecutionContext): Promise<Response> {
     const type = asset.headers.get('content-type') ?? '';
@@ -93,6 +149,9 @@ async function withTracking(request: Request, url: URL, asset: Response, env: En
       utm: context.utm,
       firstUtm: context.firstUtm,
       externalId: context.externalId,
+      // The pixel sends external_id as given; hashed here, it matches what the
+      // server sends for the same visitor.
+      externalIdHash: await sha256Hex(context.externalId),
       pageViewEventId: eventId,
       pixelId: env.META_PIXEL_ID ?? null,
     };
@@ -105,6 +164,8 @@ async function withTracking(request: Request, url: URL, asset: Response, env: En
     const response = new Response(withTag, asset);
 
     response.headers.append('Set-Cookie', buildSetCookie(serializeCookie(context)));
+    if (context.fbp) response.headers.append('Set-Cookie', buildMetaCookie('_fbp', context.fbp, url.hostname, CANONICAL_HOST));
+    if (context.fbc) response.headers.append('Set-Cookie', buildMetaCookie('_fbc', context.fbc, url.hostname, CANONICAL_HOST));
 
     if (env.META_PIXEL_ID && env.META_CAPI_TOKEN) {
       ctx.waitUntil(
@@ -127,7 +188,9 @@ async function withTracking(request: Request, url: URL, asset: Response, env: En
           },
           fetch,
           env.META_TEST_EVENT_CODE,
-        ).catch(() => undefined),
+        )
+          .then((result) => logCapi('PageView', result))
+          .catch(() => undefined),
       );
     }
 

@@ -15,7 +15,7 @@ export const POSTHOG_KEY = "phc_tVhroSsJ6YMQAx7AEi7oL6YVJVu5gj2ZbhYkQ4rt2VLD";
 
 declare global {
   interface Window {
-    __ag?: { externalId?: string | null };
+    __ag?: { externalId?: string | null; pixelId?: string | null };
     fbq?: (...args: unknown[]) => void;
   }
 }
@@ -50,10 +50,41 @@ export function track(event: string, properties: Record<string, unknown> = {}): 
   }
 }
 
-/** A custom event for the Meta pixel, for retargeting audiences. */
-export function trackMeta(event: string, properties: Record<string, unknown> = {}): void {
+const META_STANDARD = new Set(["PageView", "ViewContent", "Schedule", "Contact", "Purchase"]);
+
+/**
+ * The browser copy of a Meta event. The id is what lets Meta merge it with the
+ * server copy. The pixel starts after the page does, so an event that comes
+ * first (the thank-you page's Schedule) waits up to five seconds for it.
+ */
+export function pixelEvent(name: string, params: Record<string, string | number>, eventId: string, tries = 20): void {
   try {
-    window.fbq?.("trackCustom", event, properties);
+    if (!window.fbq) {
+      if (window.__ag?.pixelId && tries > 0) window.setTimeout(() => pixelEvent(name, params, eventId, tries - 1), 250);
+      return;
+    }
+    window.fbq(META_STANDARD.has(name) ? "track" : "trackCustom", name, params, { eventID: eventId });
+  } catch {
+    // ignore
+  }
+}
+
+/**
+ * A Meta event the page sends twice: to the pixel, and through our Worker to
+ * the Conversions API, which an ad blocker cannot stop. The Worker only lets
+ * through VideoProgress, ViewContent and ButtonClick with known values.
+ */
+export function metaEvent(
+  name: "VideoProgress" | "ViewContent" | "ButtonClick",
+  params: Record<string, string | number>,
+): void {
+  try {
+    const eventId = crypto.randomUUID();
+    pixelEvent(name, params, eventId);
+    const body = JSON.stringify({ event_name: name, event_id: eventId, params, url: window.location.href });
+    if (!navigator.sendBeacon?.("/booking/prep", body)) {
+      void fetch("/booking/prep", { method: "POST", body, keepalive: true }).catch(() => {});
+    }
   } catch {
     // ignore
   }

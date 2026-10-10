@@ -1,5 +1,6 @@
 "use client";
 
+import { metaEvent } from "@/lib/analytics";
 import { openBooking, warmBooking } from "@/lib/booking";
 import { cn } from "@/lib/utils";
 import { LongArrowRightIcon } from "./icons";
@@ -19,10 +20,15 @@ const VARIANTS: Record<CtaVariant, string> = {
     "bg-[#f4f1ea] text-[#001232] text-[20px] leading-[30px] px-[40px] py-[12px]",
 };
 
+/** The names Meta's ButtonClick knows; the Worker drops any other. */
+export type CtaTrackId = "hero_desktop" | "hero_mobile" | "after_benefits" | "after_objections" | "sticky_mobile";
+
 interface CtaButtonProps {
   children: React.ReactNode;
   variant?: CtaVariant;
   className?: string;
+  /** Reports the click to Meta as ButtonClick under this name. */
+  trackId?: CtaTrackId;
 }
 
 /**
@@ -39,11 +45,13 @@ export function CtaButton({
   children,
   variant = "blueRaised",
   className,
+  trackId,
 }: CtaButtonProps) {
   return (
     <a
       href={CALENDAR_URL}
       onClick={(event) => {
+        if (trackId) metaEvent("ButtonClick", { button_id: trackId });
         // Let modified clicks open the calendar in a new tab as usual.
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
         event.preventDefault();

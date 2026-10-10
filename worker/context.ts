@@ -36,19 +36,41 @@ export function serializeCookie(ctx: TrackingContext): string {
   return encodeURIComponent(btoa(JSON.stringify(ctx)));
 }
 
-export function readContext(url: URL, cookieHeader: string | null, now: number, randomId: () => string): TrackingContext {
+/** The fbclid inside an fbc value, `fb.1.<ms>.<fbclid>`. */
+function clickIdOf(fbc: string | null): string | null {
+  if (!fbc) return null;
+  const parts = fbc.split('.');
+  return parts.length >= 4 ? parts.slice(3).join('.') : null;
+}
+
+/** Meta's browser id format. The pixel reuses an `_fbp` it finds instead of making its own. */
+export function newFbp(now: number): string {
+  return `fb.1.${now}.${1_000_000_000 + Math.floor(Math.random() * 9_000_000_000)}`;
+}
+
+export function readContext(
+  url: URL,
+  cookieHeader: string | null,
+  now: number,
+  randomId: () => string,
+  makeFbp: (now: number) => string = newFbp,
+): TrackingContext {
   const old = parseCookie(cookieHeader);
   const utm = utmFrom(url);
   const clickId = url.searchParams.get('fbclid');
 
-  // The click id is case sensitive: Meta says never normalize it.
+  // The click id is case sensitive: Meta says never normalize it. A click id we
+  // already hold keeps the time it was first seen, which is what Meta asks for.
   const fbclid = clickId ?? old?.fbclid ?? null;
-  const fbc = clickId ? `fb.1.${now}.${clickId}` : (old?.fbc ?? null);
+  const knownFbc = readRawCookie(cookieHeader, '_fbc') ?? old?.fbc ?? null;
+  const fbc = clickId && clickIdOf(knownFbc) !== clickId ? `fb.1.${now}.${clickId}` : knownFbc;
+  // Without a pixel (blocked, or not loaded yet) nobody else makes this id.
+  const fbp = readRawCookie(cookieHeader, '_fbp') ?? old?.fbp ?? makeFbp(now);
 
   return {
     fbclid,
     fbc,
-    fbp: old?.fbp ?? null,
+    fbp,
     utm: Object.keys(utm).length > 0 ? utm : (old?.utm ?? {}),
     firstUtm: old?.firstUtm ?? utm,
     landingUrl: old?.landingUrl ?? url.toString(),

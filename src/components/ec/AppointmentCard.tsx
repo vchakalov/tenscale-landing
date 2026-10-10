@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import { pollBookingLinks } from "@/lib/booking-links";
-import { identifyLead, track } from "@/lib/analytics";
+import { identifyLead, pixelEvent, track } from "@/lib/analytics";
 import {
   downloadIcs,
   formatDay,
@@ -138,6 +138,22 @@ function reportBooked(appointment: Appointment): void {
   }, 300);
 }
 
+/**
+ * The browser copy of Meta's Schedule, once per call. The bridge sends the
+ * same event from iClosed's webhook with the same id, so Meta keeps one.
+ */
+function scheduleOnce(callId: string): void {
+  const id = callId.trim().replace(/^call_/, "");
+  const key = `meta-schedule:${id}`;
+  try {
+    if (window.localStorage.getItem(key) === "1") return;
+    window.localStorage.setItem(key, "1");
+  } catch {
+    // A repeat is harmless: Meta drops the second copy by its id.
+  }
+  pixelEvent("Schedule", { category: "booked_call" }, `booked-${id}`);
+}
+
 /** How long a click waits for the Meet link before adding the call without it. */
 const CLICK_WAIT_MS = 4000;
 
@@ -170,6 +186,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
       }
       setState({ status: "known", appointment });
       reportBooked(appointment);
+      if (appointment.callId) scheduleOnce(appointment.callId);
       try {
         setAdded(window.localStorage.getItem(addedKey(appointment)) === "1");
       } catch {

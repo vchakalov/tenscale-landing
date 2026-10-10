@@ -46,6 +46,7 @@ export function StickyCta() {
       style={{ paddingBottom: "calc(12px + env(safe-area-inset-bottom))" }}
     >
       <CtaButton
+        trackId="sticky_mobile"
         variant="blueRaised"
         className="flex w-full justify-center rounded-[50px] px-[24px] py-[13px] text-[16px] leading-[24px]"
       >

@@ -1,4 +1,4 @@
-import { CtaButton } from "./CtaButton";
+import { CtaButton, type CtaTrackId } from "./CtaButton";
 
 /**
  * Social proof under the button.
@@ -49,11 +49,12 @@ export function ProofStats({
  * second pitch rather than on an ask. The three numbers live in the fold, where
  * they are read once; repeating them under every button wears them out.
  */
-export function CtaBlock() {
+export function CtaBlock({ trackId }: { trackId?: CtaTrackId }) {
   return (
     <section className="mt-[130px] px-[40px] max-[800px]:mt-[64px] max-[800px]:px-[20px]">
       <div className="mx-auto w-full max-w-[1120px] text-center">
         <CtaButton
+          trackId={trackId}
           variant="blueRaised"
           className="px-[clamp(30px,2.6vw,46px)] py-[clamp(12px,1vw,17px)] text-[clamp(16px,1.25vw,21px)] leading-[1.5] max-[800px]:rounded-[50px]"
         >

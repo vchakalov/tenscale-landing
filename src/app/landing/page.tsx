@@ -37,9 +37,9 @@ export default function Page() {
     <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
       <HeroFold />
       <Benefits />
-      <CtaBlock />
+      <CtaBlock trackId="after_benefits" />
       <Objections />
-      <CtaBlock />
+      <CtaBlock trackId="after_objections" />
       <SiteFooter />
       {/* The bar is fixed, so the last section needs room to clear it. */}
       <div aria-hidden="true" className="h-[76px] min-[801px]:hidden" />

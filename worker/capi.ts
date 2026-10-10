@@ -20,7 +20,7 @@ export interface CapiEvent {
   customData?: Record<string, unknown>;
 }
 
-const GRAPH_VERSION = 'v23.0';
+const GRAPH_VERSION = 'v26.0';
 
 export function normalizeEmail(value: string): string {
   return value.trim().toLowerCase();
@@ -45,7 +45,8 @@ export async function buildPayload(event: CapiEvent, testCode?: string): Promise
   if (u.ph) user_data.ph = await sha256Hex(normalizePhone(u.ph));
   if (u.fn) user_data.fn = await sha256Hex(u.fn.trim().toLowerCase());
   if (u.ln) user_data.ln = await sha256Hex(u.ln.trim().toLowerCase());
-  if (u.externalId) user_data.external_id = u.externalId;
+  // Hashed like the rest, and the page hands the pixel the same hash.
+  if (u.externalId) user_data.external_id = await sha256Hex(u.externalId);
   // Never hashed, by Meta's rule:
   if (u.fbc) user_data.fbc = u.fbc;
   if (u.fbp) user_data.fbp = u.fbp;
