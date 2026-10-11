@@ -16,7 +16,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * The page the scheduler sends people to after they book.
+ * The page the scheduler sends people to after they book, in the brand's light
+ * theme like the landings. The cream-and-blue version is /thank-you-blue.
  *
  * Same design system as the landing, opposite job. The landing asks for the
  * booking; this page protects it. Its only measurable outcome is the calendar
@@ -35,8 +36,8 @@ export const metadata: Metadata = {
  */
 export default function Page() {
   return (
-    <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
-      <ThankYouFold />
+    <div className="ec-landing ec-theme-light min-h-screen w-full overflow-x-hidden">
+      <ThankYouFold brandMark />
       <BreakoutVideos />
       <ResultShots title="Some Of Our Recent Successes." />
       <CaseStudy />

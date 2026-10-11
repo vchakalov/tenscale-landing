@@ -15,16 +15,16 @@ export const metadata: Metadata = {
 };
 
 /**
- * /thank-you in the Tenscale brand, light: white, black and the lime.
+ * /thank-you in the original palette: cream, navy and blue, without the mark.
  *
- * Same sections, copy and tracking as /thank-you, plus the mark. Nothing
- * links here: a booking lands on whichever page the scheduler's redirect
- * names, so this page is reached only once that redirect is pointed at it.
+ * Same sections, copy and tracking as /thank-you. Nothing links here: a
+ * booking lands on whichever page the scheduler's redirect names, so this page
+ * is reached only once that redirect is pointed at it.
  */
 export default function Page() {
   return (
-    <div className="ec-landing ec-theme-light min-h-screen w-full overflow-x-hidden">
-      <ThankYouFold brandMark />
+    <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
+      <ThankYouFold />
       <BreakoutVideos />
       <ResultShots title="Some Of Our Recent Successes." />
       <CaseStudy />

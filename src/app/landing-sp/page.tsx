@@ -18,7 +18,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * The same landing, with the proof moved above the argument.
+ * The same landing, with the proof moved above the argument. In the brand's
+ * light theme like /landing; the cream-and-blue version is /landing-sp-blue.
  *
  * Everything else on the two pages is identical, which is the point: when one
  * of them converts better, the difference is that one section and nothing
@@ -33,8 +34,8 @@ export const metadata: Metadata = {
  */
 export default function Page() {
   return (
-    <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
-      <HeroFold />
+    <div className="ec-landing ec-theme-light min-h-screen w-full overflow-x-hidden">
+      <HeroFold brandMark />
       {/*
         The same wall the thank-you page carries, in navy rather than blue and
         under its own label. On /landing the page earns the benefits and then hopes
@@ -61,7 +62,7 @@ export default function Page() {
       <SiteFooter />
       {/* The bar is fixed, so the last section needs room to clear it. */}
       <div aria-hidden="true" className="h-[76px] min-[801px]:hidden" />
-      <StickyCta />
+      <StickyCta brandMark />
       <BookingModal />
     </div>
   );

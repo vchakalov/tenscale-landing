@@ -17,7 +17,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * The new Tenscale landing.
+ * The new Tenscale landing, in the brand's light theme: white, black and the
+ * lime. The original cream-and-blue version is /landing-blue.
  *
  * The fold sells; everything below catches whoever did not watch. The ask is
  * repeated after each of those blocks rather than saved for a closing panel,
@@ -28,8 +29,8 @@ export const metadata: Metadata = {
  */
 export default function Page() {
   return (
-    <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
-      <HeroFold />
+    <div className="ec-landing ec-theme-light min-h-screen w-full overflow-x-hidden">
+      <HeroFold brandMark />
       <Benefits />
       <CtaBlock trackId="after_benefits" />
       <Objections />
@@ -37,7 +38,7 @@ export default function Page() {
       <SiteFooter />
       {/* The bar is fixed, so the last section needs room to clear it. */}
       <div aria-hidden="true" className="h-[76px] min-[801px]:hidden" />
-      <StickyCta />
+      <StickyCta brandMark />
       <BookingModal />
     </div>
   );

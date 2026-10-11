@@ -15,6 +15,19 @@ Meta's Conversions API.
 | `/thank-you` | Where iClosed sends the lead after booking: Ben's video, add-to-calendar, save-my-number, prep for the call. No CTA on purpose | no |
 | `/privacy` | Privacy policy and tracking notice | yes |
 
+These three are in the brand's light theme (white, black and the lime) with the TS
+mark. Each also exists in two more colours, with the same sections, copy and
+tracking:
+
+- `-blue`: the original cream, navy and blue (`/landing-blue`, `/landing-sp-blue`,
+  `/thank-you-blue`)
+- `-bl`: lime on near-black (`/landing-bl`, `/landing-sp-bl`, `/thank-you-bl`)
+
+The theme is one class on the page's root (`ec-theme-light`, `ec-theme-black`, or
+none for the original palette), which swaps the colour tokens in
+`src/app/globals.css`. A booking from any of them lands on `/thank-you`, because the
+redirect is a single setting in iClosed.
+
 Every CTA opens the iClosed booking widget in a dialog (`BookingModal`). There is no
 form of our own.
 

@@ -16,15 +16,15 @@ export const metadata: Metadata = {
 };
 
 /**
- * /landing in the Tenscale brand, light: white, black and the lime.
+ * /landing in the original palette: cream, navy and blue, without the mark.
  *
- * Same sections, copy and tracking as /landing; only the theme class and the
- * mark differ, so the two can run side by side against the same traffic.
+ * Same sections, copy and tracking as /landing; only the theme differs, so the
+ * two can run side by side against the same traffic.
  */
 export default function Page() {
   return (
-    <div className="ec-landing ec-theme-light min-h-screen w-full overflow-x-hidden">
-      <HeroFold brandMark />
+    <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
+      <HeroFold />
       <Benefits />
       <CtaBlock trackId="after_benefits" />
       <Objections />
@@ -32,7 +32,7 @@ export default function Page() {
       <SiteFooter />
       {/* The bar is fixed, so the last section needs room to clear it. */}
       <div aria-hidden="true" className="h-[76px] min-[801px]:hidden" />
-      <StickyCta brandMark />
+      <StickyCta />
       <BookingModal />
     </div>
   );
