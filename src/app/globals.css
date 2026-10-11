@@ -153,7 +153,7 @@ body {
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Tenscale brand, used by /landing-black: the lime mark on near-black, as in
+/* Tenscale brand, used by the *-bl pages: the lime mark on near-black, as in
    the logo files in the Drive "Branding" folder. */
 .ec-landing.ec-theme-black {
   --ec-bg: #111111;
@@ -179,7 +179,7 @@ body {
    only where it holds up on white. Lime text on white is unreadable, so the
    accent words turn ink with a lime highlighter stroke behind them (.ec-mark),
    and the lime goes into fills: buttons, discs, card shadows, and the accents
-   inside the black video frame. Used by the *-white-yellow-black pages. */
+   inside the black video frame. Used by the *-wh pages. */
 .ec-landing.ec-theme-light {
   --ec-bg: #ffffff;
   --ec-ink: #111111;
