@@ -1,14 +1,9 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
 
-  // Static assets only: there is no `main`, so no Worker code runs and no
-  // request is billed as an invocation. Cloudflare's asset server answers
-  // everything straight from the edge.
-  //
-  // When the Meta Conversions API endpoint is added, it arrives as:
-  //   "main": "worker/index.ts",
-  //   "assets": { ..., "run_worker_first": ["/api/*"] }
-  // Everything else keeps bypassing the Worker.
+  // Secrets (set with `wrangler secret put`, never in this file):
+  //   META_PIXEL_ID, META_CAPI_TOKEN, and optionally META_TEST_EVENT_CODE.
+  // Without the first two the site still works; Meta simply hears nothing.
   "name": "agentica-landing",
   "compatibility_date": "2026-09-18",
 
@@ -28,7 +23,6 @@
       "/",
       "/landing", "/landing/*",
       "/landing-sp", "/landing-sp/*",
-      "/landing-v2", "/landing-v2/*",
       "/thank-you", "/thank-you/*",
       "/privacy", "/privacy/*",
       "/robots.txt", "/sitemap.xml",
@@ -58,10 +52,8 @@
   //
   // tenscale.ai is the brand from Sep 2026. agenticalab.io stays live and
   // serving: the tracked iClosed link we tested with still points at it, and
-  // nothing is gained by breaking a URL that already works.
-  //
-  // tenscale.ai only works once its nameservers move from Porkbun to
-  // Cloudflare; until then `wrangler deploy` will reject these two patterns.
+  // nothing is gained by breaking a URL that already works. The Worker answers
+  // every host but tenscale.ai with a 301 to the same path there.
   "routes": [
     { "pattern": "tenscale.ai", "custom_domain": true },
     { "pattern": "www.tenscale.ai", "custom_domain": true },

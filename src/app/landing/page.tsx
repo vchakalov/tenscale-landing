@@ -24,13 +24,7 @@ export const metadata: Metadata = {
  * because a visitor convinced by the benefits should not have to scroll past
  * four objections to find the button.
  *
- * The header is off for now: the page opens straight on the callout. The
- * component is untouched in `src/components/ec/SiteHeader.tsx`.
- *
- * The Eleven Cloud sections this page was ported from, Hero, ArrowDivider,
- * HowWeWork, Results, Team, Testimonial, Pricing, Faq, are still in
- * `src/components/ec/` and are simply not rendered. Nothing was deleted, so any
- * of them can come back into this list.
+ * There is no header: the page opens straight on the callout.
  */
 export default function Page() {
   return (

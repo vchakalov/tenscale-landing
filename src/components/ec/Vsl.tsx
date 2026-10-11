@@ -318,9 +318,9 @@ export function Vsl({
   className?: string;
   source?: { src: string; poster: string };
   /**
-   * Optional chapters, drawn inside the frame (see ChapterBar). The landing
-   * VSL has none; the thank-you video does, because a visitor in research mode
-   * wants to jump to the part they care about. A chapter click also unmutes:
+   * Optional chapters, drawn inside the frame (see ChapterBar). Both the
+   * landing VSL and the thank-you video have them, because a visitor in research
+   * mode wants to jump to the part they care about. A chapter click also unmutes:
    * choosing a section is a clear sign the visitor means to listen to it.
    */
   chapters?: readonly Chapter[];

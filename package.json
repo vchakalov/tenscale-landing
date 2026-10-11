@@ -1,28 +1,14 @@
 {
-  "name": "ai-website-clone-template",
-  "version": "0.3.1",
+  "name": "tenscale-landing",
+  "version": "1.0.0",
   "private": true,
-  "description": "Clone any website into a clean, modern Next.js codebase using AI coding agents",
-  "author": "JCodesMore",
+  "description": "tenscale.ai: the Tenscale marketing site, landing pages and thank-you page, served by a Cloudflare Worker",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JCodesMore/ai-website-cloner-template.git"
+    "url": "https://github.com/vchakalov/tenscale-landing.git"
   },
-  "homepage": "https://github.com/JCodesMore/ai-website-cloner-template",
-  "bugs": {
-    "url": "https://github.com/JCodesMore/ai-website-cloner-template/issues"
-  },
-  "keywords": [
-    "claude-code",
-    "website-clone",
-    "reverse-engineering",
-    "nextjs",
-    "ai",
-    "template",
-    "tailwindcss",
-    "shadcn-ui"
-  ],
+  "homepage": "https://tenscale.ai",
   "engines": {
     "node": ">=24"
   },
@@ -38,17 +24,12 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@base-ui/react": "^1.3.0",
-    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^1.6.0",
     "next": "16.2.1",
     "posthog-js": "^1.438.7",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "shadcn": "^4.1.0",
-    "tailwind-merge": "^3.5.0",
-    "tw-animate-css": "^1.4.0"
+    "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260923.1",

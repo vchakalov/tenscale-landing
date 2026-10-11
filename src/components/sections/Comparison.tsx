@@ -16,7 +16,7 @@ export function Comparison() {
             <div className="flex-1 flex flex-col gap-4">
               <div className="flex justify-center flex-1">
                 <img
-                  src="/images/agentica/comparison-stack.png"
+                  src="/images/tenscale/comparison-stack.png"
                   alt="Without Tenscale - a whole stack of tools and specialists"
                   className="w-full h-auto rounded-2xl border border-[#2d2d2d0d]"
                 />
@@ -33,7 +33,7 @@ export function Comparison() {
             <div className="flex-1 flex flex-col gap-4">
               <div className="flex justify-center flex-1">
                 <img
-                  src="/images/agentica/comparison-engine.png"
+                  src="/images/tenscale/comparison-engine.png"
                   alt="With Tenscale - one engine, end to end"
                   className="w-full h-auto rounded-2xl border border-[#2d2d2d0d]"
                 />

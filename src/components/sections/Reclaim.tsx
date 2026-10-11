@@ -30,7 +30,7 @@ export function Reclaim() {
               </div>
               <div className="relative">
                 <img
-                  src="/images/agentica/reclaim-describe.png"
+                  src="/images/tenscale/reclaim-describe.png"
                   alt=""
                   className="rounded-3xl border border-solid border-[#2d2d2d0d] w-full h-auto"
                 />
@@ -49,7 +49,7 @@ export function Reclaim() {
               </div>
               <div className="relative">
                 <img
-                  src="/images/agentica/reclaim-creatives.png"
+                  src="/images/tenscale/reclaim-creatives.png"
                   alt=""
                   className="rounded-3xl border border-solid border-[#2d2d2d0d] w-full h-auto"
                 />
@@ -68,7 +68,7 @@ export function Reclaim() {
               </div>
               <div className="relative">
                 <img
-                  src="/images/agentica/reclaim-funnels.png"
+                  src="/images/tenscale/reclaim-funnels.png"
                   alt=""
                   className="rounded-3xl border border-solid border-[#2d2d2d0d] w-full h-auto"
                 />

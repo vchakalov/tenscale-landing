@@ -1,6 +1,6 @@
 'use client'
 
-import { BookCallButton } from '@/components/agentica/CtaButtons'
+import { BookCallButton } from '@/components/sections/CtaButtons'
 
 export function Pricing() {
   return (

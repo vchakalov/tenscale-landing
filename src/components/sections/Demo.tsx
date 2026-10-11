@@ -1,6 +1,6 @@
 'use client';
 
-import { BookCallButton } from '@/components/agentica/CtaButtons';
+import { BookCallButton } from '@/components/sections/CtaButtons';
 
 export function Demo() {
   return (
@@ -23,7 +23,7 @@ export function Demo() {
           <div className="absolute -inset-4 opacity-70 rounded-3xl bg-linear-to-r from-[#F4F2EE] to-[#F4F2EE] blur-lg" />
           <div className="relative">
             <img
-              src="/images/agentica/demo-funnel.png"
+              src="/images/tenscale/demo-funnel.png"
               alt="Tenscale funnel builder"
               width={2752}
               height={1536}

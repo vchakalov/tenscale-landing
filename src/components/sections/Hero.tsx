@@ -1,4 +1,4 @@
-import { BookCallButton } from "@/components/agentica/CtaButtons";
+import { BookCallButton } from "@/components/sections/CtaButtons";
 
 export function Hero() {
   return (
@@ -107,7 +107,7 @@ export function Hero() {
             width="2752"
             height="1536"
             className="rounded-t-2xl border border-[#ECEAE4] shadow-[0_40px_90px_-40px_rgba(17,17,17,0.35)] mx-auto w-full max-w-5xl h-auto"
-            src="/images/agentica/hero-awareness.png"
+            src="/images/tenscale/hero-awareness.png"
           />
         </div>
       </div>

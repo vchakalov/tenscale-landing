@@ -121,7 +121,7 @@ const features: Feature[] = [
     ],
     tagBgClass: "bg-[#F4F2EE]",
     tagLabel: "Angle-matched landing variation, one line of code.",
-    image: "/images/agentica/features-lp.png",
+    image: "/images/tenscale/features-lp.png",
     icon: ClockIcon,
   },
   {
@@ -133,7 +133,7 @@ const features: Feature[] = [
     ],
     tagBgClass: "bg-[#F4F2EE]",
     tagLabel: "Constantly scanning for new angles to test.",
-    image: "/images/agentica/features-angles.png",
+    image: "/images/tenscale/features-angles.png",
     icon: MailIcon,
   },
   {
@@ -145,7 +145,7 @@ const features: Feature[] = [
     ],
     tagBgClass: "bg-[#F4F2EE]",
     tagLabel: "Built on proven structures, per angle and audience.",
-    image: "/images/agentica/features-creatives.png",
+    image: "/images/tenscale/features-creatives.png",
     icon: LockIcon,
   },
   {
@@ -157,7 +157,7 @@ const features: Feature[] = [
     ],
     tagBgClass: "bg-[#F4F2EE]",
     tagLabel: "If-this-then-that on your live metrics.",
-    image: "/images/agentica/features-workflows.png",
+    image: "/images/tenscale/features-workflows.png",
     icon: EyeIcon,
   },
   {
@@ -169,7 +169,7 @@ const features: Feature[] = [
     ],
     tagBgClass: "bg-[#F4F2EE]",
     tagLabel: "Chats leads, handles objections and books calls.",
-    image: "/images/agentica/features-messenger.png",
+    image: "/images/tenscale/features-messenger.png",
     icon: BrainIcon,
   },
 ];
