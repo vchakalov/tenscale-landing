@@ -150,8 +150,7 @@ const SECTIONS: Section[] = [
           We do not sell your data. Some US state laws, including
           California&rsquo;s, count the reports to Meta described above as
           &ldquo;sharing&rdquo; personal information for advertising. You can opt
-          out of them, as described below, and we honour the Global Privacy
-          Control signal as that opt-out.
+          out of them, as described below.
         </p>
       </>
     ),
@@ -167,10 +166,8 @@ const SECTIONS: Section[] = [
               {CONTACT_EMAIL}
             </a>{" "}
             and we will stop reporting your booking, your calls and any deal with
-            us to Meta. If your browser sends the Global Privacy Control signal,
-            we report none of your visits to Meta: the page loads without the Meta
-            pixel and without Meta&rsquo;s cookies. On Meta&rsquo;s side, you can
-            turn off personalised ads in your{" "}
+            us to Meta. On Meta&rsquo;s side, you can turn off personalised ads in
+            your{" "}
             <a
               className="underline"
               href="https://accountscenter.facebook.com/ad_preferences"
