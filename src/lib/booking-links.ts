@@ -12,13 +12,30 @@ export interface BookingLinks {
   rescheduleLink: string | null;
 }
 
+/**
+ * The visitor's ids, which the bridge stores on the lead when iClosed did not
+ * pass them on: iClosed never sees our visitor id, and may miss the click id.
+ * With them, every later stage reaches Meta as the same person.
+ */
+function visitorQuery(): string {
+  if (typeof window === "undefined") return "";
+  const ag = (window as unknown as { __ag?: { externalId?: string; fbp?: string | null; fbc?: string | null } }).__ag;
+  if (!ag) return "";
+  const params = new URLSearchParams();
+  if (ag.externalId) params.set("vid", ag.externalId);
+  if (ag.fbp) params.set("fbp", ag.fbp);
+  if (ag.fbc) params.set("fbc", ag.fbc);
+  const query = params.toString();
+  return query ? `&${query}` : "";
+}
+
 /** One ask. A miss, a network error or a non-JSON answer is simply "not yet". */
 export async function fetchBookingLinks(
   email: string,
   callId: string,
   signal?: AbortSignal,
 ): Promise<BookingLinks | null> {
-  const url = `${BRIDGE_URL}/booking?email=${encodeURIComponent(email)}&id=${encodeURIComponent(callId)}`;
+  const url = `${BRIDGE_URL}/booking?email=${encodeURIComponent(email)}&id=${encodeURIComponent(callId)}${visitorQuery()}`;
   try {
     const res = await fetch(url, { signal, cache: "no-store" });
     if (!res.ok) return null;
