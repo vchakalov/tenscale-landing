@@ -6,7 +6,6 @@ import { NextSteps } from "@/components/ec/NextSteps";
 import { ResultShots } from "@/components/ec/ResultShots";
 import { SiteFooter } from "@/components/ec/SiteFooter";
 import { ThankYouFold } from "@/components/ec/ThankYouFold";
-import { VideoSources } from "@/components/ec/VideoSources";
 
 export const metadata: Metadata = {
   title: "Tenscale: your call is booked",
@@ -26,8 +25,9 @@ export const metadata: Metadata = {
  * Order follows the confirmation-page plan
  * (docs/superpowers/specs/2026-09-27-confirmation-page-plan.md): Ben's video
  * and the two actions that keep the call alive, then short answers, proof in
- * volume, one account up close, what to prepare, what happens next with the
- * guarantee, and the sources behind the video.
+ * volume, one account up close, what to prepare, and what happens next with
+ * the guarantee. The plan also had the sources behind the video's numbers; the
+ * final video quotes none, so that block is gone.
  *
  * There is no CTA and no booking modal here on purpose. The visitor already did
  * the thing the button asks for, and a second "Book Free Demo" after a booking
@@ -42,7 +42,6 @@ export default function Page() {
       <CaseStudy />
       <CallPrep />
       <NextSteps />
-      <VideoSources />
       <SiteFooter />
     </div>
   );

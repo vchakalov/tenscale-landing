@@ -181,8 +181,6 @@ Tenscale was called Agentica until September 2026.
 ## Open items at handover (2026-10-11)
 
 - The four answer videos on `/thank-you` are not filmed yet.
-- "Sources for every number in the video" (`VideoSources.tsx`) lists claims from an
-  earlier script. The 2:33 thank-you video makes none of them.
 - The company page footer links to `/terms` and `/impressum`, which do not exist yet.
 - Code comments cite specs under `docs/superpowers/specs/`. Those live in the internal
   planning repo, not here.
