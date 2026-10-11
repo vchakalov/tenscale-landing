@@ -440,16 +440,28 @@ export function Vsl({
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  /*
+    The muted preview runs only while its player is on screen. A page hides one
+    of its two players with CSS, so the hidden copy stays still and the film is
+    not downloaded twice; a viewport that crosses 800px after load (a tablet
+    turned, a window resized) swaps which copy that is, and the newly shown one
+    starts. Once the visitor has chosen to watch, nothing here pauses it.
+  */
+  const startedRef = useRef(false);
+  useEffect(() => {
+    startedRef.current = started;
+  }, [started]);
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    // The hidden layout's copy stays still, so the film is not downloaded twice.
-    if (video.getClientRects().length === 0) {
-      video.pause();
-      return;
-    }
-    // Autoplay is only allowed while muted; a rejected play is not an error.
-    void video.play().catch(() => {});
+    const observer = new IntersectionObserver(([entry]) => {
+      if (startedRef.current) return;
+      // Autoplay is only allowed while muted; a rejected play is not an error.
+      if (entry.isIntersecting) void video.play().catch(() => {});
+      else video.pause();
+    });
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   /*
