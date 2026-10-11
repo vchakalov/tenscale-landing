@@ -149,8 +149,8 @@ const SECTIONS: Section[] = [
         <p>
           We do not sell your data. Some US state laws, including
           California&rsquo;s, count the reports to Meta described above as
-          &ldquo;sharing&rdquo; personal information for advertising. You can opt
-          out of them, as described below.
+          &ldquo;sharing&rdquo; personal information for advertising. Meta&rsquo;s
+          own controls for this are described below.
         </p>
       </>
     ),
@@ -161,12 +161,7 @@ const SECTIONS: Section[] = [
       <>
         <ul>
           <li>
-            <strong>Advertising.</strong> Write to{" "}
-            <a className="underline" href={`mailto:${CONTACT_EMAIL}`}>
-              {CONTACT_EMAIL}
-            </a>{" "}
-            and we will stop reporting your booking, your calls and any deal with
-            us to Meta. On Meta&rsquo;s side, you can turn off personalised ads in
+            <strong>Advertising.</strong> You can turn off personalised ads in
             your{" "}
             <a
               className="underline"
