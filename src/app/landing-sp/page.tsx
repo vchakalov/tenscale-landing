@@ -55,9 +55,9 @@ export default function Page() {
         note="Messages and screenshots, straight out of client accounts. Click any one to read it full size."
       />
       <Benefits />
-      <CtaBlock />
+      <CtaBlock trackId="after_benefits" />
       <Objections />
-      <CtaBlock />
+      <CtaBlock trackId="after_objections" />
       <SiteFooter />
       {/* The bar is fixed, so the last section needs room to clear it. */}
       <div aria-hidden="true" className="h-[76px] min-[801px]:hidden" />
