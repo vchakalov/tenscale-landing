@@ -22,18 +22,33 @@ function utmFrom(url: URL): Record<string, string> {
   return out;
 }
 
+/*
+  base64 of the UTF-8 bytes. btoa alone takes only Latin-1, so a UTM value in
+  Cyrillic or with an emoji threw, and the page failed. ASCII-only cookies
+  written before this read back the same.
+*/
+function toBase64(text: string): string {
+  let binary = '';
+  for (const byte of new TextEncoder().encode(text)) binary += String.fromCharCode(byte);
+  return btoa(binary);
+}
+
+function fromBase64(encoded: string): string {
+  return new TextDecoder().decode(Uint8Array.from(atob(encoded), (c) => c.charCodeAt(0)));
+}
+
 export function parseCookie(header: string | null): Partial<TrackingContext> | null {
   const raw = readRawCookie(header);
   if (!raw) return null;
   try {
-    return JSON.parse(atob(decodeURIComponent(raw))) as Partial<TrackingContext>;
+    return JSON.parse(fromBase64(decodeURIComponent(raw))) as Partial<TrackingContext>;
   } catch {
     return null; // a damaged cookie is the same as no cookie
   }
 }
 
 export function serializeCookie(ctx: TrackingContext): string {
-  return encodeURIComponent(btoa(JSON.stringify(ctx)));
+  return encodeURIComponent(toBase64(JSON.stringify(ctx)));
 }
 
 /** The fbclid inside an fbc value, `fb.1.<ms>.<fbclid>`. */

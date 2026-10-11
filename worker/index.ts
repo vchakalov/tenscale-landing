@@ -84,7 +84,8 @@ export default {
 
     const asset = await env.ASSETS.fetch(request);
     try {
-      return await withTracking(request, url, asset, env, ctx);
+      // A copy: tracking reads the body, and the fallback needs it unread.
+      return await withTracking(request, url, asset.clone(), env, ctx);
     } catch (error) {
       // The page must never break because of tracking. Serve it untouched.
       console.log(JSON.stringify({ level: 'error', message: `tracking failed: ${String(error)}` }));

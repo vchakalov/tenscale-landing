@@ -46,6 +46,34 @@ describe('page requests', () => {
     expect(await res.text()).toMatch(/"externalIdHash":"[0-9a-f]{64}"/);
   });
 
+  it('serves a page whose UTM is in Cyrillic, and reads its cookie back', async () => {
+    const res = await worker.fetch(
+      new Request('https://tenscale.ai/landing/?utm_campaign=%D0%9F%D1%83%D1%81%D0%BD%D0%B8%20%F0%9F%9A%80'),
+      envWith(html),
+      ctx,
+    );
+    expect(res.status).toBe(200);
+    const cookie = res.headers.getSetCookie().find((c) => c.startsWith('ag_ctx='))!.split(';')[0];
+    const back = await worker.fetch(new Request('https://tenscale.ai/', { headers: { cookie } }), envWith(html), ctx);
+    expect(await back.text()).toContain('"utm_campaign":"Пусни 🚀"');
+  });
+
+  it('still serves the page when tracking throws after reading it', async () => {
+    // The cookie is encoded after the page body has been read: the case that took the site down.
+    const spy = vi.spyOn(globalThis, 'btoa').mockImplementation(() => {
+      throw new Error('boom');
+    });
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+    try {
+      const res = await worker.fetch(new Request('https://tenscale.ai/landing/'), envWith(html), ctx);
+      expect(res.status).toBe(200);
+      expect(await res.text()).toBe(html);
+    } finally {
+      spy.mockRestore();
+      log.mockRestore();
+    }
+  });
+
   it('leaves a non-HTML asset untouched', async () => {
     const env = { ASSETS: { fetch: async () => new Response('body{}', { headers: { 'content-type': 'text/css' } }) } } as never;
     const res = await worker.fetch(new Request('https://tenscale.ai/style.css'), env, ctx);
