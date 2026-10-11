@@ -32,7 +32,7 @@ import { metaEvent, track } from "@/lib/analytics";
 export const VSL_ORIGIN = "https://media.tenscale.ai";
 
 export const VSL_SOURCE = {
-  src: `${VSL_ORIGIN}/Tenscale_corrected_2%20(1).mp4`,
+  src: `${VSL_ORIGIN}/Tenscale%20Final.mp4`,
   poster: "/images/vsl-poster.webp",
 };
 
@@ -119,10 +119,16 @@ export interface PlayerControls {
   onToggleMute: () => void;
   onCycleRate: () => void;
   onFullscreen: () => void;
+  /** Present only when the video has subtitles. */
+  captions?: { on: boolean; onToggle: () => void };
 }
 
-function ControlIcon({ name }: { name: "play" | "pause" | "sound" | "muted" | "fullscreen" }) {
+type IconName = "play" | "pause" | "sound" | "muted" | "fullscreen" | "captionsOn" | "captionsOff";
+
+function ControlIcon({ name }: { name: IconName }) {
   const common = { fill: "none", stroke: "currentColor", strokeWidth: 1.9, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  /* The two Cs of "CC", drawn rather than typed so they do not depend on a font. */
+  const cc = "M10.4 10.2a2.6 2.6 0 1 0 0 3.6M16.4 10.2a2.6 2.6 0 1 0 0 3.6";
   return (
     <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden="true">
       {name === "play" && <path d="M8 5.5v13l10-6.5z" fill="currentColor" />}
@@ -131,6 +137,19 @@ function ControlIcon({ name }: { name: "play" | "pause" | "sound" | "muted" | "f
       {name === "sound" && <path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" {...common} />}
       {name === "muted" && <path d="M16.5 9.5l5 5M21.5 9.5l-5 5" {...common} />}
       {name === "fullscreen" && <path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" {...common} />}
+      {/* On: a filled chip, the way every player marks subtitles that are showing. Off: the outline only. */}
+      {name === "captionsOn" && (
+        <>
+          <rect x="2.5" y="5" width="19" height="14" rx="3" fill="currentColor" />
+          <path d={cc} {...common} stroke="#001232" />
+        </>
+      )}
+      {name === "captionsOff" && (
+        <>
+          <rect x="3" y="5.5" width="18" height="13" rx="2.6" {...common} strokeWidth={1.6} />
+          <path d={cc} {...common} />
+        </>
+      )}
     </svg>
   );
 }
@@ -244,6 +263,17 @@ function ChapterBar({
           </button>
 
           <div className="ml-auto flex shrink-0 items-center gap-[4px]">
+            {controls.captions && (
+              <button
+                type="button"
+                onClick={controls.captions.onToggle}
+                aria-pressed={controls.captions.on}
+                aria-label="Subtitles"
+                className={CONTROL_BUTTON}
+              >
+                <ControlIcon name={controls.captions.on ? "captionsOn" : "captionsOff"} />
+              </button>
+            )}
             <button
               type="button"
               onClick={controls.onCycleRate}
@@ -314,6 +344,8 @@ export function Vsl({
   estimatedDuration,
   placeholder = "VSL goes here. Set `VSL_SOURCE.src` in Vsl.tsx.",
   trackAs,
+  captions,
+  promptGlass = false,
 }: {
   className?: string;
   source?: { src: string; poster: string };
@@ -332,6 +364,18 @@ export function Vsl({
    * Without it the player reports nothing.
    */
   trackAs?: string;
+  /**
+   * A WebVTT file, served from this site. With one, subtitles are on from the
+   * first frame, the muted preview included, and a CC button in the controls
+   * turns them off. The controls live in the chapter bar, so this needs
+   * chapters too.
+   */
+  captions?: string;
+  /**
+   * Draws the unmute panel see-through, for a talking head whose face is in
+   * the middle of the frame, where the panel sits.
+   */
+  promptGlass?: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   /* `started` is the unmute overlay's state, not the sound's: once the visitor
@@ -396,6 +440,54 @@ export function Vsl({
     // Autoplay is only allowed while muted; a rejected play is not an error.
     void video.play().catch(() => {});
   }, []);
+
+  /*
+    Subtitles. The browser loads the track but does not draw it ("hidden"):
+    its own captions sit at the very bottom of the frame, under the chapter
+    bar. The page draws the current line itself, just above the bar. In full
+    screen only the video element is on screen, so there the browser draws
+    them ("showing"), unless the visitor turned them off.
+  */
+  const trackRef = useRef<HTMLTrackElement>(null);
+  const [captionsOn, setCaptionsOn] = useState(true);
+  const [cue, setCue] = useState("");
+  const [fullscreenNow, setFullscreenNow] = useState(false);
+
+  useEffect(() => {
+    const textTrack = trackRef.current?.track;
+    if (!textTrack) return;
+    textTrack.mode = captionsOn && fullscreenNow ? "showing" : "hidden";
+  }, [captionsOn, fullscreenNow]);
+
+  useEffect(() => {
+    const textTrack = trackRef.current?.track;
+    const video = videoRef.current;
+    if (!textTrack || !video) return;
+    const onCueChange = () => {
+      const active = Array.from(textTrack.activeCues ?? []) as VTTCue[];
+      setCue(active.map((c) => c.text.replace(/<[^>]+>/g, "")).join("\n"));
+    };
+    const onFullscreenChange = () => setFullscreenNow(document.fullscreenElement === video);
+    // iPhone Safari has no Fullscreen API on a video, only these two events.
+    const onBegin = () => setFullscreenNow(true);
+    const onEnd = () => setFullscreenNow(false);
+    textTrack.addEventListener("cuechange", onCueChange);
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    video.addEventListener("webkitbeginfullscreen", onBegin);
+    video.addEventListener("webkitendfullscreen", onEnd);
+    return () => {
+      textTrack.removeEventListener("cuechange", onCueChange);
+      document.removeEventListener("fullscreenchange", onFullscreenChange);
+      video.removeEventListener("webkitbeginfullscreen", onBegin);
+      video.removeEventListener("webkitendfullscreen", onEnd);
+    };
+  }, [captions]);
+
+  function toggleCaptions() {
+    const next = !captionsOn;
+    setCaptionsOn(next);
+    report("vsl_captions", { on: next });
+  }
 
   function unmute({ restart, via }: { restart: boolean; via: string }) {
     const video = videoRef.current;
@@ -490,12 +582,34 @@ export function Vsl({
               onLoadedMetadata={(event) =>
                 setDuration(event.currentTarget.duration)
               }
-            />
+            >
+              {captions && (
+                <track ref={trackRef} kind="subtitles" src={captions} srcLang="en" label="English" default />
+              )}
+            </video>
           ) : (
             /* No cut yet. The frame still shows so the fold can be judged. */
             <div className="flex h-full w-full items-center justify-center bg-[#001232]">
               <p className="px-[24px] text-center font-[family-name:var(--font-pt-serif)] text-[15px] leading-[22px] text-[rgba(244,241,234,0.45)]">
                 {placeholder}
+              </p>
+            </div>
+          )}
+
+          {captions && captionsOn && cue !== "" && (
+            /*
+              The current line, just above the chapter bar and never on it.
+              It comes before the unmute prompt in the markup, so during the
+              muted preview it sits under the dimmed layer: still readable, and
+              the prompt stays the one thing on top. On a phone the prompt fills
+              the frame and the line would peek out from under it, so there it
+              waits until the visitor unmutes.
+            */
+            <div
+              className={`pointer-events-none absolute inset-x-0 flex justify-center px-[8%] ${hasChapters ? "bottom-[78px] max-[800px]:bottom-[64px]" : "bottom-[20px] max-[800px]:bottom-[10px]"} ${started ? "" : "max-[800px]:hidden"}`}
+            >
+              <p className="whitespace-pre-line rounded-[8px] bg-[rgba(0,18,50,0.8)] px-[14px] py-[5px] text-center font-[family-name:var(--font-inter)] text-[clamp(16px,1.4vw,22px)] leading-[1.4] font-medium text-[#f4f1ea] max-[800px]:rounded-[6px] max-[800px]:px-[8px] max-[800px]:py-[3px] max-[800px]:text-[13px]">
+                {cue}
               </p>
             </div>
           )}
@@ -512,6 +626,10 @@ export function Vsl({
               colour mass on the screen and competed with the actual CTA below.
               Only the speaker mark carries the accent, and a cream hairline
               keeps the panel separate from whatever frame is behind it.
+
+              The glass panel is the same panel, see-through, for a talking
+              head: the face stays visible under it. Its halo is a ring rather
+              than a fill, because a fill behind glass would wash the face out.
             */
             <button
               type="button"
@@ -523,10 +641,10 @@ export function Vsl({
                 {/* Behind the panel, same shape, scaling outward and fading. */}
                 <span
                   aria-hidden="true"
-                  className="ec-pulse-ring absolute inset-0 rounded-[16px] bg-[rgba(244,241,234,0.75)]"
+                  className={`ec-pulse-ring absolute inset-0 rounded-[16px] ${promptGlass ? "border-2 border-[rgba(244,241,234,0.9)]" : "bg-[rgba(244,241,234,0.75)]"}`}
                 />
 
-                <span className={`relative flex w-full flex-col items-center gap-[10px] rounded-[16px] border border-[rgba(244,241,234,0.28)] bg-[#001232] px-[26px] py-[22px] text-center ${hasChapters ? "max-[800px]:gap-[4px] max-[800px]:py-[10px]" : ""} shadow-[0_8px_1px_0_rgba(0,0,0,0.22)] transition-transform duration-200 group-hover:-translate-y-px group-active:scale-[0.98]`}>
+                <span className={`relative flex w-full flex-col items-center gap-[10px] rounded-[16px] border border-[rgba(244,241,234,0.28)] px-[26px] py-[22px] text-center ${hasChapters ? "max-[800px]:gap-[4px] max-[800px]:py-[10px]" : ""} ${promptGlass ? "bg-[rgba(0,18,50,0.4)] [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]" : "bg-[#001232] shadow-[0_8px_1px_0_rgba(0,0,0,0.22)]"} transition-transform duration-200 group-hover:-translate-y-px group-active:scale-[0.98]`}>
                   <SpeakerIcon className="h-[34px] w-[34px] text-[#0158ff]" />
                   <span className="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[26px] font-bold text-[#f4f1ea] max-[800px]:text-[17px] max-[800px]:leading-[24px]">
                     Your Video Is Playing
@@ -556,6 +674,7 @@ export function Vsl({
                 onToggleMute: toggleMute,
                 onCycleRate: cycleRate,
                 onFullscreen: fullscreen,
+                captions: captions ? { on: captionsOn, onToggle: toggleCaptions } : undefined,
               }}
             />
           )}

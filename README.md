@@ -142,8 +142,13 @@ email. Heatmaps and session recordings are on, with inputs masked.
 
 - **Landing VSL**: one 1080p MP4 on Cloudflare R2 at `media.tenscale.ai`. File name
   and chapter times: `VSL_SOURCE` and `VSL_CHAPTERS` in `src/components/ec/Vsl.tsx`.
-- **Ben's thank-you video**: `THANK_YOU_VIDEO` and `THANK_YOU_CHAPTERS` in
-  `src/components/ec/ThankYouFold.tsx`. An empty `src` shows a placeholder.
+- **Ben's thank-you video**: `tenscale-thank-you.mp4` on the same R2 bucket (`media`),
+  remuxed to faststart. `THANK_YOU_VIDEO` and `THANK_YOU_CHAPTERS` in
+  `src/components/ec/ThankYouFold.tsx`. Its subtitles are
+  `public/captions/thank-you.en.vtt`, on by default with a CC button to turn them off.
+  They are served from this site rather than R2, because a `<track>` on another origin
+  needs CORS. Upload a new cut with
+  `npx wrangler r2 object put media/<file> --file <path> --content-type video/mp4 --remote`.
 - **Four answer videos** on `/thank-you`: `BREAKOUTS` in
   `src/components/ec/BreakoutVideos.tsx`. An empty `src` shows the card as text only.
 - Client screenshots for the proof wall: `public/proof/`.
@@ -175,10 +180,10 @@ Tenscale was called Agentica until September 2026.
 
 ## Open items at handover (2026-10-11)
 
-- Ben's thank-you video and the four answer videos are not filmed yet.
+- The four answer videos on `/thank-you` are not filmed yet.
+- "Sources for every number in the video" (`VideoSources.tsx`) lists claims from an
+  earlier script. The 2:33 thank-you video makes none of them.
 - The company page footer links to `/terms` and `/impressum`, which do not exist yet.
-- On `/landing-sp` the two mid-page CTAs have no `trackId`, so their clicks do not reach
-  Meta as `ButtonClick` (they do on `/landing`).
 - Code comments cite specs under `docs/superpowers/specs/`. Those live in the internal
   planning repo, not here.
 

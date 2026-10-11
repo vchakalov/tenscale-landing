@@ -25,6 +25,11 @@
 /contact/*
   Content-Type: text/vcard; charset=utf-8
 
+# Subtitles for the thank-you video. A <track> only loads text/vtt; with
+# nosniff, any other type and the captions silently never appear.
+/captions/*
+  Content-Type: text/vtt; charset=utf-8
+
 # Cheap, and none of it touches how the page behaves.
 /*
   X-Content-Type-Options: nosniff

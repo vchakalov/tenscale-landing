@@ -25,21 +25,32 @@ import { type Chapter, Vsl } from "./Vsl";
  */
 
 /**
- * Ben's video. Fill these in when the cut is ready; an empty `src` renders the
- * placeholder. Chapter times follow the script plan in
- * docs/superpowers/specs/2026-09-27-confirmation-page-plan.md and should be
- * moved to match the final edit.
+ * Ben's video (2:33), on R2 next to the landing VSL, faststart like it. An
+ * empty `src` renders the placeholder.
+ *
+ * The address is written out rather than built from `VSL_ORIGIN`: this is a
+ * server component and Vsl.tsx is a client module, so a constant imported
+ * from it arrives here as a client reference, not as the string.
  */
-export const THANK_YOU_VIDEO = { src: "", poster: "" };
+export const THANK_YOU_VIDEO = {
+  src: "https://media.tenscale.ai/tenscale-thank-you.mp4",
+  poster: "/images/thank-you-poster.webp",
+};
 
+/**
+ * The editor's subtitles, on by default. Served from this site, not from R2:
+ * a <track> on another origin would need CORS on the bucket.
+ */
+const THANK_YOU_CAPTIONS = "/captions/thank-you.en.vtt";
+
+/** Each chapter starts on the first word of its part, read from the subtitles. */
 const THANK_YOU_CHAPTERS: readonly Chapter[] = [
-  { at: 0, label: "Who I am" },
-  { at: 30, label: "Meta changed the job" },
-  { at: 120, label: "Volume finds winners" },
-  { at: 195, label: "Being wrong costs more" },
-  { at: 255, label: "The squeeze on your P&L" },
-  { at: 345, label: "The gap is forming" },
-  { at: 420, label: "Who wins, and our call" },
+  { at: 0, label: "Why I made this video" },
+  { at: 10, label: "What's happening to agencies" },
+  { at: 48.4, label: "What our call is about" },
+  { at: 92.2, label: "If it's a fit, and if it's not" },
+  { at: 105.4, label: "One thing to think about" },
+  { at: 136.85, label: "Bring your questions" },
 ];
 
 const VIDEO_PLACEHOLDER =
@@ -69,7 +80,7 @@ function SubheadCopy() {
         Everything on this page is prep for our call.
       </span>
       <span className="mt-[4px] block text-[rgba(0,18,50,0.7)]">
-        Start with the 7-minute video, then the two quick steps under it.
+        Start with the 3-minute video, then the two quick steps under it.
       </span>
     </>
   );
@@ -133,8 +144,10 @@ export function ThankYouFold() {
             className={`mx-auto mt-[30px] w-full text-left ${COLUMN}`}
             source={THANK_YOU_VIDEO}
             chapters={THANK_YOU_CHAPTERS}
+            captions={THANK_YOU_CAPTIONS}
+            promptGlass
             trackAs="thank_you"
-            estimatedDuration={480}
+            estimatedDuration={153}
             placeholder={VIDEO_PLACEHOLDER}
           />
 
@@ -170,8 +183,10 @@ export function ThankYouFold() {
           className="mt-[20px] w-full text-left"
           source={THANK_YOU_VIDEO}
           chapters={THANK_YOU_CHAPTERS}
-            trackAs="thank_you"
-            estimatedDuration={480}
+          captions={THANK_YOU_CAPTIONS}
+          promptGlass
+          trackAs="thank_you"
+          estimatedDuration={153}
           placeholder={VIDEO_PLACEHOLDER}
         />
 
