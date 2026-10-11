@@ -395,8 +395,14 @@ export function Vsl({
   */
   const fired = useRef(new Set<string>());
   const lastChapter = useRef(-1);
+  /* Pages render one player per layout and hide the other with CSS. Only the
+     one on screen speaks: the hidden one reported every muted view twice. */
+  function onScreen(): boolean {
+    const video = videoRef.current;
+    return !video || video.getClientRects().length > 0;
+  }
   function report(event: string, properties: Record<string, unknown> = {}) {
-    if (trackAs) track(event, { video: trackAs, ...properties });
+    if (trackAs && onScreen()) track(event, { video: trackAs, ...properties });
   }
   function reportOnce(key: string, event: string, properties: Record<string, unknown> = {}) {
     if (fired.current.has(key)) return;
@@ -411,7 +417,7 @@ export function Vsl({
       reportOnce(`p:${sound}:${step}`, "vsl_progress", { percent: step, sound, seconds: Math.round(video.currentTime) });
     }
     const metaVideo = META_VIDEO_IDS[trackAs];
-    if (sound && metaVideo) {
+    if (sound && metaVideo && onScreen()) {
       for (const mark of [25, 50, 75, 95]) {
         if (share * 100 >= mark && !fired.current.has(`meta:${mark}`)) {
           fired.current.add(`meta:${mark}`);
@@ -437,6 +443,11 @@ export function Vsl({
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    // The hidden layout's copy stays still, so the film is not downloaded twice.
+    if (video.getClientRects().length === 0) {
+      video.pause();
+      return;
+    }
     // Autoplay is only allowed while muted; a rejected play is not an error.
     void video.play().catch(() => {});
   }, []);

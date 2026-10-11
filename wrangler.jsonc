@@ -19,10 +19,11 @@
     // straight from the asset edge, the Worker never runs, and the first-party
     // cookie is never written — so the fbclid is lost on Safari and behind an
     // ad blocker, which is the one failure this Worker exists to prevent.
+    // "/landing*" covers every landing variant (/landing, /landing-sp,
+    // /landing-<anything>), so a new A/B page is tracked from its first visit.
     "run_worker_first": [
       "/",
-      "/landing", "/landing/*",
-      "/landing-sp", "/landing-sp/*",
+      "/landing*",
       "/thank-you", "/thank-you/*",
       "/privacy", "/privacy/*",
       "/robots.txt", "/sitemap.xml",
