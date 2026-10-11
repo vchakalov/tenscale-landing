@@ -72,7 +72,7 @@ export function ContactCard({ className = "" }: { className?: string }) {
         <a
           href={CONTACT.vcard}
           download="Ben - Tenscale.vcf"
-          className="mt-[24px] inline-flex items-center gap-[12px] rounded-[100px] bg-(--ec-accent) px-[clamp(26px,2.2vw,38px)] py-[clamp(12px,1vw,15px)] font-[family-name:var(--font-inter)] text-[clamp(16px,1.15vw,19px)] leading-[25px] font-medium whitespace-nowrap text-(--ec-on-accent) shadow-[0_8px_1px_0_var(--ec-cta-shadow)] transition-transform duration-200 hover:-translate-y-px active:scale-[0.98]"
+          className="mt-[24px] inline-flex items-center gap-[12px] rounded-[100px] bg-(--ec-cta) px-[clamp(26px,2.2vw,38px)] py-[clamp(12px,1vw,15px)] font-[family-name:var(--font-inter)] text-[clamp(16px,1.15vw,19px)] leading-[25px] font-medium whitespace-nowrap text-(--ec-on-cta) shadow-[0_8px_1px_0_var(--ec-cta-shadow)] transition-transform duration-200 hover:-translate-y-px active:scale-[0.98]"
         >
           <PersonIcon className="h-[20px] w-[20px] shrink-0" />
           Save My Contact

@@ -140,6 +140,8 @@ body {
   --ec-on-frame: var(--ec-cream);
   --ec-shadow: rgba(0, 18, 50, 0.12);  /* hard offset shadows */
   --ec-band: var(--ec-blue);           /* full-width coloured band, under on-frame text */
+  --ec-cta: var(--ec-accent);          /* button fill: the CTAs, add-to-calendar, save-contact */
+  --ec-on-cta: var(--ec-on-accent);    /* button label */
   --ec-cta-shadow: rgba(0, 0, 0, 0.1); /* the raised CTA's offset shadow */
   --ec-logo: var(--ec-accent);         /* the TS mark */
   --ec-card: var(--ec-bg);             /* bordered cards on the page ground */
@@ -196,8 +198,10 @@ body {
 /* Tenscale brand, light: white ground, near-black ink and frames, and the lime
    only where it holds up on white. Lime text on white is unreadable, so the
    accent words turn ink with a lime highlighter stroke behind them (.ec-mark),
-   and the lime goes into fills: buttons, discs, card shadows, and the accents
-   inside the black video frame. Used by the *-wh pages. */
+   and the lime goes into fills: discs, card shadows, and the accents inside
+   the black video frame. The buttons are blue instead: a lime button sits at
+   1.2:1 against white and does not read as the thing to click. Used by
+   /landing, /landing-sp and /thank-you. */
 .ec-landing.ec-theme-light {
   --ec-bg: #ffffff;
   --ec-ink: #111111;
@@ -209,6 +213,8 @@ body {
   --ec-on-frame: #ffffff;
   --ec-shadow: #e2f93b;
   --ec-band: #111111;
+  --ec-cta: #1f4bff;
+  --ec-on-cta: #ffffff;
   --ec-cta-shadow: #111111;
   --ec-logo: #111111;
   --ec-ink-rgb: 17, 17, 17;
