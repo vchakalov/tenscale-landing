@@ -132,13 +132,16 @@ body {
      page that does not opt into a theme renders exactly as before. */
   --ec-bg: var(--ec-cream);            /* page and section ground */
   --ec-ink: var(--ec-navy);            /* text, rules, icon strokes */
-  --ec-accent: var(--ec-blue);         /* CTA fill, the few accent words */
+  --ec-accent: var(--ec-blue);         /* CTA fill, accents on dark frames */
+  --ec-accent-text: var(--ec-accent);  /* the few accent words on the page ground */
   --ec-on-accent: var(--ec-cream);     /* CTA label */
   --ec-frame: var(--ec-navy);          /* VSL frame, controls and panels */
   --ec-frame-border: var(--ec-navy);
   --ec-on-frame: var(--ec-cream);
   --ec-shadow: rgba(0, 18, 50, 0.12);  /* hard offset shadows */
   --ec-band: var(--ec-blue);           /* full-width coloured band, under on-frame text */
+  --ec-cta-shadow: rgba(0, 0, 0, 0.1); /* the raised CTA's offset shadow */
+  --ec-logo: var(--ec-accent);         /* the TS mark */
   /* Channels of the same roles, for translucent uses as rgba(var(), a). */
   --ec-ink-rgb: 0, 18, 50;
   --ec-accent-rgb: 1, 88, 255;
@@ -171,6 +174,39 @@ body {
   color: var(--ec-ink);
 }
 .ec-theme-black ::selection { background: #e2f93b; color: #111111; }
+
+/* Tenscale brand, light: white ground, near-black ink and frames, and the lime
+   only where it holds up on white. Lime text on white is unreadable, so the
+   accent words turn ink with a lime highlighter stroke behind them (.ec-mark),
+   and the lime goes into fills: buttons, discs, card shadows, and the accents
+   inside the black video frame. Used by the *-white-yellow-black pages. */
+.ec-landing.ec-theme-light {
+  --ec-bg: #ffffff;
+  --ec-ink: #111111;
+  --ec-accent: #e2f93b;
+  --ec-accent-text: #111111;
+  --ec-on-accent: #111111;
+  --ec-frame: #111111;
+  --ec-frame-border: #111111;
+  --ec-on-frame: #ffffff;
+  --ec-shadow: #e2f93b;
+  --ec-band: #111111;
+  --ec-cta-shadow: #111111;
+  --ec-logo: #111111;
+  --ec-ink-rgb: 17, 17, 17;
+  --ec-accent-rgb: 226, 249, 59;
+  --ec-frame-rgb: 17, 17, 17;
+  --ec-on-frame-rgb: 255, 255, 255;
+
+  background-color: var(--ec-bg);
+  color: var(--ec-ink);
+}
+.ec-theme-light ::selection { background: #e2f93b; color: #111111; }
+.ec-theme-light .ec-mark {
+  background-image: linear-gradient(transparent 58%, #e2f93b 58%, #e2f93b 94%, transparent 94%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
 
 /* "Only 2 spots left" pill, the one element on the page with a real hover. */
 .ec-landing .ec-notice-box {

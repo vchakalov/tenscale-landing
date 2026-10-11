@@ -80,12 +80,12 @@ function BreakoutCard({ item, index }: { item: Breakout; index: number }) {
         </div>
       )}
       <div className="flex flex-1 items-start gap-[clamp(16px,1.8vw,28px)] px-[clamp(20px,2.2vw,36px)] py-[clamp(22px,2.2vw,32px)] text-left">
-        <span className="shrink-0 font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.4vw,40px)] leading-none font-bold text-(--ec-accent) tabular-nums">
+        <span className="shrink-0 font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.4vw,40px)] leading-none font-bold text-(--ec-accent-text) tabular-nums">
           {String(index + 1).padStart(2, "0")}
         </span>
         <div className="min-w-0">
           {item.src !== "" && (
-            <p className="mb-[10px] font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-(--ec-accent) uppercase">
+            <p className="mb-[10px] font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-(--ec-accent-text) uppercase">
               Video · {item.minutes}
             </p>
           )}

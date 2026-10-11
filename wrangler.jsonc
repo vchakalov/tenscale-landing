@@ -26,6 +26,7 @@
       "/landing*",
       "/thank-you", "/thank-you/*",
       "/thank-you-black", "/thank-you-black/*",
+      "/thank-you-white-yellow-black", "/thank-you-white-yellow-black/*",
       "/privacy", "/privacy/*",
       "/robots.txt", "/sitemap.xml",
       "/relay", "/relay/*",

@@ -95,8 +95,8 @@ function GmailBannerMock() {
         {/* Arrow and caption wrap as one piece. Loose, the caption dropped to
             its own line and left the arrow pointing at nothing. */}
         <span className="flex items-center gap-[12px]">
-          <PointerArrow className="h-[20px] w-[40px] shrink-0 text-(--ec-accent) max-[800px]:h-[24px] max-[800px]:w-[24px] max-[800px]:rotate-90" />
-          <span className="font-[family-name:var(--font-inter)] text-[clamp(15px,1.15vw,18px)] leading-[1.4] font-bold text-(--ec-accent)">
+          <PointerArrow className="h-[20px] w-[40px] shrink-0 text-(--ec-accent-text) max-[800px]:h-[24px] max-[800px]:w-[24px] max-[800px]:rotate-90" />
+          <span className="font-[family-name:var(--font-inter)] text-[clamp(15px,1.15vw,18px)] leading-[1.4] font-bold text-(--ec-accent-text) ec-mark">
             Press this.
           </span>
         </span>

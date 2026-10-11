@@ -133,7 +133,7 @@ function BenefitCard({
       </p>
       <p className="mt-[12px] font-[family-name:var(--font-inter)] text-[clamp(15px,1.12vw,19px)] leading-[1.6] font-normal text-[rgba(var(--ec-ink-rgb),0.78)]">
         {hook && (
-          <span className="font-semibold text-(--ec-accent)">{hook} </span>
+          <span className="ec-mark font-semibold text-(--ec-accent-text)">{hook} </span>
         )}
         {body}
       </p>
@@ -171,7 +171,7 @@ function BenefitRow({
         </p>
         <p className="mt-[5px] font-[family-name:var(--font-inter)] text-[16px] leading-[24px] font-normal text-[rgba(var(--ec-ink-rgb),0.78)]">
           {hook && (
-          <span className="font-semibold text-(--ec-accent)">{hook} </span>
+          <span className="ec-mark font-semibold text-(--ec-accent-text)">{hook} </span>
         )}
         {body}
         </p>

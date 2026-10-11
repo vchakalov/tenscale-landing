@@ -14,7 +14,7 @@ const VARIANTS: Record<CtaVariant, string> = {
   blue: "bg-(--ec-accent) text-(--ec-on-accent) text-[16px] leading-[25px] px-[30px] py-[12px]",
   /** Hero + footer CTA, identical to `blue` plus the hard offset shadow. */
   blueRaised:
-    "bg-(--ec-accent) text-(--ec-on-accent) text-[16px] leading-[25px] px-[30px] py-[12px] shadow-[0_8px_1px_0_rgba(0,0,0,0.1)]",
+    "bg-(--ec-accent) text-(--ec-on-accent) text-[16px] leading-[25px] px-[30px] py-[12px] shadow-[0_8px_1px_0_var(--ec-cta-shadow)]",
   /** CTA inside the dark "Book a Call TODAY" card, inverted. 20px/500, padding 12px 40px. */
   cream:
     "bg-[#f4f1ea] text-[#001232] text-[20px] leading-[30px] px-[40px] py-[12px]",

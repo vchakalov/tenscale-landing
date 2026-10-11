@@ -56,7 +56,7 @@ function Eyebrow({ className }: { className: string }) {
   return (
     <p className={className}>
       Owners of{" "}
-      <span className="text-(--ec-accent) whitespace-nowrap">$1M&ndash;$4M</span>{" "}
+      <span className="ec-mark text-(--ec-accent-text) whitespace-nowrap">$1M&ndash;$4M</span>{" "}
       Lead Gen Agencies
     </p>
   );
@@ -82,7 +82,7 @@ function Headline({ className }: { className: string }) {
       {/* Never allowed to split: the risk reversal is the half of the promise
           that closes the deal, and "Or" alone at the end of a line reads as a
           typo. It fits on one line at every size the clamp produces. */}
-      <span className="text-(--ec-accent) whitespace-nowrap">
+      <span className="ec-mark text-(--ec-accent-text) whitespace-nowrap">
         Or You Don&apos;t Pay.
       </span>
     </h1>

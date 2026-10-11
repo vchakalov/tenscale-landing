@@ -339,7 +339,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
               /* Confirmed, not just clicked. Without this people press the
                  button three times and still are not sure it worked. */
               <p className="inline-flex items-center gap-[10px] rounded-[100px] border-[1.5px] border-(--ec-ink) px-[26px] py-[13px] font-[family-name:var(--font-inter)] text-[16px] leading-[25px] font-medium text-(--ec-ink)">
-                <CheckIcon className="h-[19px] w-[19px] shrink-0 text-(--ec-accent)" />
+                <CheckIcon className="h-[19px] w-[19px] shrink-0 text-(--ec-accent-text)" />
                 Added. See you {formatDay(state.appointment)}.
               </p>
             ) : (
@@ -349,7 +349,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
                 rel="noopener noreferrer"
                 onClick={(event) => void openCalendar(event, googleCalendarUrl)}
                 aria-busy={waiting}
-                className="inline-flex items-center gap-[12px] rounded-[100px] bg-(--ec-accent) px-[clamp(26px,2.2vw,38px)] py-[clamp(12px,1vw,15px)] font-[family-name:var(--font-inter)] text-[clamp(16px,1.15vw,19px)] leading-[25px] font-medium whitespace-nowrap text-(--ec-on-accent) shadow-[0_8px_1px_0_rgba(0,0,0,0.1)] transition-transform duration-200 hover:-translate-y-px active:scale-[0.98]"
+                className="inline-flex items-center gap-[12px] rounded-[100px] bg-(--ec-accent) px-[clamp(26px,2.2vw,38px)] py-[clamp(12px,1vw,15px)] font-[family-name:var(--font-inter)] text-[clamp(16px,1.15vw,19px)] leading-[25px] font-medium whitespace-nowrap text-(--ec-on-accent) shadow-[0_8px_1px_0_var(--ec-cta-shadow)] transition-transform duration-200 hover:-translate-y-px active:scale-[0.98]"
               >
                 <CalendarIcon className="h-[20px] w-[20px] shrink-0" />
                 {waiting ? "Getting your meeting link\u2026" : "Add To Google Calendar"}

@@ -62,7 +62,7 @@ function Headline({ className }: { className: string }) {
     <h1 className={className}>
       Congratulations.
       <br />
-      <span className="text-(--ec-accent)">Your Call Is Booked.</span>
+      <span className="ec-mark text-(--ec-accent-text)">Your Call Is Booked.</span>
     </h1>
   );
 }

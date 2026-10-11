@@ -41,7 +41,7 @@ export function CaseStudy() {
         </p>
         <h2 className="mt-[12px] text-center font-[family-name:var(--font-pt-serif)] text-[clamp(30px,3vw,52px)] leading-[1.18] font-bold text-(--ec-ink) max-[800px]:text-[32px] max-[800px]:leading-[38px]">
           Same Budget.{" "}
-          <span className="text-(--ec-accent)">40% Cheaper Leads.</span>
+          <span className="ec-mark text-(--ec-accent-text)">40% Cheaper Leads.</span>
         </h2>
 
         <div className="mt-[44px] grid grid-cols-3 gap-[18px] max-[800px]:mt-[28px] max-[800px]:grid-cols-1 max-[800px]:gap-[12px]">
@@ -59,7 +59,7 @@ export function CaseStudy() {
                   >
                     {figure.before}
                   </span>{" "}
-                  <span className="text-(--ec-accent)">
+                  <span className="text-(--ec-accent-text)">
                     {figure.changed ? "\u2192" : "\u2248"}
                   </span>{" "}
                   {figure.after}
