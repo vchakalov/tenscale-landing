@@ -59,6 +59,8 @@ const DESCRIPTION =
  * `metadataBase` makes the relative image below resolve to an absolute URL,
  * which is the only form a scraper accepts. Without the card image, a link
  * pasted into Slack, iMessage or a Meta ad preview renders as bare text.
+ * The `?v=` changes with the card, so a scraper that cached the old image
+ * fetches the new one.
  */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
@@ -70,13 +72,13 @@ export const metadata: Metadata = {
     url: SITE,
     siteName: "Tenscale",
     type: "website",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Tenscale" }],
+    images: [{ url: "/og.png?v=2", width: 1200, height: 630, alt: "Tenscale" }],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: ["/og.png"],
+    images: ["/og.png?v=2"],
   },
 };
 
