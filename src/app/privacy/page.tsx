@@ -21,7 +21,7 @@ export const metadata: Metadata = {
  * `LAST_UPDATED` is edited by hand. A date that moves on every deploy tells the
  * reader nothing about when the terms changed.
  */
-const LAST_UPDATED = "23 September 2026";
+const LAST_UPDATED = "11 October 2026";
 const CONTACT_EMAIL = "team@tenscale.ai";
 
 type Section = { heading: string; body: React.ReactNode };
@@ -65,8 +65,17 @@ const SECTIONS: Section[] = [
         </ul>
         <p>
           The cookie lasts up to 400 days, and your browser sends it only to this
-          site. We use it for one purpose: to know which advertisement brought a
-          visitor who later books a call.
+          site. We use it to know which advertisement brought a visitor who later
+          books a call, and to recognise the same browser in the reports described
+          below.
+        </p>
+        <p>
+          We also write two cookies that Meta&rsquo;s advertising tools read:{" "}
+          <code>_fbp</code>, a random identifier for your browser, and{" "}
+          <code>_fbc</code>, which keeps Meta&rsquo;s click identifier when you
+          arrive from one of our ads. Both last 90 days. The page also loads the
+          Meta pixel, a script from Meta that reports the same events from your
+          browser.
         </p>
         <p>
           Our server also sees what every web server sees: your IP address, your
@@ -101,13 +110,18 @@ const SECTIONS: Section[] = [
         <p>We use a small number of services, and each one sees only what it needs:</p>
         <ul>
           <li>
-            <strong>Meta (Facebook, Instagram).</strong> We report that a visit, a
-            form submission or a booking happened, so we can measure our
-            advertising and so Meta can show our ads to people like you. Where
-            this includes your email address or phone number, it is sent in a
-            protected, unreadable form (a one-way hash), together with the click
-            identifier described above. We do not send Meta your answers, your
-            call recording or your notes.
+            <strong>Meta (Facebook, Instagram).</strong> We tell Meta what happens
+            on this site and after it: that you viewed a page, how much of a video
+            you watched with the sound on, that you pressed a booking button or
+            booked a call, whether the call took place, and whether you became a
+            client and for what amount. Meta uses these reports to measure our
+            advertising and to show our ads to people like you. To match a report
+            to your Meta account, we send your IP address and browser, the
+            identifiers in the cookies above and Meta&rsquo;s click identifier.
+            Once you book, we add your name, email address, phone number and
+            country, each in a protected, unreadable form (a one-way hash). We do
+            not send Meta your answers to the booking questions, your call
+            recording or our notes.
           </li>
           <li>
             <strong>iClosed</strong> runs the booking calendar and the questions.
@@ -133,8 +147,11 @@ const SECTIONS: Section[] = [
           </li>
         </ul>
         <p>
-          We do not sell your data, and we do not share it for anyone else&rsquo;s
-          advertising.
+          We do not sell your data. Some US state laws, including
+          California&rsquo;s, count the reports to Meta described above as
+          &ldquo;sharing&rdquo; personal information for advertising. You can opt
+          out of them, as described below, and we honour the Global Privacy
+          Control signal as that opt-out.
         </p>
       </>
     ),
@@ -145,14 +162,31 @@ const SECTIONS: Section[] = [
       <>
         <ul>
           <li>
-            <strong>Advertising.</strong> You can turn off personalised ads in your{" "}
+            <strong>Advertising.</strong> Write to{" "}
+            <a className="underline" href={`mailto:${CONTACT_EMAIL}`}>
+              {CONTACT_EMAIL}
+            </a>{" "}
+            and we will stop reporting your booking, your calls and any deal with
+            us to Meta. If your browser sends the Global Privacy Control signal,
+            we report none of your visits to Meta: the page loads without the Meta
+            pixel and without Meta&rsquo;s cookies. On Meta&rsquo;s side, you can
+            turn off personalised ads in your{" "}
             <a
               className="underline"
-              href="https://accounts.meta.com/ad_preferences/"
+              href="https://accountscenter.facebook.com/ad_preferences"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Meta ad settings
+              Meta ad preferences
+            </a>{" "}
+            and disconnect what businesses share with Meta in{" "}
+            <a
+              className="underline"
+              href="https://accountscenter.facebook.com/info_and_permissions/off_facebook_activity"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              your activity off Meta technologies
             </a>
             .
           </li>

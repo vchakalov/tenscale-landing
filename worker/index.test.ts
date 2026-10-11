@@ -88,6 +88,47 @@ describe('page requests', () => {
   });
 });
 
+describe('Global Privacy Control', () => {
+  const meta = { META_PIXEL_ID: 'PIX1', META_CAPI_TOKEN: 'TOK1' };
+
+  it('serves the page with no pixel, no Meta cookies and no server event', async () => {
+    const spy = vi.spyOn(globalThis, 'fetch');
+    try {
+      const res = await worker.fetch(
+        new Request('https://tenscale.ai/landing/?fbclid=AbC123', { headers: { 'sec-gpc': '1' } }),
+        envWith(html, meta),
+        ctx,
+      );
+      expect(res.status).toBe(200);
+      expect(await res.text()).toContain('"pixelId":null');
+      const cookies = res.headers.getSetCookie();
+      expect(cookies.some((c) => c.startsWith('ag_ctx='))).toBe(true);
+      expect(cookies.some((c) => c.startsWith('_fbp=') || c.startsWith('_fbc='))).toBe(false);
+      expect(spy).not.toHaveBeenCalled();
+    } finally {
+      spy.mockRestore();
+    }
+  });
+
+  it('drops engagement events from a browser that sends it', async () => {
+    const spy = vi.spyOn(globalThis, 'fetch');
+    try {
+      await worker.fetch(
+        new Request('https://tenscale.ai/booking/prep', {
+          method: 'POST',
+          headers: { 'sec-gpc': '1' },
+          body: JSON.stringify({ event_name: 'ButtonClick', event_id: 'b7f0c2de-1111-4a2b-9c3d-123456789abc', params: { button_id: 'hero_desktop' }, url: 'https://tenscale.ai/landing/' }),
+        }),
+        envWith(html, meta),
+        ctx,
+      );
+      expect(spy).not.toHaveBeenCalled();
+    } finally {
+      spy.mockRestore();
+    }
+  });
+});
+
 describe('POST /booking/prep', () => {
   it('answers ok', async () => {
     const res = await worker.fetch(new Request('https://tenscale.ai/booking/prep', { method: 'POST', body: '{"step":"open"}' }), envWith(html), ctx);

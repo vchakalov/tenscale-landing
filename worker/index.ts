@@ -22,6 +22,16 @@ function logCapi(eventName: string, result: { ok: boolean; status: number; body:
   );
 }
 
+/**
+ * Global Privacy Control: the browser's "do not sell or share" signal, which
+ * California law treats as an opt-out. A visitor who sends it gets no Meta
+ * pixel, no Meta cookies and no server events to Meta. The site and its own
+ * cookie work as before.
+ */
+export function optedOut(request: Request): boolean {
+  return request.headers.get('sec-gpc') === '1';
+}
+
 /** Our own endpoint name: /collect, /track and /api/events are all in blocklists. */
 const EVENT_PATH = '/booking/prep';
 
@@ -99,7 +109,7 @@ export default {
  * only the server knows: the visitor's address, browser and stored ids.
  */
 async function forwardEngagement(request: Request, url: URL, env: Env, ctx: ExecutionContext): Promise<void> {
-  if (!env.META_PIXEL_ID || !env.META_CAPI_TOKEN) return;
+  if (!env.META_PIXEL_ID || !env.META_CAPI_TOKEN || optedOut(request)) return;
   const origin = request.headers.get('origin');
   if (origin && origin !== url.origin) return;
   const text = await request.text();
@@ -154,7 +164,7 @@ async function withTracking(request: Request, url: URL, asset: Response, env: En
       // server sends for the same visitor.
       externalIdHash: await sha256Hex(context.externalId),
       pageViewEventId: eventId,
-      pixelId: env.META_PIXEL_ID ?? null,
+      pixelId: optedOut(request) ? null : (env.META_PIXEL_ID ?? null),
     };
 
     // A text insert, not HTMLRewriter: the pages are a small static export, and
@@ -165,10 +175,12 @@ async function withTracking(request: Request, url: URL, asset: Response, env: En
     const response = new Response(withTag, asset);
 
     response.headers.append('Set-Cookie', buildSetCookie(serializeCookie(context)));
-    if (context.fbp) response.headers.append('Set-Cookie', buildMetaCookie('_fbp', context.fbp, url.hostname, CANONICAL_HOST));
-    if (context.fbc) response.headers.append('Set-Cookie', buildMetaCookie('_fbc', context.fbc, url.hostname, CANONICAL_HOST));
+    if (!optedOut(request)) {
+      if (context.fbp) response.headers.append('Set-Cookie', buildMetaCookie('_fbp', context.fbp, url.hostname, CANONICAL_HOST));
+      if (context.fbc) response.headers.append('Set-Cookie', buildMetaCookie('_fbc', context.fbc, url.hostname, CANONICAL_HOST));
+    }
 
-    if (env.META_PIXEL_ID && env.META_CAPI_TOKEN) {
+    if (env.META_PIXEL_ID && env.META_CAPI_TOKEN && !optedOut(request)) {
       ctx.waitUntil(
         sendCapi(
           env.META_PIXEL_ID,
