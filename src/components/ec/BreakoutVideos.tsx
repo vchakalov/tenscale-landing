@@ -66,7 +66,7 @@ const BREAKOUTS: readonly Breakout[] = [
  */
 function BreakoutCard({ item, index }: { item: Breakout; index: number }) {
   return (
-    <article className="flex flex-col overflow-hidden rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-bg) shadow-[0_10px_0_0_var(--ec-shadow)]">
+    <article className="flex flex-col overflow-hidden rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-card) shadow-[0_10px_0_0_var(--ec-shadow)]">
       {item.src !== "" && (
         <div className="aspect-video w-full border-b-[1.5px] border-(--ec-ink) bg-(--ec-frame)">
           <video

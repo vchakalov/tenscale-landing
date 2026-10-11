@@ -220,7 +220,7 @@ export function ResultShots({
         }`}
       >
         {eyebrow && (
-          <p className="mb-[14px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.18em] text-[rgba(var(--ec-on-frame-rgb),0.62)] uppercase">
+          <p className={`mb-[14px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.18em] uppercase ${tone === "navy" ? "text-[rgba(var(--ec-on-frame-rgb),0.62)]" : "text-[rgba(var(--ec-on-band-rgb),0.62)]"}`}>
             {eyebrow}
           </p>
         )}
@@ -231,7 +231,7 @@ export function ResultShots({
           the wall is not persuading them to buy; it is showing them where they
           are about to be.
         */}
-        <h2 className="text-center text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(32px,2.9vw,50px)] leading-[1.18] font-bold text-(--ec-on-frame)">
+        <h2 className={`text-center text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(32px,2.9vw,50px)] leading-[1.18] font-bold ${tone === "navy" ? "text-(--ec-on-frame)" : "text-(--ec-on-band)"}`}>
           {title ?? (
             <>
               Don&apos;t Take Our Word For It.
@@ -241,7 +241,7 @@ export function ResultShots({
           )}
         </h2>
 
-        <p className="mt-[16px] text-center font-[family-name:var(--font-inter)] text-[clamp(15px,1.05vw,18px)] leading-[1.55] text-[rgba(var(--ec-on-frame-rgb),0.72)]">
+        <p className={`mt-[16px] text-center font-[family-name:var(--font-inter)] text-[clamp(15px,1.05vw,18px)] leading-[1.55] ${tone === "navy" ? "text-[rgba(var(--ec-on-frame-rgb),0.72)]" : "text-[rgba(var(--ec-on-band-rgb),0.72)]"}`}>
           {note}
         </p>
 

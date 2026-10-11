@@ -142,11 +142,17 @@ body {
   --ec-band: var(--ec-blue);           /* full-width coloured band, under on-frame text */
   --ec-cta-shadow: rgba(0, 0, 0, 0.1); /* the raised CTA's offset shadow */
   --ec-logo: var(--ec-accent);         /* the TS mark */
+  --ec-card: var(--ec-bg);             /* bordered cards on the page ground */
+  --ec-inverse: var(--ec-frame);       /* panels set against the page: guarantee, warning strip */
+  --ec-on-inverse: var(--ec-on-frame);
+  --ec-on-band: var(--ec-on-frame);
   /* Channels of the same roles, for translucent uses as rgba(var(), a). */
   --ec-ink-rgb: 0, 18, 50;
   --ec-accent-rgb: 1, 88, 255;
   --ec-frame-rgb: 0, 18, 50;
   --ec-on-frame-rgb: 244, 241, 234;
+  --ec-on-inverse-rgb: var(--ec-on-frame-rgb);
+  --ec-on-band-rgb: var(--ec-on-frame-rgb);
 
   background-color: var(--ec-cream);
   color: var(--ec-navy);
@@ -154,7 +160,13 @@ body {
 }
 
 /* Tenscale brand, used by the *-bl pages: the lime mark on near-black, as in
-   the logo files in the Drive "Branding" folder. */
+   the logo files in the Drive "Branding" folder.
+
+   On a black page every dark surface blends into the ground, so elevation is
+   carried by tone, the way dark interfaces do it, rather than by inverting:
+   ground #111, cards #1a1a1a, raised panels #262626, each card and panel on
+   the same solid lime shadow. The blue band, the one coloured field on the
+   cream page, turns lime. */
 .ec-landing.ec-theme-black {
   --ec-bg: #111111;
   --ec-ink: #ffffff;
@@ -163,12 +175,18 @@ body {
   --ec-frame: #1c1c1c;
   --ec-frame-border: rgba(255, 255, 255, 0.14);
   --ec-on-frame: #ffffff;
-  --ec-shadow: rgba(226, 249, 59, 0.16);
-  --ec-band: #1c1c1c;
+  --ec-shadow: #e2f93b;
+  --ec-band: #e2f93b;
+  --ec-on-band: #111111;
+  --ec-card: #1a1a1a;
+  --ec-inverse: #262626;
+  --ec-on-inverse: #ffffff;
   --ec-ink-rgb: 255, 255, 255;
   --ec-accent-rgb: 226, 249, 59;
   --ec-frame-rgb: 28, 28, 28;
   --ec-on-frame-rgb: 255, 255, 255;
+  --ec-on-inverse-rgb: 255, 255, 255;
+  --ec-on-band-rgb: 17, 17, 17;
 
   background-color: var(--ec-bg);
   color: var(--ec-ink);

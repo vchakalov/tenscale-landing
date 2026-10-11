@@ -48,7 +48,7 @@ export function CaseStudy() {
           {FIGURES.map((figure) => (
               <div
                 key={figure.label}
-                className="rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-bg) px-[22px] py-[22px] text-center shadow-[0_10px_0_0_var(--ec-shadow)]"
+                className="rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-card) px-[22px] py-[22px] text-center shadow-[0_10px_0_0_var(--ec-shadow)]"
               >
                 <p className="font-[family-name:var(--font-pt-serif)] text-[clamp(24px,2.2vw,38px)] leading-[1.15] font-bold text-(--ec-ink) tabular-nums">
                   {/* Spend did not change, so it is not struck through: a

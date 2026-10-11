@@ -295,7 +295,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
 
   return (
     <div
-      className={`rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-bg) px-[clamp(24px,2.6vw,44px)] py-[clamp(28px,2.8vw,42px)] shadow-[0_10px_0_0_var(--ec-shadow)] ${className}`}
+      className={`rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-card) px-[clamp(24px,2.6vw,44px)] py-[clamp(28px,2.8vw,42px)] shadow-[0_10px_0_0_var(--ec-shadow)] ${className}`}
     >
       {state.status === "pending" && (
         /* One frame, until the query string has been read. Bars rather than a

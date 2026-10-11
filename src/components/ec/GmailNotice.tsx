@@ -108,11 +108,11 @@ function GmailBannerMock() {
 export function GmailNotice({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`overflow-hidden rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-bg) text-left shadow-[0_10px_0_0_var(--ec-shadow)] ${className}`}
+      className={`overflow-hidden rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-card) text-left shadow-[0_10px_0_0_var(--ec-shadow)] ${className}`}
     >
-      <div className="flex items-center justify-center gap-[10px] bg-(--ec-frame) px-[20px] py-[clamp(11px,1vw,15px)]">
-        <WarningIcon className="h-[19px] w-[19px] shrink-0 text-(--ec-on-frame)" />
-        <p className="text-center font-[family-name:var(--font-pt-serif)] text-[clamp(16px,1.2vw,21px)] leading-[1.35] font-bold text-(--ec-on-frame)">
+      <div className="flex items-center justify-center gap-[10px] bg-(--ec-inverse) px-[20px] py-[clamp(11px,1vw,15px)]">
+        <WarningIcon className="h-[19px] w-[19px] shrink-0 text-(--ec-on-inverse)" />
+        <p className="text-center font-[family-name:var(--font-pt-serif)] text-[clamp(16px,1.2vw,21px)] leading-[1.35] font-bold text-(--ec-on-inverse)">
           This Google Update Could Affect Your Appointment
         </p>
       </div>

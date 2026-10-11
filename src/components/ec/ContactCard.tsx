@@ -47,7 +47,7 @@ function PersonIcon({ className }: { className: string }) {
 export function ContactCard({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-bg) px-[clamp(24px,2.6vw,44px)] py-[clamp(26px,2.6vw,38px)] text-left shadow-[0_10px_0_0_var(--ec-shadow)] ${className}`}
+      className={`rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-card) px-[clamp(24px,2.6vw,44px)] py-[clamp(26px,2.6vw,38px)] text-left shadow-[0_10px_0_0_var(--ec-shadow)] ${className}`}
     >
       <div className="min-w-0">
         <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(var(--ec-ink-rgb),0.5)] uppercase">

@@ -65,14 +65,14 @@ export function NextSteps() {
           ))}
         </ol>
 
-        <div className="mx-auto mt-[64px] max-w-[900px] rounded-[16px] bg-(--ec-frame) px-[clamp(24px,3vw,56px)] py-[clamp(30px,3vw,48px)] text-center shadow-[0_10px_0_0_var(--ec-shadow)] max-[800px]:mt-[44px]">
-          <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(var(--ec-on-frame-rgb),0.6)] uppercase">
+        <div className="mx-auto mt-[64px] max-w-[900px] rounded-[16px] bg-(--ec-inverse) px-[clamp(24px,3vw,56px)] py-[clamp(30px,3vw,48px)] text-center shadow-[0_10px_0_0_var(--ec-shadow)] max-[800px]:mt-[44px]">
+          <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(var(--ec-on-inverse-rgb),0.6)] uppercase">
             Our guarantee
           </p>
-          <p className="mt-[12px] text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(26px,2.5vw,44px)] leading-[1.2] font-bold text-(--ec-on-frame)">
+          <p className="mt-[12px] text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(26px,2.5vw,44px)] leading-[1.2] font-bold text-(--ec-on-inverse)">
             Two Months. Or 100% Of Your Money Back.
           </p>
-          <p className="mx-auto mt-[14px] max-w-[640px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(var(--ec-on-frame-rgb),0.8)]">
+          <p className="mx-auto mt-[14px] max-w-[640px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(var(--ec-on-inverse-rgb),0.8)]">
             If after two months you don&apos;t believe Tenscale helps your
             agency, you get every dollar back. No questions asked.
           </p>
