@@ -653,6 +653,11 @@ export function Vsl({
               The glass panel is the same panel, see-through, for a talking
               head: the face stays visible under it. Its halo is a ring rather
               than a fill, because a fill behind glass would wash the face out.
+
+              On a phone the stacked panel covered most of the frame, so there
+              it is one compact row: the mark beside the two lines. It stays
+              solid on the landing. A panel in the way is what gets the tap,
+              and the tap is the unmute.
             */
             <button
               type="button"
@@ -660,16 +665,16 @@ export function Vsl({
               aria-label="Unmute the video"
               className={`group absolute inset-0 flex cursor-pointer items-center justify-center bg-[rgba(var(--ec-frame-rgb),0.45)] transition-colors duration-200 hover:bg-[rgba(var(--ec-frame-rgb),0.55)] ${hasChapters ? "pb-[60px] max-[800px]:pb-[48px]" : ""}`}
             >
-              <span className="relative flex w-[min(76%,290px)] items-center justify-center">
+              <span className="relative flex w-[min(76%,290px)] items-center justify-center max-[800px]:w-auto">
                 {/* Behind the panel, same shape, scaling outward and fading. */}
                 <span
                   aria-hidden="true"
-                  className={`ec-pulse-ring absolute inset-0 rounded-[16px] ${promptGlass ? "border-2 border-[rgba(var(--ec-on-frame-rgb),0.9)]" : "bg-[rgba(var(--ec-on-frame-rgb),0.75)]"}`}
+                  className={`ec-pulse-ring absolute inset-0 rounded-[16px] max-[800px]:rounded-[12px] ${promptGlass ? "border-2 border-[rgba(var(--ec-on-frame-rgb),0.9)]" : "bg-[rgba(var(--ec-on-frame-rgb),0.75)]"}`}
                 />
 
-                <span className={`relative flex w-full flex-col items-center gap-[10px] rounded-[16px] border border-[rgba(var(--ec-on-frame-rgb),0.28)] px-[26px] py-[22px] text-center ${hasChapters ? "max-[800px]:gap-[4px] max-[800px]:py-[10px]" : ""} ${promptGlass ? "bg-[rgba(var(--ec-frame-rgb),0.4)] [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]" : "bg-(--ec-frame) shadow-[0_8px_1px_0_rgba(0,0,0,0.22)]"} transition-transform duration-200 group-hover:-translate-y-px group-active:scale-[0.98]`}>
-                  <SpeakerIcon className="h-[34px] w-[34px] text-(--ec-accent)" />
-                  <span className="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[26px] font-bold text-(--ec-on-frame) max-[800px]:text-[17px] max-[800px]:leading-[24px]">
+                <span className={`relative flex w-full flex-col items-center gap-[10px] rounded-[16px] border border-[rgba(var(--ec-on-frame-rgb),0.28)] px-[26px] py-[22px] text-center max-[800px]:flex-row max-[800px]:gap-[10px] max-[800px]:rounded-[12px] max-[800px]:px-[14px] max-[800px]:py-[8px] max-[800px]:text-left ${promptGlass ? "bg-[rgba(var(--ec-frame-rgb),0.4)] [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]" : "bg-(--ec-frame) shadow-[0_8px_1px_0_rgba(0,0,0,0.22)]"} transition-transform duration-200 group-hover:-translate-y-px group-active:scale-[0.98]`}>
+                  <SpeakerIcon className="h-[34px] w-[34px] shrink-0 text-(--ec-accent) max-[800px]:h-[22px] max-[800px]:w-[22px]" />
+                  <span className="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[26px] font-bold text-(--ec-on-frame) max-[800px]:text-[14px] max-[800px]:leading-[18px]">
                     Your Video Is Playing
                     <br />
                     Click To Unmute
