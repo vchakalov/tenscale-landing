@@ -48,14 +48,14 @@ const DISCLAIMER =
 
 export function SiteFooter() {
   return (
-    <footer className="mt-[150px] border-t border-[rgba(0,18,50,0.12)] px-[40px] pt-[38px] pb-[64px] max-[800px]:mt-[80px] max-[800px]:px-[20px] max-[800px]:pt-[30px] max-[800px]:pb-[48px]">
+    <footer className="mt-[150px] border-t border-[var(--ec-shadow)] px-[40px] pt-[38px] pb-[64px] max-[800px]:mt-[80px] max-[800px]:px-[20px] max-[800px]:pt-[30px] max-[800px]:pb-[48px]">
       <nav aria-label="Footer" className="flex justify-center">
         <ul className="flex flex-wrap items-center justify-center gap-x-[32px] gap-y-[10px] max-[800px]:gap-x-[22px]">
           {LINKS.map((link) => (
             <li key={link.label}>
               <Link
                 href={link.href}
-                className="font-[family-name:var(--font-inter)] text-[15px] leading-[22px] text-[rgba(0,18,50,0.75)] transition-colors duration-200 hover:text-[#001232] max-[800px]:text-[14px]"
+                className="font-[family-name:var(--font-inter)] text-[15px] leading-[22px] text-[rgba(var(--ec-ink-rgb),0.75)] transition-colors duration-200 hover:text-(--ec-ink) max-[800px]:text-[14px]"
               >
                 {link.label}
               </Link>
@@ -64,11 +64,11 @@ export function SiteFooter() {
         </ul>
       </nav>
 
-      <p className="mx-auto mt-[22px] max-w-[760px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[21px] text-[rgba(0,18,50,0.55)] max-[800px]:text-[12px] max-[800px]:leading-[19px]">
+      <p className="mx-auto mt-[22px] max-w-[760px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[21px] text-[rgba(var(--ec-ink-rgb),0.55)] max-[800px]:text-[12px] max-[800px]:leading-[19px]">
         {TRACKING_NOTICE}
       </p>
 
-      <p className="mx-auto mt-[14px] max-w-[760px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[21px] text-[rgba(0,18,50,0.45)] max-[800px]:text-[12px] max-[800px]:leading-[19px]">
+      <p className="mx-auto mt-[14px] max-w-[760px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[21px] text-[rgba(var(--ec-ink-rgb),0.45)] max-[800px]:text-[12px] max-[800px]:leading-[19px]">
         {DISCLAIMER}
       </p>
     </footer>

@@ -141,20 +141,20 @@ function Lightbox({ shot, onClose }: { shot: Shot; onClose: () => void }) {
       aria-modal="true"
       aria-label={shot.alt}
       onClick={onClose}
-      className="fixed inset-0 z-[90] flex cursor-zoom-out items-center justify-center bg-[rgba(0,18,50,0.82)] p-[clamp(16px,4vw,64px)]"
+      className="fixed inset-0 z-[90] flex cursor-zoom-out items-center justify-center bg-[rgba(var(--ec-frame-rgb),0.82)] p-[clamp(16px,4vw,64px)]"
     >
       <Image
         src={shot.src}
         alt={shot.alt}
         width={shot.width}
         height={shot.height}
-        className="max-h-full w-auto max-w-full rounded-[10px] object-contain shadow-[0_24px_60px_-20px_rgba(0,18,50,0.6)]"
+        className="max-h-full w-auto max-w-full rounded-[10px] object-contain shadow-[0_24px_60px_-20px_rgba(var(--ec-frame-rgb),0.6)]"
       />
       <button
         type="button"
         onClick={onClose}
         aria-label="Close"
-        className="absolute top-[18px] right-[18px] flex h-[42px] w-[42px] cursor-pointer items-center justify-center rounded-full bg-[rgba(244,241,234,0.14)] text-[22px] leading-none text-[#f4f1ea] transition-colors duration-200 hover:bg-[rgba(244,241,234,0.26)]"
+        className="absolute top-[18px] right-[18px] flex h-[42px] w-[42px] cursor-pointer items-center justify-center rounded-full bg-[rgba(var(--ec-on-frame-rgb),0.14)] text-[22px] leading-none text-(--ec-on-frame) transition-colors duration-200 hover:bg-[rgba(var(--ec-on-frame-rgb),0.26)]"
       >
         &times;
       </button>
@@ -216,11 +216,11 @@ export function ResultShots({
       */}
       <div
         className={`mx-auto w-full max-w-[1320px] rounded-[28px] px-[clamp(20px,3.4vw,64px)] py-[clamp(44px,4.6vw,88px)] max-[800px]:rounded-[18px] ${
-          tone === "navy" ? "bg-[#001232]" : "bg-[#0158ff]"
+          tone === "navy" ? "bg-(--ec-frame)" : "bg-(--ec-band)"
         }`}
       >
         {eyebrow && (
-          <p className="mb-[14px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.18em] text-[rgba(244,241,234,0.62)] uppercase">
+          <p className="mb-[14px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.18em] text-[rgba(var(--ec-on-frame-rgb),0.62)] uppercase">
             {eyebrow}
           </p>
         )}
@@ -231,7 +231,7 @@ export function ResultShots({
           the wall is not persuading them to buy; it is showing them where they
           are about to be.
         */}
-        <h2 className="text-center text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(32px,2.9vw,50px)] leading-[1.18] font-bold text-[#f4f1ea]">
+        <h2 className="text-center text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(32px,2.9vw,50px)] leading-[1.18] font-bold text-(--ec-on-frame)">
           {title ?? (
             <>
               Don&apos;t Take Our Word For It.
@@ -241,7 +241,7 @@ export function ResultShots({
           )}
         </h2>
 
-        <p className="mt-[16px] text-center font-[family-name:var(--font-inter)] text-[clamp(15px,1.05vw,18px)] leading-[1.55] text-[rgba(244,241,234,0.72)]">
+        <p className="mt-[16px] text-center font-[family-name:var(--font-inter)] text-[clamp(15px,1.05vw,18px)] leading-[1.55] text-[rgba(var(--ec-on-frame-rgb),0.72)]">
           {note}
         </p>
 
@@ -272,7 +272,7 @@ export function ResultShots({
                       onClick={() => setOpen(shot)}
                       aria-hidden={i >= row.length}
                       tabIndex={i >= row.length ? -1 : 0}
-                      className="block h-[clamp(190px,17vw,280px)] shrink-0 cursor-zoom-in overflow-hidden rounded-[10px] bg-[#ffffff] shadow-[0_2px_10px_-2px_rgba(0,18,50,0.28)] transition-transform duration-200 hover:-translate-y-px"
+                      className="block h-[clamp(190px,17vw,280px)] shrink-0 cursor-zoom-in overflow-hidden rounded-[10px] bg-[#ffffff] shadow-[0_2px_10px_-2px_rgba(var(--ec-frame-rgb),0.28)] transition-transform duration-200 hover:-translate-y-px"
                     >
                       <Image
                         src={shot.src}
@@ -300,7 +300,7 @@ export function ResultShots({
                   key={shot.src}
                   type="button"
                   onClick={() => setOpen(shot)}
-                  className="block w-full cursor-zoom-in overflow-hidden rounded-[10px] bg-[#ffffff] shadow-[0_2px_10px_-2px_rgba(0,18,50,0.28)] transition-transform duration-200 hover:-translate-y-px"
+                  className="block w-full cursor-zoom-in overflow-hidden rounded-[10px] bg-[#ffffff] shadow-[0_2px_10px_-2px_rgba(var(--ec-frame-rgb),0.28)] transition-transform duration-200 hover:-translate-y-px"
                 >
                   <Image
                     src={shot.src}

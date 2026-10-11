@@ -141,7 +141,7 @@ function ControlIcon({ name }: { name: IconName }) {
       {name === "captionsOn" && (
         <>
           <rect x="2.5" y="5" width="19" height="14" rx="3" fill="currentColor" />
-          <path d={cc} {...common} stroke="#001232" />
+          <path d={cc} {...common} stroke="var(--ec-frame)" />
         </>
       )}
       {name === "captionsOff" && (
@@ -155,7 +155,7 @@ function ControlIcon({ name }: { name: IconName }) {
 }
 
 const CONTROL_BUTTON =
-  "flex h-[30px] min-w-[30px] shrink-0 cursor-pointer items-center justify-center rounded-[100px] px-[6px] transition-colors duration-200 hover:bg-[rgba(244,241,234,0.14)]";
+  "flex h-[30px] min-w-[30px] shrink-0 cursor-pointer items-center justify-center rounded-[100px] px-[6px] transition-colors duration-200 hover:bg-[rgba(var(--ec-on-frame-rgb),0.14)]";
 
 function ChapterBar({
   chapters,
@@ -190,7 +190,7 @@ function ChapterBar({
 
   return (
     <>
-      <div className="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-[rgba(0,18,50,0.9)] via-[rgba(0,18,50,0.45)] to-transparent px-[16px] pt-[40px] pb-[12px] max-[800px]:px-[12px] max-[800px]:pt-[28px] max-[800px]:pb-[8px]">
+      <div className="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-[rgba(var(--ec-frame-rgb),0.90)] via-[rgba(var(--ec-frame-rgb),0.45)] to-transparent px-[16px] pt-[40px] pb-[12px] max-[800px]:px-[12px] max-[800px]:pt-[28px] max-[800px]:pb-[8px]">
         <div
           className="flex h-[16px] items-center gap-[3px]"
           onMouseLeave={() => setHover(null)}
@@ -217,17 +217,17 @@ function ChapterBar({
                 style={{ flexGrow: span }}
                 className="group/seg relative flex h-full basis-0 cursor-pointer items-center"
               >
-                <span className="relative block h-[4px] w-full overflow-hidden rounded-full bg-[rgba(244,241,234,0.35)] transition-[height] duration-150 group-hover/seg:h-[7px]">
+                <span className="relative block h-[4px] w-full overflow-hidden rounded-full bg-[rgba(var(--ec-on-frame-rgb),0.35)] transition-[height] duration-150 group-hover/seg:h-[7px]">
                   <span
-                    className="absolute inset-y-0 left-0 bg-[#0158ff]"
+                    className="absolute inset-y-0 left-0 bg-(--ec-accent)"
                     style={{ width: `${filled * 100}%` }}
                   />
                 </span>
                 {hover === index && (
                   <span
-                    className={`pointer-events-none absolute bottom-[22px] whitespace-nowrap rounded-[8px] bg-[#f4f1ea] px-[10px] py-[6px] font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium text-[#001232] shadow-[0_6px_0_0_rgba(0,0,0,0.18)] ${tooltipPlace(index)}`}
+                    className={`pointer-events-none absolute bottom-[22px] whitespace-nowrap rounded-[8px] bg-(--ec-on-frame) px-[10px] py-[6px] font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium text-(--ec-frame) shadow-[0_6px_0_0_rgba(0,0,0,0.18)] ${tooltipPlace(index)}`}
                   >
-                    <span className="text-[#0158ff] tabular-nums">
+                    <span className="text-(--ec-accent) tabular-nums">
                       {formatAt(segment.at)}
                     </span>{" "}
                     {segment.label}
@@ -238,7 +238,7 @@ function ChapterBar({
           })}
         </div>
 
-        <div className="mt-[6px] flex items-center gap-[10px] font-[family-name:var(--font-inter)] text-[13px] leading-[18px] text-[#f4f1ea] max-[800px]:gap-[4px] max-[800px]:text-[12px]">
+        <div className="mt-[6px] flex items-center gap-[10px] font-[family-name:var(--font-inter)] text-[13px] leading-[18px] text-(--ec-on-frame) max-[800px]:gap-[4px] max-[800px]:text-[12px]">
           <button
             type="button"
             onClick={controls.onTogglePlay}
@@ -247,15 +247,15 @@ function ChapterBar({
           >
             <ControlIcon name={controls.playing ? "pause" : "play"} />
           </button>
-          <span className="shrink-0 tabular-nums text-[rgba(244,241,234,0.75)]">
+          <span className="shrink-0 tabular-nums text-[rgba(var(--ec-on-frame-rgb),0.75)]">
             {formatAt(time)} / {formatAt(duration)}
           </span>
           <button
             type="button"
             onClick={() => setListOpen(true)}
-            className="inline-flex min-w-0 cursor-pointer items-center gap-[6px] rounded-[100px] px-[8px] py-[4px] font-medium transition-colors duration-200 hover:bg-[rgba(244,241,234,0.14)]"
+            className="inline-flex min-w-0 cursor-pointer items-center gap-[6px] rounded-[100px] px-[8px] py-[4px] font-medium transition-colors duration-200 hover:bg-[rgba(var(--ec-on-frame-rgb),0.14)]"
           >
-            <span aria-hidden="true" className="text-[#0158ff]">
+            <span aria-hidden="true" className="text-(--ec-accent)">
               &bull;
             </span>
             <span className="truncate">{segments[current]?.label}</span>
@@ -298,16 +298,16 @@ function ChapterBar({
       </div>
 
       {listOpen && (
-        <div className="absolute inset-0 z-30 flex flex-col bg-[rgba(0,18,50,0.94)] text-left">
+        <div className="absolute inset-0 z-30 flex flex-col bg-[rgba(var(--ec-frame-rgb),0.94)] text-left">
           <div className="flex items-center justify-between px-[18px] pt-[14px] pb-[8px] max-[800px]:px-[14px] max-[800px]:pt-[10px]">
-            <p className="font-[family-name:var(--font-pt-serif)] text-[18px] leading-[24px] font-bold text-[#f4f1ea] max-[800px]:text-[16px]">
+            <p className="font-[family-name:var(--font-pt-serif)] text-[18px] leading-[24px] font-bold text-(--ec-on-frame) max-[800px]:text-[16px]">
               Chapters
             </p>
             <button
               type="button"
               onClick={() => setListOpen(false)}
               aria-label="Close chapters"
-              className="flex h-[34px] w-[34px] cursor-pointer items-center justify-center rounded-full text-[22px] leading-none text-[#f4f1ea] transition-colors duration-200 hover:bg-[rgba(244,241,234,0.14)]"
+              className="flex h-[34px] w-[34px] cursor-pointer items-center justify-center rounded-full text-[22px] leading-none text-(--ec-on-frame) transition-colors duration-200 hover:bg-[rgba(var(--ec-on-frame-rgb),0.14)]"
             >
               &times;
             </button>
@@ -321,9 +321,9 @@ function ChapterBar({
                     onSeek(segment.at);
                     setListOpen(false);
                   }}
-                  className={`flex w-full cursor-pointer items-center gap-[14px] rounded-[10px] px-[10px] py-[9px] text-left font-[family-name:var(--font-inter)] text-[15px] leading-[20px] transition-colors duration-200 hover:bg-[rgba(244,241,234,0.1)] max-[800px]:py-[7px] max-[800px]:text-[14px] ${index === current ? "bg-[rgba(1,88,255,0.28)] text-[#f4f1ea]" : "text-[rgba(244,241,234,0.85)]"}`}
+                  className={`flex w-full cursor-pointer items-center gap-[14px] rounded-[10px] px-[10px] py-[9px] text-left font-[family-name:var(--font-inter)] text-[15px] leading-[20px] transition-colors duration-200 hover:bg-[rgba(var(--ec-on-frame-rgb),0.10)] max-[800px]:py-[7px] max-[800px]:text-[14px] ${index === current ? "bg-[rgba(var(--ec-accent-rgb),0.28)] text-(--ec-on-frame)" : "text-[rgba(var(--ec-on-frame-rgb),0.85)]"}`}
                 >
-                  <span className="w-[40px] shrink-0 font-medium text-[rgba(244,241,234,0.55)] tabular-nums">
+                  <span className="w-[40px] shrink-0 font-medium text-[rgba(var(--ec-on-frame-rgb),0.55)] tabular-nums">
                     {formatAt(segment.at)}
                   </span>
                   {segment.label}
@@ -580,7 +580,7 @@ export function Vsl({
 
   return (
     <div className={className}>
-      <div className="relative overflow-hidden rounded-[14px] border-[1.5px] border-[#001232] bg-[#001232] shadow-[0_10px_0_0_rgba(0,18,50,0.12)]">
+      <div className="relative overflow-hidden rounded-[14px] border-[1.5px] border-(--ec-frame-border) bg-(--ec-frame) shadow-[0_10px_0_0_var(--ec-shadow)]">
         <div className="relative aspect-video w-full">
           {hasVideo ? (
             <video
@@ -612,8 +612,8 @@ export function Vsl({
             </video>
           ) : (
             /* No cut yet. The frame still shows so the fold can be judged. */
-            <div className="flex h-full w-full items-center justify-center bg-[#001232]">
-              <p className="px-[24px] text-center font-[family-name:var(--font-pt-serif)] text-[15px] leading-[22px] text-[rgba(244,241,234,0.45)]">
+            <div className="flex h-full w-full items-center justify-center bg-(--ec-frame)">
+              <p className="px-[24px] text-center font-[family-name:var(--font-pt-serif)] text-[15px] leading-[22px] text-[rgba(var(--ec-on-frame-rgb),0.45)]">
                 {placeholder}
               </p>
             </div>
@@ -631,7 +631,7 @@ export function Vsl({
             <div
               className={`pointer-events-none absolute inset-x-0 flex justify-center px-[8%] ${hasChapters ? "bottom-[78px] max-[800px]:bottom-[64px]" : "bottom-[20px] max-[800px]:bottom-[10px]"} ${started ? "" : "max-[800px]:hidden"}`}
             >
-              <p className="whitespace-pre-line rounded-[8px] bg-[rgba(0,18,50,0.8)] px-[14px] py-[5px] text-center font-[family-name:var(--font-inter)] text-[clamp(16px,1.4vw,22px)] leading-[1.4] font-medium text-[#f4f1ea] max-[800px]:rounded-[6px] max-[800px]:px-[8px] max-[800px]:py-[3px] max-[800px]:text-[13px]">
+              <p className="whitespace-pre-line rounded-[8px] bg-[rgba(var(--ec-frame-rgb),0.8)] px-[14px] py-[5px] text-center font-[family-name:var(--font-inter)] text-[clamp(16px,1.4vw,22px)] leading-[1.4] font-medium text-[#f4f1ea] max-[800px]:rounded-[6px] max-[800px]:px-[8px] max-[800px]:py-[3px] max-[800px]:text-[13px]">
                 {cue}
               </p>
             </div>
@@ -658,18 +658,18 @@ export function Vsl({
               type="button"
               onClick={() => unmute({ restart: true, via: "overlay" })}
               aria-label="Unmute the video"
-              className={`group absolute inset-0 flex cursor-pointer items-center justify-center bg-[rgba(0,18,50,0.45)] transition-colors duration-200 hover:bg-[rgba(0,18,50,0.55)] ${hasChapters ? "pb-[60px] max-[800px]:pb-[48px]" : ""}`}
+              className={`group absolute inset-0 flex cursor-pointer items-center justify-center bg-[rgba(var(--ec-frame-rgb),0.45)] transition-colors duration-200 hover:bg-[rgba(var(--ec-frame-rgb),0.55)] ${hasChapters ? "pb-[60px] max-[800px]:pb-[48px]" : ""}`}
             >
               <span className="relative flex w-[min(76%,290px)] items-center justify-center">
                 {/* Behind the panel, same shape, scaling outward and fading. */}
                 <span
                   aria-hidden="true"
-                  className={`ec-pulse-ring absolute inset-0 rounded-[16px] ${promptGlass ? "border-2 border-[rgba(244,241,234,0.9)]" : "bg-[rgba(244,241,234,0.75)]"}`}
+                  className={`ec-pulse-ring absolute inset-0 rounded-[16px] ${promptGlass ? "border-2 border-[rgba(var(--ec-on-frame-rgb),0.9)]" : "bg-[rgba(var(--ec-on-frame-rgb),0.75)]"}`}
                 />
 
-                <span className={`relative flex w-full flex-col items-center gap-[10px] rounded-[16px] border border-[rgba(244,241,234,0.28)] px-[26px] py-[22px] text-center ${hasChapters ? "max-[800px]:gap-[4px] max-[800px]:py-[10px]" : ""} ${promptGlass ? "bg-[rgba(0,18,50,0.4)] [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]" : "bg-[#001232] shadow-[0_8px_1px_0_rgba(0,0,0,0.22)]"} transition-transform duration-200 group-hover:-translate-y-px group-active:scale-[0.98]`}>
-                  <SpeakerIcon className="h-[34px] w-[34px] text-[#0158ff]" />
-                  <span className="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[26px] font-bold text-[#f4f1ea] max-[800px]:text-[17px] max-[800px]:leading-[24px]">
+                <span className={`relative flex w-full flex-col items-center gap-[10px] rounded-[16px] border border-[rgba(var(--ec-on-frame-rgb),0.28)] px-[26px] py-[22px] text-center ${hasChapters ? "max-[800px]:gap-[4px] max-[800px]:py-[10px]" : ""} ${promptGlass ? "bg-[rgba(var(--ec-frame-rgb),0.4)] [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]" : "bg-(--ec-frame) shadow-[0_8px_1px_0_rgba(0,0,0,0.22)]"} transition-transform duration-200 group-hover:-translate-y-px group-active:scale-[0.98]`}>
+                  <SpeakerIcon className="h-[34px] w-[34px] text-(--ec-accent)" />
+                  <span className="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[26px] font-bold text-(--ec-on-frame) max-[800px]:text-[17px] max-[800px]:leading-[24px]">
                     Your Video Is Playing
                     <br />
                     Click To Unmute

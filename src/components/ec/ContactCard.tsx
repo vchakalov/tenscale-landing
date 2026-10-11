@@ -47,24 +47,24 @@ function PersonIcon({ className }: { className: string }) {
 export function ContactCard({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`rounded-[16px] border-[1.5px] border-[#001232] bg-[#f4f1ea] px-[clamp(24px,2.6vw,44px)] py-[clamp(26px,2.6vw,38px)] text-left shadow-[0_10px_0_0_rgba(0,18,50,0.12)] ${className}`}
+      className={`rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-bg) px-[clamp(24px,2.6vw,44px)] py-[clamp(26px,2.6vw,38px)] text-left shadow-[0_10px_0_0_var(--ec-shadow)] ${className}`}
     >
       <div className="min-w-0">
-        <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(0,18,50,0.5)] uppercase">
+        <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(var(--ec-ink-rgb),0.5)] uppercase">
           Texts come from
         </p>
         <a
           href={CONTACT.phoneHref}
-          className="mt-[8px] block font-[family-name:var(--font-pt-serif)] text-[clamp(28px,2.6vw,46px)] leading-[1.15] font-bold whitespace-nowrap text-[#001232] tabular-nums"
+          className="mt-[8px] block font-[family-name:var(--font-pt-serif)] text-[clamp(28px,2.6vw,46px)] leading-[1.15] font-bold whitespace-nowrap text-(--ec-ink) tabular-nums"
         >
           {CONTACT.phoneDisplay}
         </a>
-        <p className="mt-[10px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(0,18,50,0.7)]">
+        <p className="mt-[10px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(var(--ec-ink-rgb),0.7)]">
           That&apos;s me, Ben. Reply to it any time, it reaches me directly.
           Emails come from{" "}
-          <span className="font-medium text-[#001232]">{CONTACT.email}</span>{" "}
+          <span className="font-medium text-(--ec-ink)">{CONTACT.email}</span>{" "}
           and the calendar invite from{" "}
-          <span className="font-medium text-[#001232]">
+          <span className="font-medium text-(--ec-ink)">
             {CONTACT.inviteEmail}
           </span>
           . You may also hear from Peter on my team.
@@ -72,7 +72,7 @@ export function ContactCard({ className = "" }: { className?: string }) {
         <a
           href={CONTACT.vcard}
           download="Ben - Tenscale.vcf"
-          className="mt-[24px] inline-flex items-center gap-[12px] rounded-[100px] bg-[#0158ff] px-[clamp(26px,2.2vw,38px)] py-[clamp(12px,1vw,15px)] font-[family-name:var(--font-inter)] text-[clamp(16px,1.15vw,19px)] leading-[25px] font-medium whitespace-nowrap text-[#f4f1ea] shadow-[0_8px_1px_0_rgba(0,0,0,0.1)] transition-transform duration-200 hover:-translate-y-px active:scale-[0.98]"
+          className="mt-[24px] inline-flex items-center gap-[12px] rounded-[100px] bg-(--ec-accent) px-[clamp(26px,2.2vw,38px)] py-[clamp(12px,1vw,15px)] font-[family-name:var(--font-inter)] text-[clamp(16px,1.15vw,19px)] leading-[25px] font-medium whitespace-nowrap text-(--ec-on-accent) shadow-[0_8px_1px_0_rgba(0,0,0,0.1)] transition-transform duration-200 hover:-translate-y-px active:scale-[0.98]"
         >
           <PersonIcon className="h-[20px] w-[20px] shrink-0" />
           Save My Contact

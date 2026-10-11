@@ -66,9 +66,9 @@ const BREAKOUTS: readonly Breakout[] = [
  */
 function BreakoutCard({ item, index }: { item: Breakout; index: number }) {
   return (
-    <article className="flex flex-col overflow-hidden rounded-[16px] border-[1.5px] border-[#001232] bg-[#f4f1ea] shadow-[0_10px_0_0_rgba(0,18,50,0.12)]">
+    <article className="flex flex-col overflow-hidden rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-bg) shadow-[0_10px_0_0_var(--ec-shadow)]">
       {item.src !== "" && (
-        <div className="aspect-video w-full border-b-[1.5px] border-[#001232] bg-[#001232]">
+        <div className="aspect-video w-full border-b-[1.5px] border-(--ec-ink) bg-(--ec-frame)">
           <video
             className="h-full w-full object-cover"
             src={item.src}
@@ -80,19 +80,19 @@ function BreakoutCard({ item, index }: { item: Breakout; index: number }) {
         </div>
       )}
       <div className="flex flex-1 items-start gap-[clamp(16px,1.8vw,28px)] px-[clamp(20px,2.2vw,36px)] py-[clamp(22px,2.2vw,32px)] text-left">
-        <span className="shrink-0 font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.4vw,40px)] leading-none font-bold text-[#0158ff] tabular-nums">
+        <span className="shrink-0 font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.4vw,40px)] leading-none font-bold text-(--ec-accent) tabular-nums">
           {String(index + 1).padStart(2, "0")}
         </span>
         <div className="min-w-0">
           {item.src !== "" && (
-            <p className="mb-[10px] font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[#0158ff] uppercase">
+            <p className="mb-[10px] font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-(--ec-accent) uppercase">
               Video · {item.minutes}
             </p>
           )}
-          <h3 className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.5vw,26px)] leading-[1.28] font-bold text-[#001232]">
+          <h3 className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.5vw,26px)] leading-[1.28] font-bold text-(--ec-ink)">
             {item.question}
           </h3>
-          <p className="mt-[10px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(0,18,50,0.75)]">
+          <p className="mt-[10px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(var(--ec-ink-rgb),0.75)]">
             {item.answer}
           </p>
         </div>
@@ -103,9 +103,9 @@ function BreakoutCard({ item, index }: { item: Breakout; index: number }) {
 
 export function BreakoutVideos() {
   return (
-    <section className="bg-[#f4f1ea] px-[40px] pt-[130px] max-[800px]:px-[14px] max-[800px]:pt-[72px]">
+    <section className="bg-(--ec-bg) px-[40px] pt-[130px] max-[800px]:px-[14px] max-[800px]:pt-[72px]">
       <div className="mx-auto w-full max-w-[1080px]">
-        <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[clamp(30px,3vw,52px)] leading-[1.18] font-bold text-[#001232] max-[800px]:text-[32px] max-[800px]:leading-[38px]">
+        <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[clamp(30px,3vw,52px)] leading-[1.18] font-bold text-(--ec-ink) max-[800px]:text-[32px] max-[800px]:leading-[38px]">
           What People Ask Before The Call.
         </h2>
         <div className="mt-[48px] grid grid-cols-2 gap-[26px] max-[800px]:mt-[28px] max-[800px]:grid-cols-1 max-[800px]:gap-[18px]">

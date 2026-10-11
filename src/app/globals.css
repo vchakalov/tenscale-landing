@@ -128,10 +128,49 @@ body {
   --ec-notice-border: #ffe3e3;
   --ec-notice-border-hover: #ffd1d1;
 
+  /* Roles the components colour by. Defaults keep the source palette, so a
+     page that does not opt into a theme renders exactly as before. */
+  --ec-bg: var(--ec-cream);            /* page and section ground */
+  --ec-ink: var(--ec-navy);            /* text, rules, icon strokes */
+  --ec-accent: var(--ec-blue);         /* CTA fill, the few accent words */
+  --ec-on-accent: var(--ec-cream);     /* CTA label */
+  --ec-frame: var(--ec-navy);          /* VSL frame, controls and panels */
+  --ec-frame-border: var(--ec-navy);
+  --ec-on-frame: var(--ec-cream);
+  --ec-shadow: rgba(0, 18, 50, 0.12);  /* hard offset shadows */
+  --ec-band: var(--ec-blue);           /* full-width coloured band, under on-frame text */
+  /* Channels of the same roles, for translucent uses as rgba(var(), a). */
+  --ec-ink-rgb: 0, 18, 50;
+  --ec-accent-rgb: 1, 88, 255;
+  --ec-frame-rgb: 0, 18, 50;
+  --ec-on-frame-rgb: 244, 241, 234;
+
   background-color: var(--ec-cream);
   color: var(--ec-navy);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
+
+/* Tenscale brand, used by /landing-black: the lime mark on near-black, as in
+   the logo files in the Drive "Branding" folder. */
+.ec-landing.ec-theme-black {
+  --ec-bg: #111111;
+  --ec-ink: #ffffff;
+  --ec-accent: #e2f93b;
+  --ec-on-accent: #111111;
+  --ec-frame: #1c1c1c;
+  --ec-frame-border: rgba(255, 255, 255, 0.14);
+  --ec-on-frame: #ffffff;
+  --ec-shadow: rgba(226, 249, 59, 0.16);
+  --ec-band: #1c1c1c;
+  --ec-ink-rgb: 255, 255, 255;
+  --ec-accent-rgb: 226, 249, 59;
+  --ec-frame-rgb: 28, 28, 28;
+  --ec-on-frame-rgb: 255, 255, 255;
+
+  background-color: var(--ec-bg);
+  color: var(--ec-ink);
+}
+.ec-theme-black ::selection { background: #e2f93b; color: #111111; }
 
 /* "Only 2 spots left" pill, the one element on the page with a real hover. */
 .ec-landing .ec-notice-box {

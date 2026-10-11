@@ -34,44 +34,44 @@ const FIGURES = [
 
 export function CaseStudy() {
   return (
-    <section className="bg-[#f4f1ea] px-[40px] pt-[130px] max-[800px]:px-[14px] max-[800px]:pt-[72px]">
+    <section className="bg-(--ec-bg) px-[40px] pt-[130px] max-[800px]:px-[14px] max-[800px]:pt-[72px]">
       <div className="mx-auto w-full max-w-[1080px]">
-        <p className="text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(0,18,50,0.5)] uppercase">
+        <p className="text-center font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(var(--ec-ink-rgb),0.5)] uppercase">
           One account, up close
         </p>
-        <h2 className="mt-[12px] text-center font-[family-name:var(--font-pt-serif)] text-[clamp(30px,3vw,52px)] leading-[1.18] font-bold text-[#001232] max-[800px]:text-[32px] max-[800px]:leading-[38px]">
+        <h2 className="mt-[12px] text-center font-[family-name:var(--font-pt-serif)] text-[clamp(30px,3vw,52px)] leading-[1.18] font-bold text-(--ec-ink) max-[800px]:text-[32px] max-[800px]:leading-[38px]">
           Same Budget.{" "}
-          <span className="text-[#0158ff]">40% Cheaper Leads.</span>
+          <span className="text-(--ec-accent)">40% Cheaper Leads.</span>
         </h2>
 
         <div className="mt-[44px] grid grid-cols-3 gap-[18px] max-[800px]:mt-[28px] max-[800px]:grid-cols-1 max-[800px]:gap-[12px]">
           {FIGURES.map((figure) => (
               <div
                 key={figure.label}
-                className="rounded-[16px] border-[1.5px] border-[#001232] bg-[#f4f1ea] px-[22px] py-[22px] text-center shadow-[0_10px_0_0_rgba(0,18,50,0.12)]"
+                className="rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-bg) px-[22px] py-[22px] text-center shadow-[0_10px_0_0_var(--ec-shadow)]"
               >
-                <p className="font-[family-name:var(--font-pt-serif)] text-[clamp(24px,2.2vw,38px)] leading-[1.15] font-bold text-[#001232] tabular-nums">
+                <p className="font-[family-name:var(--font-pt-serif)] text-[clamp(24px,2.2vw,38px)] leading-[1.15] font-bold text-(--ec-ink) tabular-nums">
                   {/* Spend did not change, so it is not struck through: a
                     crossed-out number reads as "we cut this", which is the
                     opposite of the point. */}
                   <span
-                    className={`text-[rgba(0,18,50,0.4)] ${figure.changed ? "line-through decoration-[1.5px]" : ""}`}
+                    className={`text-[rgba(var(--ec-ink-rgb),0.4)] ${figure.changed ? "line-through decoration-[1.5px]" : ""}`}
                   >
                     {figure.before}
                   </span>{" "}
-                  <span className="text-[#0158ff]">
+                  <span className="text-(--ec-accent)">
                     {figure.changed ? "\u2192" : "\u2248"}
                   </span>{" "}
                   {figure.after}
                 </p>
-                <p className="mt-[8px] font-[family-name:var(--font-inter)] text-[17px] leading-[24px] text-[rgba(0,18,50,0.7)]">
+                <p className="mt-[8px] font-[family-name:var(--font-inter)] text-[17px] leading-[24px] text-[rgba(var(--ec-ink-rgb),0.7)]">
                   {figure.label}
                 </p>
               </div>
           ))}
         </div>
 
-        <p className="mx-auto mt-[36px] max-w-[820px] text-center text-pretty font-[family-name:var(--font-inter)] text-[clamp(18px,1.3vw,21px)] leading-[1.65] text-[rgba(0,18,50,0.8)]">
+        <p className="mx-auto mt-[36px] max-w-[820px] text-center text-pretty font-[family-name:var(--font-inter)] text-[clamp(18px,1.3vw,21px)] leading-[1.65] text-[rgba(var(--ec-ink-rgb),0.8)]">
           In March the account ran three broad campaigns. By June it ran four,
           each built for one kind of buyer with its own funnel: a quiz page, a
           video page for parents and caregivers, a lead form for warm engagers,
@@ -83,7 +83,7 @@ export function CaseStudy() {
           href="/proof/cpl-compare.webp"
           target="_blank"
           rel="noopener noreferrer"
-          className="mx-auto mt-[36px] block max-w-[900px] overflow-hidden rounded-[14px] border-[1.5px] border-[#001232] shadow-[0_10px_0_0_rgba(0,18,50,0.12)]"
+          className="mx-auto mt-[36px] block max-w-[900px] overflow-hidden rounded-[14px] border-[1.5px] border-(--ec-ink) shadow-[0_10px_0_0_var(--ec-shadow)]"
         >
           <Image
             src="/proof/cpl-compare.webp"
@@ -93,7 +93,7 @@ export function CaseStudy() {
             className="block h-auto w-full"
           />
         </a>
-        <p className="mt-[12px] text-center font-[family-name:var(--font-inter)] text-[14px] leading-[20px] text-[rgba(0,18,50,0.5)]">
+        <p className="mt-[12px] text-center font-[family-name:var(--font-inter)] text-[14px] leading-[20px] text-[rgba(var(--ec-ink-rgb),0.5)]">
           Click to open it full size.
         </p>
       </div>

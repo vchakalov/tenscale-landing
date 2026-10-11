@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { AppointmentCard } from "./AppointmentCard";
+import { BrandMark } from "./BrandMark";
 import { ContactCard } from "./ContactCard";
 import { GmailNotice } from "./GmailNotice";
 import { type Chapter, Vsl } from "./Vsl";
@@ -61,7 +62,7 @@ function Headline({ className }: { className: string }) {
     <h1 className={className}>
       Congratulations.
       <br />
-      <span className="text-[#0158ff]">Your Call Is Booked.</span>
+      <span className="text-(--ec-accent)">Your Call Is Booked.</span>
     </h1>
   );
 }
@@ -76,10 +77,10 @@ function Headline({ className }: { className: string }) {
 function SubheadCopy() {
   return (
     <>
-      <span className="block font-medium text-[#001232]">
+      <span className="block font-medium text-(--ec-ink)">
         Everything on this page is prep for our call.
       </span>
-      <span className="mt-[4px] block text-[rgba(0,18,50,0.7)]">
+      <span className="mt-[4px] block text-[rgba(var(--ec-ink-rgb),0.7)]">
         Start with the 3-minute video, then the two quick steps under it.
       </span>
     </>
@@ -105,10 +106,10 @@ function Step({
   return (
     <div className={`text-left ${className}`}>
       <div className="flex items-center gap-[14px]">
-        <span className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full bg-[#0158ff] font-[family-name:var(--font-pt-serif)] text-[20px] leading-none font-bold text-[#f4f1ea] max-[800px]:h-[34px] max-[800px]:w-[34px] max-[800px]:text-[17px]">
+        <span className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full bg-(--ec-accent) font-[family-name:var(--font-pt-serif)] text-[20px] leading-none font-bold text-(--ec-on-accent) max-[800px]:h-[34px] max-[800px]:w-[34px] max-[800px]:text-[17px]">
           {index}
         </span>
-        <h2 className="font-[family-name:var(--font-pt-serif)] text-[clamp(22px,1.8vw,32px)] leading-[1.2] font-bold text-[#001232]">
+        <h2 className="font-[family-name:var(--font-pt-serif)] text-[clamp(22px,1.8vw,32px)] leading-[1.2] font-bold text-(--ec-ink)">
           {title}
         </h2>
       </div>
@@ -128,15 +129,24 @@ function Step({
  */
 const COLUMN = "max-w-[min(1080px,94vw,calc((100vh-235px-7.8vw)*16/9))]";
 
-export function ThankYouFold() {
+/**
+ * `brandMark` puts the mark in the desktop fold's top-left corner, as on the
+ * landing. The phone fold has no free corner beside the centred headline and
+ * no sticky bar, so there it sits small above the headline.
+ */
+export function ThankYouFold({ brandMark = false }: { brandMark?: boolean }) {
   return (
     <>
       {/* Desktop */}
-      <section className="hidden bg-[#f4f1ea] px-[40px] pt-[22px] pb-[26px] min-[801px]:block">
+      <section className="hidden bg-(--ec-bg) px-[40px] pt-[22px] pb-[26px] min-[801px]:block">
         <div className="relative mx-auto w-full max-w-[1560px] text-center">
-          <Headline className="mx-auto text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(36px,3.4vw,64px)] leading-[1.12] font-bold text-[#001232]" />
+          {brandMark && (
+            <BrandMark className="absolute top-0 left-0 h-[clamp(28px,2.4vw,40px)] w-auto" />
+          )}
 
-          <p className="mx-auto mt-[24px] max-w-[min(900px,72vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(21px,1.5vw,26px)] leading-[1.45] font-normal text-[#001232]">
+          <Headline className="mx-auto text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(36px,3.4vw,64px)] leading-[1.12] font-bold text-(--ec-ink)" />
+
+          <p className="mx-auto mt-[24px] max-w-[min(900px,72vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(21px,1.5vw,26px)] leading-[1.45] font-normal text-(--ec-ink)">
             <SubheadCopy />
           </p>
 
@@ -172,10 +182,12 @@ export function ThankYouFold() {
       </section>
 
       {/* Mobile */}
-      <section className="flex flex-col items-center bg-[#f4f1ea] px-[14px] pt-[24px] pb-[12px] text-center min-[801px]:hidden">
-        <Headline className="text-balance font-[family-name:var(--font-pt-serif)] text-[35px] leading-[1.15] font-bold text-[#001232]" />
+      <section className="flex flex-col items-center bg-(--ec-bg) px-[14px] pt-[24px] pb-[12px] text-center min-[801px]:hidden">
+        {brandMark && <BrandMark className="mb-[14px] h-[24px] w-auto" />}
 
-        <p className="mt-[16px] text-pretty font-[family-name:var(--font-inter)] text-[20px] leading-[29px] font-normal text-[#001232]">
+        <Headline className="text-balance font-[family-name:var(--font-pt-serif)] text-[35px] leading-[1.15] font-bold text-(--ec-ink)" />
+
+        <p className="mt-[16px] text-pretty font-[family-name:var(--font-inter)] text-[20px] leading-[29px] font-normal text-(--ec-ink)">
           <SubheadCopy />
         </p>
 

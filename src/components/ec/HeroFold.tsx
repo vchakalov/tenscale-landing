@@ -1,5 +1,6 @@
 import { CtaButton } from "./CtaButton";
 import { ProofStats } from "./CtaBlock";
+import { BrandMark } from "./BrandMark";
 import { VSL_CHAPTERS, VSL_ORIGIN, Vsl } from "./Vsl";
 
 /**
@@ -55,7 +56,7 @@ function Eyebrow({ className }: { className: string }) {
   return (
     <p className={className}>
       Owners of{" "}
-      <span className="text-[#0158ff] whitespace-nowrap">$1M&ndash;$4M</span>{" "}
+      <span className="text-(--ec-accent) whitespace-nowrap">$1M&ndash;$4M</span>{" "}
       Lead Gen Agencies
     </p>
   );
@@ -81,7 +82,7 @@ function Headline({ className }: { className: string }) {
       {/* Never allowed to split: the risk reversal is the half of the promise
           that closes the deal, and "Or" alone at the end of a line reads as a
           typo. It fits on one line at every size the clamp produces. */}
-      <span className="text-[#0158ff] whitespace-nowrap">
+      <span className="text-(--ec-accent) whitespace-nowrap">
         Or You Don&apos;t Pay.
       </span>
     </h1>
@@ -95,7 +96,7 @@ function SubheadCopy() {
       {/* Navy, not the accent. The blue is spent on the headline's closing
           phrase and on the button; a third mass of it here is what made the
           fold read as busy. */}
-      <strong className="font-semibold text-[#001232]">
+      <strong className="font-semibold text-(--ec-ink)">
         Meta Ads Automation Engine
       </strong>{" "}
       that handles creative production, campaign setup, testing and scaling.
@@ -103,7 +104,13 @@ function SubheadCopy() {
   );
 }
 
-export function HeroFold() {
+/**
+ * `brandMark` puts the mark in the desktop fold's top-left corner, out of flow,
+ * so it costs the fold no height; the centred eyebrow leaves that corner empty
+ * at every desktop width. The phone fold has no such corner, so its mark lives
+ * in the sticky bar instead.
+ */
+export function HeroFold({ brandMark = false }: { brandMark?: boolean }) {
 
   return (
     <>
@@ -137,13 +144,17 @@ export function HeroFold() {
         The 94vw and 1500px caps only bite on an ultrawide monitor; everywhere
         else the height is what decides.
       */}
-      <section className="hidden bg-[#f4f1ea] px-[40px] pt-[20px] pb-[16px] min-[801px]:block">
+      <section className="hidden bg-(--ec-bg) px-[40px] pt-[20px] pb-[16px] min-[801px]:block">
         <div className="relative mx-auto w-full max-w-[1560px] text-center">
-          <Eyebrow className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.78vw,34px)] leading-[1.35] font-bold text-[#001232]" />
+          {brandMark && (
+            <BrandMark className="absolute top-0 left-0 h-[clamp(28px,2.4vw,40px)] w-auto" />
+          )}
 
-          <Headline className="mx-auto mt-[18px] max-w-[min(1560px,92vw)] text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.95vw,56px)] leading-[1.18] font-bold text-[#001232]" />
+          <Eyebrow className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.78vw,34px)] leading-[1.35] font-bold text-(--ec-ink)" />
 
-          <p className="mx-auto mt-[20px] max-w-[min(1400px,84vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(16px,1.1vw,21px)] leading-[1.55] font-normal text-[#001232]">
+          <Headline className="mx-auto mt-[18px] max-w-[min(1560px,92vw)] text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.95vw,56px)] leading-[1.18] font-bold text-(--ec-ink)" />
+
+          <p className="mx-auto mt-[20px] max-w-[min(1400px,84vw)] text-pretty font-[family-name:var(--font-poppins)] text-[clamp(16px,1.1vw,21px)] leading-[1.55] font-normal text-(--ec-ink)">
             <SubheadCopy />
           </p>
 
@@ -165,8 +176,8 @@ export function HeroFold() {
             <div className="mt-[18px]">
               <ProofStats
                 gapClass="gap-[clamp(48px,5vw,92px)]"
-                valueClass="font-[family-name:var(--font-libre-baskerville)] text-[clamp(22px,1.7vw,31px)] leading-[1.28] font-bold text-[#001232]"
-                labelClass="mt-[3px] font-[family-name:var(--font-inter)] text-[clamp(12px,0.95vw,16px)] leading-[1.4] text-[rgba(0,18,50,0.65)]"
+                valueClass="font-[family-name:var(--font-libre-baskerville)] text-[clamp(22px,1.7vw,31px)] leading-[1.28] font-bold text-(--ec-ink)"
+                labelClass="mt-[3px] font-[family-name:var(--font-inter)] text-[clamp(12px,0.95vw,16px)] leading-[1.4] text-[rgba(var(--ec-ink-rgb),0.65)]"
               />
             </div>
           </div>
@@ -183,12 +194,12 @@ export function HeroFold() {
         that budget too: the gaps, the two type sizes and the top padding were
         all cut once the words had been cut as far as they could go.
       */}
-      <section className="flex flex-col items-center bg-[#f4f1ea] px-[14px] pt-[24px] pb-[12px] text-center min-[801px]:hidden">
-        <Eyebrow className="text-balance font-[family-name:var(--font-pt-serif)] text-[18px] leading-[1.4] font-bold text-[#001232]" />
+      <section className="flex flex-col items-center bg-(--ec-bg) px-[14px] pt-[24px] pb-[12px] text-center min-[801px]:hidden">
+        <Eyebrow className="text-balance font-[family-name:var(--font-pt-serif)] text-[18px] leading-[1.4] font-bold text-(--ec-ink)" />
 
-        <Headline className="mt-[14px] text-balance font-[family-name:var(--font-pt-serif)] text-[29px] leading-[1.2] font-bold text-[#001232]" />
+        <Headline className="mt-[14px] text-balance font-[family-name:var(--font-pt-serif)] text-[29px] leading-[1.2] font-bold text-(--ec-ink)" />
 
-        <p className="mt-[20px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] font-normal text-[#001232]">
+        <p className="mt-[20px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] font-normal text-(--ec-ink)">
           <SubheadCopy />
         </p>
 
@@ -210,8 +221,8 @@ export function HeroFold() {
           <div className="mt-[18px] w-full">
             <ProofStats
               gapClass="gap-[22px]"
-              valueClass="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[25px] font-bold text-[#001232]"
-              labelClass="mt-[2px] font-[family-name:var(--font-inter)] text-[11px] leading-[15px] text-[rgba(0,18,50,0.65)]"
+              valueClass="font-[family-name:var(--font-pt-serif)] text-[19px] leading-[25px] font-bold text-(--ec-ink)"
+              labelClass="mt-[2px] font-[family-name:var(--font-inter)] text-[11px] leading-[15px] text-[rgba(var(--ec-ink-rgb),0.65)]"
             />
           </div>
         </div>

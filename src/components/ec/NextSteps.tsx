@@ -32,9 +32,9 @@ const MOMENTS = [
 
 export function NextSteps() {
   return (
-    <section className="bg-[#f4f1ea] px-[40px] pt-[130px] max-[800px]:px-[14px] max-[800px]:pt-[72px]">
+    <section className="bg-(--ec-bg) px-[40px] pt-[130px] max-[800px]:px-[14px] max-[800px]:pt-[72px]">
       <div className="mx-auto w-full max-w-[1080px]">
-        <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[clamp(30px,3vw,52px)] leading-[1.18] font-bold text-[#001232] max-[800px]:text-[32px] max-[800px]:leading-[38px]">
+        <h2 className="text-center font-[family-name:var(--font-pt-serif)] text-[clamp(30px,3vw,52px)] leading-[1.18] font-bold text-(--ec-ink) max-[800px]:text-[32px] max-[800px]:leading-[38px]">
           What Happens Next.
         </h2>
 
@@ -47,17 +47,17 @@ export function NextSteps() {
               {index < MOMENTS.length - 1 && (
                 <span
                   aria-hidden="true"
-                  className="absolute top-[34px] bottom-0 left-[16px] w-[1.5px] bg-[rgba(0,18,50,0.2)]"
+                  className="absolute top-[34px] bottom-0 left-[16px] w-[1.5px] bg-[rgba(var(--ec-ink-rgb),0.2)]"
                 />
               )}
-              <span className="relative flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-[#001232] bg-[#f4f1ea] font-[family-name:var(--font-pt-serif)] text-[16px] leading-none font-bold text-[#001232]">
+              <span className="relative flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-(--ec-ink) bg-(--ec-bg) font-[family-name:var(--font-pt-serif)] text-[16px] leading-none font-bold text-(--ec-ink)">
                 {index + 1}
               </span>
               <div className="min-w-0 pt-[4px]">
-                <p className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.45vw,24px)] leading-[1.3] font-bold text-[#001232]">
+                <p className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.45vw,24px)] leading-[1.3] font-bold text-(--ec-ink)">
                   {moment.when}
                 </p>
-                <p className="mt-[6px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(0,18,50,0.75)]">
+                <p className="mt-[6px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(var(--ec-ink-rgb),0.75)]">
                   {moment.what}
                 </p>
               </div>
@@ -65,14 +65,14 @@ export function NextSteps() {
           ))}
         </ol>
 
-        <div className="mx-auto mt-[64px] max-w-[900px] rounded-[16px] bg-[#001232] px-[clamp(24px,3vw,56px)] py-[clamp(30px,3vw,48px)] text-center shadow-[0_10px_0_0_rgba(0,18,50,0.12)] max-[800px]:mt-[44px]">
-          <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(244,241,234,0.6)] uppercase">
+        <div className="mx-auto mt-[64px] max-w-[900px] rounded-[16px] bg-(--ec-frame) px-[clamp(24px,3vw,56px)] py-[clamp(30px,3vw,48px)] text-center shadow-[0_10px_0_0_var(--ec-shadow)] max-[800px]:mt-[44px]">
+          <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(var(--ec-on-frame-rgb),0.6)] uppercase">
             Our guarantee
           </p>
-          <p className="mt-[12px] text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(26px,2.5vw,44px)] leading-[1.2] font-bold text-[#f4f1ea]">
+          <p className="mt-[12px] text-balance font-[family-name:var(--font-pt-serif)] text-[clamp(26px,2.5vw,44px)] leading-[1.2] font-bold text-(--ec-on-frame)">
             Two Months. Or 100% Of Your Money Back.
           </p>
-          <p className="mx-auto mt-[14px] max-w-[640px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(244,241,234,0.8)]">
+          <p className="mx-auto mt-[14px] max-w-[640px] text-pretty font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(var(--ec-on-frame-rgb),0.8)]">
             If after two months you don&apos;t believe Tenscale helps your
             agency, you get every dollar back. No questions asked.
           </p>

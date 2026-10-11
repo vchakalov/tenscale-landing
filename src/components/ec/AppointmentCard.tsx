@@ -112,7 +112,7 @@ function CalendarIcon({ className }: { className: string }) {
 }
 
 const SECONDARY_LINK =
-  "font-[family-name:var(--font-inter)] text-[15px] leading-[22px] text-[rgba(0,18,50,0.6)] underline decoration-[rgba(0,18,50,0.25)] underline-offset-[4px] transition-colors duration-200 hover:text-[#001232] hover:decoration-[rgba(0,18,50,0.6)] max-[800px]:text-[14px]";
+  "font-[family-name:var(--font-inter)] text-[15px] leading-[22px] text-[rgba(var(--ec-ink-rgb),0.6)] underline decoration-[rgba(var(--ec-ink-rgb),0.25)] underline-offset-[4px] transition-colors duration-200 hover:text-(--ec-ink) hover:decoration-[rgba(var(--ec-ink-rgb),0.6)] max-[800px]:text-[14px]";
 
 /**
  * The conversion. Reported once per call, not once per page load, so a
@@ -295,24 +295,24 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
 
   return (
     <div
-      className={`rounded-[16px] border-[1.5px] border-[#001232] bg-[#f4f1ea] px-[clamp(24px,2.6vw,44px)] py-[clamp(28px,2.8vw,42px)] shadow-[0_10px_0_0_rgba(0,18,50,0.12)] ${className}`}
+      className={`rounded-[16px] border-[1.5px] border-(--ec-ink) bg-(--ec-bg) px-[clamp(24px,2.6vw,44px)] py-[clamp(28px,2.8vw,42px)] shadow-[0_10px_0_0_var(--ec-shadow)] ${className}`}
     >
       {state.status === "pending" && (
         /* One frame, until the query string has been read. Bars rather than a
            guessed date: a wrong date here is worse than a blank one. */
         <div aria-hidden="true" className="animate-pulse">
-          <div className="h-[26px] w-[62%] rounded-[6px] bg-[rgba(0,18,50,0.1)]" />
-          <div className="mt-[12px] h-[18px] w-[44%] rounded-[6px] bg-[rgba(0,18,50,0.07)]" />
-          <div className="mt-[26px] h-[52px] w-[260px] max-w-full rounded-[100px] bg-[rgba(0,18,50,0.07)]" />
+          <div className="h-[26px] w-[62%] rounded-[6px] bg-[rgba(var(--ec-ink-rgb),0.1)]" />
+          <div className="mt-[12px] h-[18px] w-[44%] rounded-[6px] bg-[rgba(var(--ec-ink-rgb),0.07)]" />
+          <div className="mt-[26px] h-[52px] w-[260px] max-w-full rounded-[100px] bg-[rgba(var(--ec-ink-rgb),0.07)]" />
         </div>
       )}
 
       {state.status === "unknown" && (
         <div className="text-left">
-          <p className="font-[family-name:var(--font-pt-serif)] text-[clamp(21px,1.7vw,30px)] leading-[1.28] font-bold text-[#001232]">
+          <p className="font-[family-name:var(--font-pt-serif)] text-[clamp(21px,1.7vw,30px)] leading-[1.28] font-bold text-(--ec-ink)">
             The invite is in your inbox.
           </p>
-          <p className="mt-[10px] font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(0,18,50,0.7)]">
+          <p className="mt-[10px] font-[family-name:var(--font-inter)] text-[clamp(17px,1.25vw,20px)] leading-[1.6] text-[rgba(var(--ec-ink-rgb),0.7)]">
             Open the confirmation email and accept the invitation. That puts the
             call in your calendar with the meeting link attached.
           </p>
@@ -321,25 +321,25 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
 
       {state.status === "known" && (
         <div className="text-left">
-          <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(0,18,50,0.5)] uppercase">
+          <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(var(--ec-ink-rgb),0.5)] uppercase">
             Your call
           </p>
 
-          <p className="mt-[10px] font-[family-name:var(--font-pt-serif)] text-[clamp(23px,2vw,36px)] leading-[1.22] font-bold text-[#001232]">
+          <p className="mt-[10px] font-[family-name:var(--font-pt-serif)] text-[clamp(23px,2vw,36px)] leading-[1.22] font-bold text-(--ec-ink)">
             {formatDay(state.appointment)}
           </p>
-          <p className="mt-[6px] font-[family-name:var(--font-inter)] text-[clamp(17px,1.3vw,20px)] leading-[1.5] text-[rgba(0,18,50,0.7)]">
+          <p className="mt-[6px] font-[family-name:var(--font-inter)] text-[clamp(17px,1.3vw,20px)] leading-[1.5] text-[rgba(var(--ec-ink-rgb),0.7)]">
             {formatTimeRange(state.appointment)}
             {timeZoneLabel(state.appointment) &&
               ` \u00b7 ${timeZoneLabel(state.appointment)}`}
           </p>
 
-          <div className="mt-[30px] border-t border-[rgba(0,18,50,0.14)] pt-[30px]">
+          <div className="mt-[30px] border-t border-[rgba(var(--ec-ink-rgb),0.14)] pt-[30px]">
             {added ? (
               /* Confirmed, not just clicked. Without this people press the
                  button three times and still are not sure it worked. */
-              <p className="inline-flex items-center gap-[10px] rounded-[100px] border-[1.5px] border-[#001232] px-[26px] py-[13px] font-[family-name:var(--font-inter)] text-[16px] leading-[25px] font-medium text-[#001232]">
-                <CheckIcon className="h-[19px] w-[19px] shrink-0 text-[#0158ff]" />
+              <p className="inline-flex items-center gap-[10px] rounded-[100px] border-[1.5px] border-(--ec-ink) px-[26px] py-[13px] font-[family-name:var(--font-inter)] text-[16px] leading-[25px] font-medium text-(--ec-ink)">
+                <CheckIcon className="h-[19px] w-[19px] shrink-0 text-(--ec-accent)" />
                 Added. See you {formatDay(state.appointment)}.
               </p>
             ) : (
@@ -349,14 +349,14 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
                 rel="noopener noreferrer"
                 onClick={(event) => void openCalendar(event, googleCalendarUrl)}
                 aria-busy={waiting}
-                className="inline-flex items-center gap-[12px] rounded-[100px] bg-[#0158ff] px-[clamp(26px,2.2vw,38px)] py-[clamp(12px,1vw,15px)] font-[family-name:var(--font-inter)] text-[clamp(16px,1.15vw,19px)] leading-[25px] font-medium whitespace-nowrap text-[#f4f1ea] shadow-[0_8px_1px_0_rgba(0,0,0,0.1)] transition-transform duration-200 hover:-translate-y-px active:scale-[0.98]"
+                className="inline-flex items-center gap-[12px] rounded-[100px] bg-(--ec-accent) px-[clamp(26px,2.2vw,38px)] py-[clamp(12px,1vw,15px)] font-[family-name:var(--font-inter)] text-[clamp(16px,1.15vw,19px)] leading-[25px] font-medium whitespace-nowrap text-(--ec-on-accent) shadow-[0_8px_1px_0_rgba(0,0,0,0.1)] transition-transform duration-200 hover:-translate-y-px active:scale-[0.98]"
               >
                 <CalendarIcon className="h-[20px] w-[20px] shrink-0" />
                 {waiting ? "Getting your meeting link\u2026" : "Add To Google Calendar"}
               </a>
             )}
 
-            <p className="mt-[16px] font-[family-name:var(--font-inter)] text-[15px] leading-[22px] text-[rgba(0,18,50,0.5)] max-[800px]:text-[14px]">
+            <p className="mt-[16px] font-[family-name:var(--font-inter)] text-[15px] leading-[22px] text-[rgba(var(--ec-ink-rgb),0.5)] max-[800px]:text-[14px]">
               Use{" "}
               <a
                 href={outlookCalendarUrl(state.appointment)}
@@ -389,22 +389,22 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
             it is the easiest thing in the world to miss, and knowing who
             someone is decides whether the slot survives until Friday.
           */}
-          <div className="mt-[30px] flex items-start gap-[clamp(18px,1.8vw,26px)] border-t border-[rgba(0,18,50,0.14)] pt-[30px]">
+          <div className="mt-[30px] flex items-start gap-[clamp(18px,1.8vw,26px)] border-t border-[rgba(var(--ec-ink-rgb),0.14)] pt-[30px]">
             <Image
               src={HOST.photo}
               alt={HOST.name}
               width={220}
               height={220}
-              className="h-[96px] w-[96px] shrink-0 rounded-full border-[1.5px] border-[#001232] object-cover max-[800px]:h-[68px] max-[800px]:w-[68px]"
+              className="h-[96px] w-[96px] shrink-0 rounded-full border-[1.5px] border-(--ec-ink) object-cover max-[800px]:h-[68px] max-[800px]:w-[68px]"
             />
             <div className="min-w-0">
-              <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(0,18,50,0.5)] uppercase">
+              <p className="font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium tracking-[0.12em] text-[rgba(var(--ec-ink-rgb),0.5)] uppercase">
                 Your call is with
               </p>
-              <p className="mt-[5px] font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.45vw,24px)] leading-[1.3] font-bold text-[#001232]">
+              <p className="mt-[5px] font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.45vw,24px)] leading-[1.3] font-bold text-(--ec-ink)">
                 {HOST.name}
               </p>
-              <p className="mt-[10px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] text-[rgba(0,18,50,0.7)] max-[800px]:text-[16px] max-[800px]:leading-[24px]">
+              <p className="mt-[10px] text-pretty font-[family-name:var(--font-inter)] text-[17px] leading-[26px] text-[rgba(var(--ec-ink-rgb),0.7)] max-[800px]:text-[16px] max-[800px]:leading-[24px]">
                 {HOST.bio}
               </p>
             </div>
