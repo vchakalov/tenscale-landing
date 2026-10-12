@@ -129,17 +129,26 @@ export function HeroFold({ brandMark = false }: { brandMark?: boolean }) {
 
         The player is sized by the height that is left over, not by a share of
         the width. The video takes whatever the viewport has after the type and
-        spacing around it, and works out its own width from 16:9. On a tall
-        window it is enormous; on a short one it gives room back rather than
-        pushing the proof numbers off the screen.
+        spacing around it. On a tall window it is enormous; on a short one it
+        gives room back rather than pushing the proof numbers off the screen.
 
-        The reserve is `330px + 7vw` rather than a flat number because the type
-        here is sized in vw: the callout, the headline and the subhead are all
-        taller on a wide monitor than on a laptop. Measured, the block above and
-        below the player runs 422px at 1024 wide, 461px at 1512 and 496px at
-        1920. The expression tracks those three points, minus the 18px the gaps
-        around the player gave back, so the reserve is the real height rather
-        than a guess above it. A guess above it is empty screen on a laptop.
+        At 16:9 that height made it small on a laptop: 692px of a 1470px
+        MacBook Air window. So once it reaches that height it keeps growing
+        sideways, up to 2.2:1, and the video crops its top and bottom to fill
+        the frame. At 2.2:1 every caption in the cut stays whole, and Ben's
+        face stays in. The close-ups lose the top of his hair, which is the
+        price. With the reserve below, that laptop now gets 902px.
+
+        The reserve (`--ec-vsl-h` is what is left after it) follows the type,
+        which is sized in vw: the callout, the headline and the subhead are all
+        taller on a wide monitor than on a laptop. A straight `313px + 8.6vw`
+        fitted the 1920 monitor and left 40 to 50px empty under the proof on a
+        laptop, so the reserve is now three pieces, each measured:
+        `162px + 17.5vw` from 1280 to about 1700 wide, where the type grows;
+        `313px + 8.6vw` above that, where the type stops growing at its caps;
+        and 386px below 1280, where it sits at its minimums. That leaves the
+        proof the section's own 16px above the screen's edge at every laptop
+        size, and nothing more.
 
         The 94vw and 1500px caps only bite on an ultrawide monitor; everywhere
         else the height is what decides.
@@ -159,7 +168,8 @@ export function HeroFold({ brandMark = false }: { brandMark?: boolean }) {
           </p>
 
           <Vsl
-            className="mx-auto mt-[26px] w-full max-w-[min(1500px,94vw,calc((100vh-313px-8.6vw)*16/9))] text-left"
+            className="mx-auto mt-[26px] w-full [--ec-vsl-h:calc(100vh_-_clamp(386px,162px_+_17.5vw,313px_+_8.6vw))] max-w-[min(1500px,94vw,calc(var(--ec-vsl-h)*2.2))] text-left"
+            frameClassName="max-h-(--ec-vsl-h)"
             chapters={VSL_CHAPTERS}
             trackAs="landing"
             estimatedDuration={488}

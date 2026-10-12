@@ -346,6 +346,7 @@ export function Vsl({
   trackAs,
   captions,
   promptGlass = false,
+  frameClassName = "",
 }: {
   className?: string;
   source?: { src: string; poster: string };
@@ -376,6 +377,13 @@ export function Vsl({
    * the middle of the frame, where the panel sits.
    */
   promptGlass?: boolean;
+  /**
+   * Added to the 16:9 frame. A `max-h` here makes the frame wider than 16:9
+   * once it reaches that height, and the video fills it by cropping its top
+   * and bottom. Fullscreen is not affected: there the video takes the
+   * screen's shape, not the frame's.
+   */
+  frameClassName?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   /* `started` is the unmute overlay's state, not the sound's: once the visitor
@@ -581,7 +589,7 @@ export function Vsl({
   return (
     <div className={className}>
       <div className="relative overflow-hidden rounded-[14px] border-[1.5px] border-(--ec-frame-border) bg-(--ec-frame) shadow-[0_10px_0_0_var(--ec-shadow)]">
-        <div className="relative aspect-video w-full">
+        <div className={`relative aspect-video w-full ${frameClassName}`}>
           {hasVideo ? (
             <video
               ref={videoRef}
