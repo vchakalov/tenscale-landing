@@ -24,6 +24,7 @@
     "run_worker_first": [
       "/",
       "/landing*",
+      "/v2", "/v2/*",
       "/thank-you", "/thank-you/*",
       "/thank-you-blue", "/thank-you-blue/*",
       "/thank-you-bl", "/thank-you-bl/*",

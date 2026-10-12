@@ -324,3 +324,30 @@ body {
     animation: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * /v2: the company page in the light brand of /landing.
+ *
+ * The page runs on `.ec-landing.ec-theme-light`, so every role token above
+ * applies; these are the few shapes the home sections repeat and the landing
+ * has no class for. A card is drawn the way the landing draws its video: an
+ * ink outline on white with the lime as a hard shadow beneath it, so the lime
+ * is a fill and never text on white.
+ * ------------------------------------------------------------------------ */
+.v2-home .v2-card {
+  background: var(--ec-bg);
+  border: 1.5px solid var(--ec-ink);
+  border-radius: 20px;
+  box-shadow: 0 8px 0 0 var(--ec-shadow);
+}
+/* A screenshot or illustration: the outline without the lime, which stays
+   reserved for the things the eye should land on. */
+.v2-home .v2-frame {
+  border: 1.5px solid var(--ec-ink);
+  border-radius: 16px;
+}
+/* The one dark field per stretch of page: Security, the closing panel. */
+.v2-home .v2-dark {
+  background: var(--ec-frame);
+  color: var(--ec-on-frame);
+}
