@@ -34,16 +34,22 @@ const poppins = Poppins({
   adjustFontFallback: false,
 });
 
-// jace's type pairing, self-hosted: Geist (body) + Gelica (serif display)
+// jace's type pairing, self-hosted: Geist (body) + Gelica (serif display).
+// Not preloaded: only the company page and /privacy use them, and a preload in
+// the root layout is sent on every route. On the ad landings that was 157 KB of
+// fonts the page never draws, fetched at high priority ahead of the video.
+// Those two pages find the files in the stylesheet instead, a moment later.
 const geistSans = localFont({
   variable: "--font-geist-sans",
   display: "swap",
+  preload: false,
   src: [{ path: "./fonts/Geist_Variable.woff2", weight: "100 900", style: "normal" }],
 });
 
 const gelica = localFont({
   variable: "--font-gelica",
   display: "swap",
+  preload: false,
   src: [
     { path: "./fonts/Gelica_Light.woff2", weight: "300 400", style: "normal" },
     { path: "./fonts/Gelica_Medium.woff2", weight: "500", style: "normal" },

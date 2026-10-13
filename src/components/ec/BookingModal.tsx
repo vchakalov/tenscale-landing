@@ -33,7 +33,8 @@ import {
  * ahead of the click (see `lib/booking.ts`), and the iframe itself belongs to
  * iClosed, so it cannot be made faster. It can only be started earlier: the
  * dialog is in the DOM from the first render, hidden but laid out at full size,
- * and the widget boots on the browser's first idle moment. By the time anyone
+ * and the widget boots on the visitor's first scroll or touch, or a few seconds
+ * in (see BOOT_AFTER_MS). By the time anyone
  * has watched enough of the video to want a call, the calendar is already
  * rendered and opening costs one repaint.
  *
@@ -50,6 +51,9 @@ import {
 
 /** The height iClosed's embed is built around. */
 const WIDGET_HEIGHT = 520;
+
+/** When the widget boots if the visitor has not scrolled, touched or typed yet. */
+const BOOT_AFTER_MS = 6000;
 
 /**
  * The widget's type is set in fixed pixels inside a cross-origin frame, so it
@@ -112,20 +116,32 @@ export function BookingModal() {
     [],
   );
 
-  // Boot the widget on the first idle moment rather than on the click. The
-  // container is already rendered at full size, so iClosed's loader finds it.
+  // Boot the widget ahead of the click, but not during the first seconds of
+  // the visit. The widget is a whole app (its bundle, reCAPTCHA, a socket), and
+  // booted on the first idle moment it competed on a phone's connection with
+  // the video the visitor is looking at. It now boots on the first sign of
+  // engagement, a scroll, a touch, a key, or after a few seconds, whichever
+  // comes first; a visitor needs longer than that to reach for the button.
+  // Opening the dialog boots it too, in case it is opened before either.
+  // The container is already rendered at full size, so iClosed's loader finds it.
   useEffect(() => {
-    const idle =
-      typeof window !== "undefined" && "requestIdleCallback" in window
-        ? window.requestIdleCallback
-        : (fn: () => void) => window.setTimeout(fn, 1800);
-    const id = idle(() => loadBookingWidget());
+    const events = ["scroll", "pointerdown", "touchstart", "keydown"] as const;
+    const boot = () => {
+      window.clearTimeout(timer);
+      events.forEach((name) => window.removeEventListener(name, boot));
+      loadBookingWidget();
+    };
+    const timer = window.setTimeout(boot, BOOT_AFTER_MS);
+    events.forEach((name) => window.addEventListener(name, boot, { once: true, passive: true }));
     return () => {
-      if ("cancelIdleCallback" in window && typeof id === "number") {
-        window.cancelIdleCallback(id);
-      }
+      window.clearTimeout(timer);
+      events.forEach((name) => window.removeEventListener(name, boot));
     };
   }, []);
+
+  useEffect(() => {
+    if (open) loadBookingWidget();
+  }, [open]);
 
   // The skeleton stays until the widget has actually put its iframe in place.
   useEffect(() => {

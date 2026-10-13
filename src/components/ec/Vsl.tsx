@@ -24,16 +24,26 @@ import { metaEvent, track } from "@/lib/analytics";
 
 /** Fill these in when the cut is ready. Empty `src` renders the placeholder. */
 /**
- * The cut, served from R2 at media.tenscale.ai: one 1080p file, its index at
- * the front (faststart) so playback starts from the first bytes, cached at
- * Cloudflare's edge and fetched by range, so a chapter jump only downloads
- * from where it lands.
+ * The cut, served from R2 at media.tenscale.ai in two renditions of the same
+ * edit: 1080p for the desktop player, 720p for the phone one. Each has its
+ * index at the front (faststart) so playback starts from the first bytes, a
+ * keyframe every two seconds so a chapter jump starts close to where it lands,
+ * and is cached at Cloudflare's edge and fetched by range.
+ *
+ * The phone gets its own file because its player is about 360px wide: the
+ * 1080p cut there spent mobile bandwidth on pixels the screen cannot show, and
+ * the muted preview buffered megabytes before the page's own requests were done.
  */
 export const VSL_ORIGIN = "https://media.tenscale.ai";
 
 export const VSL_SOURCE = {
-  src: `${VSL_ORIGIN}/Tenscale%20Final.mp4`,
+  src: `${VSL_ORIGIN}/tenscale-vsl-1080.mp4`,
   poster: "/images/vsl-poster.webp",
+};
+
+export const VSL_SOURCE_MOBILE = {
+  src: `${VSL_ORIGIN}/tenscale-vsl-720.mp4`,
+  poster: "/images/vsl-poster-mobile.webp",
 };
 
 function SpeakerIcon({ className }: { className: string }) {
@@ -449,11 +459,15 @@ export function Vsl({
   const [duration, setDuration] = useState(0);
 
   /*
-    The muted preview runs only while its player is on screen. A page hides one
-    of its two players with CSS, so the hidden copy stays still and the film is
-    not downloaded twice; a viewport that crosses 800px after load (a tablet
-    turned, a window resized) swaps which copy that is, and the newly shown one
-    starts. Once the visitor has chosen to watch, nothing here pauses it.
+    The muted preview runs only while its player is on screen, and this is
+    what starts it: the element has no `autoplay` and `preload="none"`. A page
+    renders one player per layout and hides the other with CSS, and the two
+    play different files (720p on a phone, 1080p on desktop). With `autoplay`
+    the browser buffered the hidden copy too, so a phone downloaded the 1080p
+    film alongside its own. Now the hidden copy fetches nothing; a viewport
+    that crosses 800px after load (a tablet turned, a window resized) swaps
+    which copy is shown, and the newly shown one starts. Once the visitor has
+    chosen to watch, nothing here pauses it.
   */
   const startedRef = useRef(false);
   useEffect(() => {
@@ -597,9 +611,8 @@ export function Vsl({
               src={source.src}
               poster={source.poster || undefined}
               muted
-              autoPlay
               playsInline
-              preload="metadata"
+              preload="none"
               onClick={started ? togglePlay : undefined}
               onPlay={() => setPlaying(true)}
               onPlaying={() => reportOnce("preview", "vsl_preview")}

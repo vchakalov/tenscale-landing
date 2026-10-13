@@ -1,7 +1,7 @@
 import { CtaButton } from "./CtaButton";
 import { ProofStats } from "./CtaBlock";
 import { BrandMark } from "./BrandMark";
-import { VSL_CHAPTERS, VSL_ORIGIN, Vsl } from "./Vsl";
+import { VSL_CHAPTERS, VSL_ORIGIN, VSL_SOURCE_MOBILE, Vsl } from "./Vsl";
 
 /**
  * The first fold: callout, headline, subhead, VSL, CTA, proof.
@@ -215,8 +215,9 @@ export function HeroFold({ brandMark = false }: { brandMark?: boolean }) {
 
         <Vsl
           className="mt-[20px] w-full text-left"
+          source={VSL_SOURCE_MOBILE}
           chapters={VSL_CHAPTERS}
-            trackAs="landing"
+          trackAs="landing"
           estimatedDuration={488}
         />
 

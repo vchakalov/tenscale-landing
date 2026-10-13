@@ -153,8 +153,14 @@ email. Heatmaps and session recordings are on, with inputs masked.
 
 ## Media
 
-- **Landing VSL**: one 1080p MP4 on Cloudflare R2 at `media.tenscale.ai`. File name
-  and chapter times: `VSL_SOURCE` and `VSL_CHAPTERS` in `src/components/ec/Vsl.tsx`.
+- **Landing VSL**: two renditions of one cut on Cloudflare R2 at `media.tenscale.ai`:
+  `tenscale-vsl-1080.mp4` for the desktop player and `tenscale-vsl-720.mp4` for the
+  phone one (`VSL_SOURCE`, `VSL_SOURCE_MOBILE`, chapter times in `VSL_CHAPTERS`, all in
+  `src/components/ec/Vsl.tsx`). A new cut is encoded to both, H.264 with faststart and
+  a keyframe every 2 s:
+  `ffmpeg -i cut.mp4 [-vf scale=-2:720] -c:v libx264 -preset slow -crf 24|23 -maxrate 1300k|2400k -bufsize 2600k|4800k -force_key_frames "expr:gte(t,n_forced*2)" -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart out.mp4`
+  (720p values first). Each has a poster: `public/images/vsl-poster.webp` (1600px)
+  and `vsl-poster-mobile.webp` (960px).
 - **Ben's thank-you video**: `tenscale-thank-you.mp4` on the same R2 bucket (`media`),
   remuxed to faststart. `THANK_YOU_VIDEO` and `THANK_YOU_CHAPTERS` in
   `src/components/ec/ThankYouFold.tsx`. Its subtitles are
