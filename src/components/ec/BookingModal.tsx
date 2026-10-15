@@ -33,8 +33,9 @@ import {
  * ahead of the click (see `lib/booking.ts`), and the iframe itself belongs to
  * iClosed, so it cannot be made faster. It can only be started earlier: the
  * dialog is in the DOM from the first render, hidden but laid out at full size,
- * and the widget boots on the visitor's first scroll or touch, or a few seconds
- * in (see BOOT_AFTER_MS). By the time anyone
+ * and the widget boots once the page has loaded on a desktop, and on a phone at
+ * the visitor's first scroll or touch, or a few seconds in (see BOOT_AFTER_MS).
+ * By the time anyone
  * has watched enough of the video to want a call, the calendar is already
  * rendered and opening costs one repaint.
  *
@@ -52,7 +53,7 @@ import {
 /** The height iClosed's embed is built around. */
 const WIDGET_HEIGHT = 520;
 
-/** When the widget boots if the visitor has not scrolled, touched or typed yet. */
+/** When the widget boots on a phone if the visitor has not scrolled, touched or typed yet. */
 const BOOT_AFTER_MS = 6000;
 
 /**
@@ -124,7 +125,22 @@ export function BookingModal() {
   // comes first; a visitor needs longer than that to reach for the button.
   // Opening the dialog boots it too, in case it is opened before either.
   // The container is already rendered at full size, so iClosed's loader finds it.
+  //
+  // A desktop does not wait. iClosed needs 2.5 to 4 seconds from boot to a
+  // usable form, so a click in the first seconds met a blank panel for that
+  // long. A desktop connection carries the widget and the 1080p video at once,
+  // so there it boots as soon as the page has loaded and is ready a few
+  // seconds into the visit. The wait above is for phones.
   useEffect(() => {
+    if (window.matchMedia("(min-width: 801px)").matches) {
+      if (document.readyState === "complete") {
+        loadBookingWidget();
+        return;
+      }
+      window.addEventListener("load", loadBookingWidget, { once: true });
+      return () => window.removeEventListener("load", loadBookingWidget);
+    }
+
     const events = ["scroll", "pointerdown", "touchstart", "keydown"] as const;
     const boot = () => {
       window.clearTimeout(timer);

@@ -27,9 +27,9 @@ import { VSL_CHAPTERS, VSL_ORIGIN, VSL_SOURCE_MOBILE, Vsl } from "./Vsl";
 /**
  * The Hormozi shape, split across three type sizes rather than one headline.
  *
- * The agreed line is "Owners of $1M-$4M Marketing Lead Gen Agencies: We'll
- * Automate Your Client Fulfillment in 30 Days - And Make It Better. Or You
- * Don't Pay." Set whole at display size it runs five lines, so the audience
+ * The agreed line is "Owners of Marketing Agencies: We'll Automate Your
+ * Client Fulfillment in 30 Days - And Make It Better. Or You Don't Pay." Set
+ * whole at display size it runs five lines, so the audience
  * callout becomes an eyebrow and the risk reversal becomes its own accent
  * line. Not a word changes.
  */
@@ -45,19 +45,30 @@ import { VSL_CHAPTERS, VSL_ORIGIN, VSL_SOURCE_MOBILE, Vsl } from "./Vsl";
  * size rather than as a tracked micro-label, because a small-caps label reads
  * as a category and a sentence reads as something addressed to you.
  *
- * The accent lands on the revenue band and nowhere else. That range is the
- * single fact that answers the question, so it is what the eye should catch
- * first, and colouring four characters costs almost no visual mass.
+ * The accent lands on "Marketing Agencies" and nowhere else: those two words
+ * are the answer to the question, so they are what the eye should catch first.
  *
- * "Marketing" is gone. It said nothing "Lead Gen" was not already saying, and
- * on a phone it was the word that pushed this line onto a second row.
+ * Until October 2026 the line was "Owners of $1M-$4M Lead Gen Agencies", with
+ * the accent on the revenue band. Ben dropped the band and the niche and
+ * names the audience broadly instead, on /landing and /landing-sp. The -blue
+ * and -bl variants keep the old line (`callout="lead-gen"`).
  */
-function Eyebrow({ className }: { className: string }) {
+export type Callout = "marketing" | "lead-gen";
+
+function Eyebrow({ className, callout }: { className: string; callout: Callout }) {
+  if (callout === "lead-gen") {
+    return (
+      <p className={className}>
+        Owners of{" "}
+        <span className="ec-mark text-(--ec-accent-text) whitespace-nowrap">$1M&ndash;$4M</span>{" "}
+        Lead Gen Agencies
+      </p>
+    );
+  }
   return (
     <p className={className}>
       Owners of{" "}
-      <span className="ec-mark text-(--ec-accent-text) whitespace-nowrap">$1M&ndash;$4M</span>{" "}
-      Lead Gen Agencies
+      <span className="ec-mark text-(--ec-accent-text) whitespace-nowrap">Marketing Agencies</span>
     </p>
   );
 }
@@ -109,8 +120,16 @@ function SubheadCopy() {
  * so it costs the fold no height; the centred eyebrow leaves that corner empty
  * at every desktop width. The phone fold has no such corner, so its mark lives
  * in the sticky bar instead.
+ *
+ * `callout` picks the eyebrow line (see Eyebrow).
  */
-export function HeroFold({ brandMark = false }: { brandMark?: boolean }) {
+export function HeroFold({
+  brandMark = false,
+  callout = "marketing",
+}: {
+  brandMark?: boolean;
+  callout?: Callout;
+}) {
 
   return (
     <>
@@ -159,7 +178,7 @@ export function HeroFold({ brandMark = false }: { brandMark?: boolean }) {
             <BrandMark className="absolute top-0 left-0 h-[clamp(28px,2.4vw,40px)] w-auto" />
           )}
 
-          <Eyebrow className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.78vw,34px)] leading-[1.35] font-bold text-(--ec-ink)" />
+          <Eyebrow callout={callout} className="font-[family-name:var(--font-pt-serif)] text-[clamp(19px,1.78vw,34px)] leading-[1.35] font-bold text-(--ec-ink)" />
 
           <Headline className="mx-auto mt-[18px] max-w-[min(1560px,92vw)] text-balance font-[family-name:var(--font-libre-baskerville)] text-[clamp(30px,2.95vw,56px)] leading-[1.18] font-bold text-(--ec-ink)" />
 
@@ -205,7 +224,7 @@ export function HeroFold({ brandMark = false }: { brandMark?: boolean }) {
         all cut once the words had been cut as far as they could go.
       */}
       <section className="flex flex-col items-center bg-(--ec-bg) px-[14px] pt-[24px] pb-[12px] text-center min-[801px]:hidden">
-        <Eyebrow className="text-balance font-[family-name:var(--font-pt-serif)] text-[18px] leading-[1.4] font-bold text-(--ec-ink)" />
+        <Eyebrow callout={callout} className="text-balance font-[family-name:var(--font-pt-serif)] text-[18px] leading-[1.4] font-bold text-(--ec-ink)" />
 
         <Headline className="mt-[14px] text-balance font-[family-name:var(--font-pt-serif)] text-[29px] leading-[1.2] font-bold text-(--ec-ink)" />
 

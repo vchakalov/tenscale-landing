@@ -11,9 +11,9 @@ import type { Metadata } from "next";
  */
 const TITLE = "Tenscale: We Automate Your Client Fulfillment In 30 Days";
 const DESCRIPTION =
-  "For owners of $1M to $4M marketing lead gen agencies. We install a Meta Ads Automation Engine that handles creative production, campaign setup, testing, optimization and scaling.";
+  "For owners of marketing agencies. We install a Meta Ads Automation Engine that handles creative production, campaign setup, testing, optimization and scaling.";
 const CARD = {
-  url: "/og-landing.png",
+  url: "/og-landing.png?v=2",
   width: 1200,
   height: 630,
   alt: "We'll Automate Your Client Fulfillment in 30 Days And Make It Better. Or You Don't Pay.",

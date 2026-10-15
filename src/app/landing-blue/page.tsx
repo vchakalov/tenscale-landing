@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
-      <HeroFold />
+      <HeroFold callout="lead-gen" />
       <Benefits />
       <CtaBlock trackId="after_benefits" />
       <Objections />

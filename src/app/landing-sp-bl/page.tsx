@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="ec-landing ec-theme-black min-h-screen w-full overflow-x-hidden">
-      <HeroFold brandMark />
+      <HeroFold brandMark callout="lead-gen" />
       {/*
         The same wall the thank-you page carries, in navy rather than blue and
         under its own label. On /landing the page earns the benefits and then hopes
