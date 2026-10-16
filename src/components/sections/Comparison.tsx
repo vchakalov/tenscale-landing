@@ -33,7 +33,7 @@ export function Comparison() {
             <div className="flex-1 flex flex-col gap-4">
               <div className="flex justify-center flex-1">
                 <img
-                  src="/images/tenscale/comparison-engine.png"
+                  src="/images/tenscale/comparison-engine-ts.png"
                   alt="With Tenscale - one engine, end to end"
                   className="w-full h-auto rounded-2xl border border-[#2d2d2d0d]"
                 />
