@@ -64,24 +64,6 @@ function SpeakerIcon({ className }: { className: string }) {
 /** A chapter mark: where it starts, in seconds, and what it is called. */
 export type Chapter = { at: number; label: string };
 
-/**
- * The landing VSL's chapters, one per part of the script. Each time is the
- * first word of that section in the final cut (8:07), taken from a word-level
- * transcript and rounded down a beat, so a click never lands mid-sentence.
- */
-export const VSL_CHAPTERS: readonly Chapter[] = [
-  { at: 0, label: "What you'll get" },
-  { at: 72, label: "Where agencies get stuck" },
-  { at: 112, label: "Meta changed the game" },
-  { at: 134, label: "What it could look like" },
-  { at: 191, label: "Angles" },
-  { at: 250, label: "Creatives" },
-  { at: 293, label: "The engine" },
-  { at: 314, label: "The page" },
-  { at: 354, label: "Results" },
-  { at: 413, label: "How we work" },
-  { at: 445, label: "The guarantee" },
-];
 
 function formatAt(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -90,10 +72,14 @@ function formatAt(seconds: number): string {
 }
 
 /**
- * Chapters inside the frame, the way YouTube draws them: the progress bar is
- * cut into one segment per chapter, each as wide as the chapter is long, and
- * the name of the one under the pointer floats above it. A chip under the bar
+ * The controls along the bottom of the frame: the progress bar, play, time,
+ * speed, sound and full screen.
+ *
+ * With chapters it draws them the way YouTube does: the progress bar is cut
+ * into one segment per chapter, each as wide as the chapter is long, and the
+ * name of the one under the pointer floats above it. A chip under the bar
  * names the chapter playing now and opens the full list over the frame.
+ * Without them the bar is one plain line.
  *
  * The list covers the frame rather than dropping out of it. On a phone the
  * frame is about 200px tall, and a menu hanging off the chip would be cut by
@@ -167,13 +153,14 @@ function ControlIcon({ name }: { name: IconName }) {
 const CONTROL_BUTTON =
   "flex h-[30px] min-w-[30px] shrink-0 cursor-pointer items-center justify-center rounded-[100px] px-[6px] transition-colors duration-200 hover:bg-[rgba(var(--ec-on-frame-rgb),0.14)]";
 
-function ChapterBar({
+function ControlBar({
   chapters,
   duration,
   time,
   onSeek,
   controls,
 }: {
+  /** Empty for a video without chapters. */
   chapters: readonly Chapter[];
   duration: number;
   time: number;
@@ -183,9 +170,11 @@ function ChapterBar({
   const [hover, setHover] = useState<number | null>(null);
   const [listOpen, setListOpen] = useState(false);
 
-  const segments = chapters.map((chapter, index) => ({
-    ...chapter,
-    end: chapters[index + 1]?.at ?? duration,
+  const hasChapters = chapters.length > 0;
+  const marks = hasChapters ? chapters : [{ at: 0, label: "" }];
+  const segments = marks.map((mark, index) => ({
+    ...mark,
+    end: marks[index + 1]?.at ?? duration,
   }));
   let current = 0;
   segments.forEach((segment, index) => {
@@ -212,7 +201,7 @@ function ChapterBar({
               <button
                 key={segment.at}
                 type="button"
-                aria-label={`${formatAt(segment.at)} ${segment.label}`}
+                aria-label={hasChapters ? `${formatAt(segment.at)} ${segment.label}` : "Seek"}
                 onMouseEnter={() => setHover(index)}
                 onFocus={() => setHover(index)}
                 onBlur={() => setHover(null)}
@@ -233,7 +222,7 @@ function ChapterBar({
                     style={{ width: `${filled * 100}%` }}
                   />
                 </span>
-                {hover === index && (
+                {hasChapters && hover === index && (
                   <span
                     className={`pointer-events-none absolute bottom-[22px] whitespace-nowrap rounded-[8px] bg-(--ec-on-frame) px-[10px] py-[6px] font-[family-name:var(--font-inter)] text-[13px] leading-[18px] font-medium text-(--ec-frame) shadow-[0_6px_0_0_rgba(0,0,0,0.18)] ${tooltipPlace(index)}`}
                   >
@@ -260,17 +249,19 @@ function ChapterBar({
           <span className="shrink-0 tabular-nums text-[rgba(var(--ec-on-frame-rgb),0.75)]">
             {formatAt(time)} / {formatAt(duration)}
           </span>
-          <button
-            type="button"
-            onClick={() => setListOpen(true)}
-            className="inline-flex min-w-0 cursor-pointer items-center gap-[6px] rounded-[100px] px-[8px] py-[4px] font-medium transition-colors duration-200 hover:bg-[rgba(var(--ec-on-frame-rgb),0.14)]"
-          >
-            <span aria-hidden="true" className="text-(--ec-accent)">
-              &bull;
-            </span>
-            <span className="truncate">{segments[current]?.label}</span>
-            <span aria-hidden="true">&rsaquo;</span>
-          </button>
+          {hasChapters && (
+            <button
+              type="button"
+              onClick={() => setListOpen(true)}
+              className="inline-flex min-w-0 cursor-pointer items-center gap-[6px] rounded-[100px] px-[8px] py-[4px] font-medium transition-colors duration-200 hover:bg-[rgba(var(--ec-on-frame-rgb),0.14)]"
+            >
+              <span aria-hidden="true" className="text-(--ec-accent)">
+                &bull;
+              </span>
+              <span className="truncate">{segments[current]?.label}</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+          )}
 
           <div className="ml-auto flex shrink-0 items-center gap-[4px]">
             {controls.captions && (
@@ -361,13 +352,14 @@ export function Vsl({
   className?: string;
   source?: { src: string; poster: string };
   /**
-   * Optional chapters, drawn inside the frame (see ChapterBar). Both the
-   * landing VSL and the thank-you video have them, because a visitor in research
-   * mode wants to jump to the part they care about. A chapter click also unmutes:
-   * choosing a section is a clear sign the visitor means to listen to it.
+   * Optional chapters, drawn inside the frame (see ControlBar). The thank-you
+   * video has them, because a visitor in research mode wants to jump to the
+   * part they care about. The landing VSL had them too until October 2026,
+   * when Ben took them off. A chapter click also unmutes: choosing a section is
+   * a clear sign the visitor means to listen to it.
    */
   chapters?: readonly Chapter[];
-  /** Used to lay the chapters out until the video's own length is known. */
+  /** Used for the time and the chapters until the video's own length is known. */
   estimatedDuration?: number;
   placeholder?: string;
   /**
@@ -378,8 +370,7 @@ export function Vsl({
   /**
    * A WebVTT file, served from this site. With one, subtitles are on from the
    * first frame, the muted preview included, and a CC button in the controls
-   * turns them off. The controls live in the chapter bar, so this needs
-   * chapters too.
+   * turns them off.
    */
   captions?: string;
   /**
@@ -596,9 +587,8 @@ export function Vsl({
   }
 
   const hasVideo = source.src !== "";
-  /* With chapters, the bar owns the bottom of the frame, so the unmute panel
-     centres in the space above it; on a phone the two would otherwise touch. */
-  const hasChapters = chapters !== undefined && chapters.length > 0;
+  /* The control bar owns the bottom of the frame, so the unmute panel centres
+     in the space above it; on a phone the two would otherwise touch. */
 
   return (
     <div className={className}>
@@ -650,7 +640,7 @@ export function Vsl({
               waits until the visitor unmutes.
             */
             <div
-              className={`pointer-events-none absolute inset-x-0 flex justify-center px-[8%] ${hasChapters ? "bottom-[78px] max-[800px]:bottom-[64px]" : "bottom-[20px] max-[800px]:bottom-[10px]"} ${started ? "" : "max-[800px]:hidden"}`}
+              className={`pointer-events-none absolute inset-x-0 flex justify-center px-[8%] bottom-[78px] max-[800px]:bottom-[64px] ${started ? "" : "max-[800px]:hidden"}`}
             >
               <p className="whitespace-pre-line rounded-[8px] bg-[rgba(var(--ec-frame-rgb),0.8)] px-[14px] py-[5px] text-center font-[family-name:var(--font-inter)] text-[clamp(16px,1.4vw,22px)] leading-[1.4] font-medium text-[#f4f1ea] max-[800px]:rounded-[6px] max-[800px]:px-[8px] max-[800px]:py-[3px] max-[800px]:text-[13px]">
                 {cue}
@@ -684,7 +674,7 @@ export function Vsl({
               type="button"
               onClick={() => unmute({ restart: true, via: "overlay" })}
               aria-label="Unmute the video"
-              className={`group absolute inset-0 flex cursor-pointer items-center justify-center bg-[rgba(var(--ec-frame-rgb),0.45)] transition-colors duration-200 hover:bg-[rgba(var(--ec-frame-rgb),0.55)] ${hasChapters ? "pb-[60px] max-[800px]:pb-[48px]" : ""}`}
+              className={`group absolute inset-0 flex cursor-pointer items-center justify-center bg-[rgba(var(--ec-frame-rgb),0.45)] transition-colors duration-200 hover:bg-[rgba(var(--ec-frame-rgb),0.55)] pb-[60px] max-[800px]:pb-[48px]`}
             >
               <span className="relative flex w-[min(76%,290px)] items-center justify-center max-[800px]:w-auto">
                 {/* Behind the panel, same shape, scaling outward and fading. */}
@@ -705,28 +695,26 @@ export function Vsl({
             </button>
           )}
 
-          {hasChapters && (
-            <ChapterBar
-              chapters={chapters}
-              duration={
-                Number.isFinite(duration) && duration > 0
-                  ? duration
-                  : (estimatedDuration ?? chapters[chapters.length - 1].at + 60)
-              }
-              time={time}
-              onSeek={seek}
-              controls={{
-                playing,
-                muted,
-                rate,
-                onTogglePlay: togglePlay,
-                onToggleMute: toggleMute,
-                onCycleRate: cycleRate,
-                onFullscreen: fullscreen,
-                captions: captions ? { on: captionsOn, onToggle: toggleCaptions } : undefined,
-              }}
-            />
-          )}
+          <ControlBar
+            chapters={chapters ?? []}
+            duration={
+              Number.isFinite(duration) && duration > 0
+                ? duration
+                : (estimatedDuration ?? (chapters?.at(-1)?.at ?? 0) + 60)
+            }
+            time={time}
+            onSeek={seek}
+            controls={{
+              playing,
+              muted,
+              rate,
+              onTogglePlay: togglePlay,
+              onToggleMute: toggleMute,
+              onCycleRate: cycleRate,
+              onFullscreen: fullscreen,
+              captions: captions ? { on: captionsOn, onToggle: toggleCaptions } : undefined,
+            }}
+          />
         </div>
       </div>
     </div>

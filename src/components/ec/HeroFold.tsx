@@ -1,7 +1,7 @@
 import { CtaButton } from "./CtaButton";
 import { ProofStats } from "./CtaBlock";
 import { BrandMark } from "./BrandMark";
-import { VSL_CHAPTERS, VSL_ORIGIN, VSL_SOURCE_MOBILE, Vsl } from "./Vsl";
+import { VSL_ORIGIN, VSL_SOURCE_MOBILE, Vsl } from "./Vsl";
 
 /**
  * The first fold: callout, headline, subhead, VSL, CTA, proof.
@@ -189,7 +189,6 @@ export function HeroFold({
           <Vsl
             className="mx-auto mt-[26px] w-full [--ec-vsl-h:calc(100vh_-_clamp(386px,162px_+_17.5vw,313px_+_8.6vw))] max-w-[min(1500px,94vw,calc(var(--ec-vsl-h)*2.2))] text-left"
             frameClassName="max-h-(--ec-vsl-h)"
-            chapters={VSL_CHAPTERS}
             trackAs="landing"
             estimatedDuration={488}
           />
@@ -235,7 +234,6 @@ export function HeroFold({
         <Vsl
           className="mt-[20px] w-full text-left"
           source={VSL_SOURCE_MOBILE}
-          chapters={VSL_CHAPTERS}
           trackAs="landing"
           estimatedDuration={488}
         />

@@ -155,8 +155,8 @@ email. Heatmaps and session recordings are on, with inputs masked.
 
 - **Landing VSL**: two renditions of one cut on Cloudflare R2 at `media.tenscale.ai`:
   `tenscale-vsl-1080.mp4` for the desktop player and `tenscale-vsl-720.mp4` for the
-  phone one (`VSL_SOURCE`, `VSL_SOURCE_MOBILE`, chapter times in `VSL_CHAPTERS`, all in
-  `src/components/ec/Vsl.tsx`). A new cut is encoded to both, H.264 with faststart and
+  phone one (`VSL_SOURCE`, `VSL_SOURCE_MOBILE`, both in `src/components/ec/Vsl.tsx`;
+  no chapters since October 2026). A new cut is encoded to both, H.264 with faststart and
   a keyframe every 2 s:
   `ffmpeg -i cut.mp4 [-vf scale=-2:720] -c:v libx264 -preset slow -crf 24|23 -maxrate 1300k|2400k -bufsize 2600k|4800k -force_key_frames "expr:gte(t,n_forced*2)" -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart out.mp4`
   (720p values first). Each has a poster: `public/images/vsl-poster.webp` (1600px)

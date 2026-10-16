@@ -32,12 +32,11 @@ import {
  * Speed is the whole design here. Everything up to the iframe was already moved
  * ahead of the click (see `lib/booking.ts`), and the iframe itself belongs to
  * iClosed, so it cannot be made faster. It can only be started earlier: the
- * dialog is in the DOM from the first render, hidden but laid out at full size,
- * and the widget boots once the page has loaded on a desktop, and on a phone at
- * the visitor's first scroll or touch, or a few seconds in (see BOOT_AFTER_MS).
- * By the time anyone
+ * dialog is in the DOM from the first render, hidden but laid out at full size.
+ * On a desktop the widget boots once the page has loaded, so by the time anyone
  * has watched enough of the video to want a call, the calendar is already
- * rendered and opening costs one repaint.
+ * rendered and opening costs one repaint. On a phone it boots on the tap; see
+ * the effect below for why.
  *
  * The panel is white and sized to the widget's own height. It used to be cream
  * and much taller, which put a third-party white card inside our cream card and
@@ -52,9 +51,6 @@ import {
 
 /** The height iClosed's embed is built around. */
 const WIDGET_HEIGHT = 520;
-
-/** When the widget boots on a phone if the visitor has not scrolled, touched or typed yet. */
-const BOOT_AFTER_MS = 6000;
 
 /**
  * The widget's type is set in fixed pixels inside a cross-origin frame, so it
@@ -117,42 +113,29 @@ export function BookingModal() {
     [],
   );
 
-  // Boot the widget ahead of the click, but not during the first seconds of
-  // the visit. The widget is a whole app (its bundle, reCAPTCHA, a socket), and
-  // booted on the first idle moment it competed on a phone's connection with
-  // the video the visitor is looking at. It now boots on the first sign of
-  // engagement, a scroll, a touch, a key, or after a few seconds, whichever
-  // comes first; a visitor needs longer than that to reach for the button.
-  // Opening the dialog boots it too, in case it is opened before either.
-  // The container is already rendered at full size, so iClosed's loader finds it.
+  // On a desktop the widget boots in the background as soon as the page has
+  // loaded. iClosed needs 2.5 to 4 seconds from boot to a usable form, and by
+  // then the calendar is waiting behind the button. It costs the page nothing
+  // there: Chrome, Edge and Firefox run the cross-origin frame in a process of
+  // its own, so measured, the page's main thread was not held up at all. Safari
+  // shares the process, and on a Mac's CPU that was one 0.17s hold, in the
+  // first second, before anyone reaches for anything.
   //
-  // A desktop does not wait. iClosed needs 2.5 to 4 seconds from boot to a
-  // usable form, so a click in the first seconds met a blank panel for that
-  // long. A desktop connection carries the widget and the 1080p video at once,
-  // so there it boots as soon as the page has loaded and is ready a few
-  // seconds into the visit. The wait above is for phones.
+  // A phone boots it on the tap, never before. There the frame shares the
+  // page's process and a phone's CPU: the widget is a whole app (its bundle,
+  // reCAPTCHA, iClosed's bot checks, Hotjar), and booted ahead of the click it
+  // held a mid-range Android's main thread for 1.2s, with taps waiting up to
+  // 0.7s. Ben chose a page that never stalls over a calendar that is already
+  // up, so the phone visitor sees the skeleton for about 2.5s after the tap.
+  // The container is already rendered at full size, so iClosed's loader finds it.
   useEffect(() => {
-    if (window.matchMedia("(min-width: 801px)").matches) {
-      if (document.readyState === "complete") {
-        loadBookingWidget();
-        return;
-      }
-      window.addEventListener("load", loadBookingWidget, { once: true });
-      return () => window.removeEventListener("load", loadBookingWidget);
-    }
-
-    const events = ["scroll", "pointerdown", "touchstart", "keydown"] as const;
-    const boot = () => {
-      window.clearTimeout(timer);
-      events.forEach((name) => window.removeEventListener(name, boot));
+    if (!window.matchMedia("(min-width: 801px)").matches) return;
+    if (document.readyState === "complete") {
       loadBookingWidget();
-    };
-    const timer = window.setTimeout(boot, BOOT_AFTER_MS);
-    events.forEach((name) => window.addEventListener(name, boot, { once: true, passive: true }));
-    return () => {
-      window.clearTimeout(timer);
-      events.forEach((name) => window.removeEventListener(name, boot));
-    };
+      return;
+    }
+    window.addEventListener("load", loadBookingWidget, { once: true });
+    return () => window.removeEventListener("load", loadBookingWidget);
   }, []);
 
   useEffect(() => {
