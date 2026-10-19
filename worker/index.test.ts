@@ -88,6 +88,57 @@ describe('page requests', () => {
   });
 });
 
+describe('who Meta hears about, decided on the page response', () => {
+  const meta = { META_PIXEL_ID: 'PIX1', META_CAPI_TOKEN: 'TOK1' };
+  const phone = { 'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) [FBAN/FBIOS]' };
+  async function open(url: string, headers: Record<string, string> = phone, extra: Record<string, string> = {}) {
+    const sent: unknown[] = [];
+    const original = globalThis.fetch;
+    const pending: Promise<unknown>[] = [];
+    const waitCtx = { waitUntil: (p: Promise<unknown>) => void pending.push(p), passThroughOnException: () => {} } as never;
+    globalThis.fetch = (async (_input: RequestInfo | URL, req?: RequestInit) => {
+      sent.push(req?.body);
+      return new Response('{}');
+    }) as typeof fetch;
+    try {
+      const res = await worker.fetch(new Request(url, { headers }), envWith(html, { ...meta, ...extra }), waitCtx);
+      await Promise.all(pending);
+      const body = await res.text();
+      const report = /"report":(true|false)/.exec(body)?.[1];
+      return { sent, report: report === 'true', cookies: res.headers.getSetCookie() };
+    } finally {
+      globalThis.fetch = original;
+    }
+  }
+
+  it('sends nothing to Meta for a page download: the page sends its own PageView once it runs', async () => {
+    expect((await open('https://tenscale.ai/landing/?fbclid=AbC123')).sent).toEqual([]);
+  });
+
+  it('tells the page to start the pixel for a person from a Meta ad', async () => {
+    expect((await open('https://tenscale.ai/landing/?fbclid=AbC123&utm_source=ig')).report).toBe(true);
+  });
+
+  it('keeps the pixel off for a visitor who never came from Meta, and for a crawler', async () => {
+    expect((await open('https://tenscale.ai/landing/')).report).toBe(false);
+    expect((await open('https://tenscale.ai/landing/?utm_source=google')).report).toBe(false);
+    expect((await open('https://tenscale.ai/landing/?fbclid=AbC123', { 'user-agent': 'facebookexternalhit/1.1' })).report).toBe(false);
+  });
+
+  it('reports everyone real when the audience is switched to all', async () => {
+    expect((await open('https://tenscale.ai/landing/', phone, { META_AUDIENCE: 'all' })).report).toBe(true);
+  });
+
+  it('marks a browser as the team from the team link, and never reports it', async () => {
+    const joined = await open('https://tenscale.ai/?team=s3cret&fbclid=AbC123', phone, { TEAM_KEY: 's3cret' });
+    expect(joined.report).toBe(false);
+    expect(joined.cookies.find((c) => c.startsWith('ag_team=1'))).toContain('HttpOnly');
+    const wrongKey = await open('https://tenscale.ai/?team=guess&fbclid=AbC123', phone, { TEAM_KEY: 's3cret' });
+    expect(wrongKey.cookies.some((c) => c.startsWith('ag_team='))).toBe(false);
+    expect((await open('https://tenscale.ai/landing/?fbclid=AbC123', { ...phone, cookie: 'ag_team=1' })).report).toBe(false);
+  });
+});
+
 describe('POST /booking/prep', () => {
   it('answers ok', async () => {
     const res = await worker.fetch(new Request('https://tenscale.ai/booking/prep', { method: 'POST', body: '{"step":"open"}' }), envWith(html), ctx);
@@ -98,7 +149,10 @@ describe('POST /booking/prep', () => {
 
 describe('engagement events to Meta', () => {
   const meta = { META_PIXEL_ID: 'PIX1', META_CAPI_TOKEN: 'TOK1' };
-  async function post(body: unknown, headers: Record<string, string> = {}) {
+  /** A phone that arrived from a Meta ad: the visitor these events are for. */
+  const fromAd = { 'user-agent': 'Mozilla/5.0 (iPhone) [FBAN/FBIOS]', cookie: '_fbc=fb.1.1.Click' };
+  async function post(body: unknown, extra: Record<string, string> = {}) {
+    const headers = { ...fromAd, ...extra };
     const sent: Record<string, unknown>[] = [];
     const original = globalThis.fetch;
     const pending: Promise<unknown>[] = [];
@@ -150,6 +204,17 @@ describe('engagement events to Meta', () => {
     expect(await post({ ...video, url: 'https://evil.example/' })).toEqual([]);
     expect(await post(video, { origin: 'https://evil.example' })).toEqual([]);
     expect(await post('not json')).toEqual([]);
+  });
+
+  it('forwards the PageView the page sends once it runs, under the event id the pixel used', async () => {
+    const [view] = await post({ event_name: 'PageView', event_id: video.event_id, params: {}, url: 'https://tenscale.ai/landing/?fbclid=Click' });
+    expect(view).toMatchObject({ event_name: 'PageView', event_id: video.event_id, event_source_url: 'https://tenscale.ai/landing/' });
+  });
+
+  it('sends nothing for a visitor who never came from Meta, the team, or a crawler', async () => {
+    expect(await post(video, { cookie: '' })).toEqual([]);
+    expect(await post(video, { cookie: '_fbc=fb.1.1.Click; ag_team=1' })).toEqual([]);
+    expect(await post(video, { 'user-agent': 'facebookexternalhit/1.1' })).toEqual([]);
   });
 
   it('accepts ButtonClick and ViewContent', async () => {

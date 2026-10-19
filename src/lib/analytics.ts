@@ -15,7 +15,8 @@ export const POSTHOG_KEY = "phc_tVhroSsJ6YMQAx7AEi7oL6YVJVu5gj2ZbhYkQ4rt2VLD";
 
 declare global {
   interface Window {
-    __ag?: { externalId?: string | null; pixelId?: string | null };
+    /** `report`: whether Meta may hear about this visitor at all (worker/audience.ts). */
+    __ag?: { externalId?: string | null; pixelId?: string | null; report?: boolean };
     fbq?: (...args: unknown[]) => void;
   }
 }
@@ -59,6 +60,7 @@ const META_STANDARD = new Set(["PageView", "ViewContent", "Schedule", "Contact",
  */
 export function pixelEvent(name: string, params: Record<string, string | number>, eventId: string, tries = 20): void {
   try {
+    if (!window.__ag?.report) return;
     if (!window.fbq) {
       if (window.__ag?.pixelId && tries > 0) window.setTimeout(() => pixelEvent(name, params, eventId, tries - 1), 250);
       return;
@@ -72,13 +74,15 @@ export function pixelEvent(name: string, params: Record<string, string | number>
 /**
  * A Meta event the page sends twice: to the pixel, and through our Worker to
  * the Conversions API, which an ad blocker cannot stop. The Worker only lets
- * through VideoProgress, ViewContent and ButtonClick with known values.
+ * through VideoProgress, ViewContent and ButtonClick with known values, and
+ * only for a visitor Meta may hear about; the page skips the others itself.
  */
 export function metaEvent(
   name: "VideoProgress" | "ViewContent" | "ButtonClick",
   params: Record<string, string | number>,
 ): void {
   try {
+    if (!window.__ag?.report) return;
     const eventId = crypto.randomUUID();
     pixelEvent(name, params, eventId);
     const body = JSON.stringify({ event_name: name, event_id: eventId, params, url: window.location.href });

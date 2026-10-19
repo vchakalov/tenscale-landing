@@ -76,11 +76,19 @@ export interface InjectedContext {
   pixelId: string | null;
 }
 
-/** The Worker stamps the stored tracking values onto the page; iClosed reads them from the URL. */
+/**
+ * The Worker stamps the stored tracking values onto the page; iClosed reads them from the URL.
+ *
+ * Both touches go: the latest UTMs as `utm_*`, and the visit that first brought
+ * this person as `first_utm_*`, which the bridge files under the GHL fields of
+ * the same names. Until October 2026 only the latest went, and those fields
+ * stayed empty.
+ */
 export function bookingUrlWithContext(base: string, context: InjectedContext | null): string {
   if (!context) return base;
   const url = new URL(base);
   for (const [key, value] of Object.entries(context.utm)) url.searchParams.set(key, value);
+  for (const [key, value] of Object.entries(context.firstUtm ?? {})) url.searchParams.set(`first_${key}`, value);
   if (context.fbc) url.searchParams.set("fbc", context.fbc);
   if (context.fbp) url.searchParams.set("fbp", context.fbp);
   url.searchParams.set("external_id", context.externalId);

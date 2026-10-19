@@ -20,6 +20,22 @@ describe('bookingUrlWithContext', () => {
     expect(parsed.searchParams.get('external_id')).toBe('ext-1');
   });
 
+  it('carries the first touch as first_utm_*, beside the latest', () => {
+    const url = bookingUrlWithContext('https://app.iclosed.io/e/agentica/meet', {
+      fbc: null,
+      fbp: null,
+      utm: { utm_source: 'google', utm_medium: 'organic' },
+      firstUtm: { utm_source: 'ig', utm_content: '120251142698200305' },
+      externalId: 'ext-1',
+      pageViewEventId: 'ev',
+      pixelId: null,
+    });
+    const parsed = new URL(url);
+    expect(parsed.searchParams.get('utm_source')).toBe('google');
+    expect(parsed.searchParams.get('first_utm_source')).toBe('ig');
+    expect(parsed.searchParams.get('first_utm_content')).toBe('120251142698200305');
+  });
+
   it('returns the plain url when there is no context', () => {
     expect(bookingUrlWithContext('https://app.iclosed.io/e/agentica/meet', null)).toBe('https://app.iclosed.io/e/agentica/meet');
   });

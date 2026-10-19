@@ -4,6 +4,7 @@
   // Secrets (set with `wrangler secret put`, never in this file):
   //   META_PIXEL_ID, META_CAPI_TOKEN, and optionally META_TEST_EVENT_CODE.
   // Without the first two the site still works; Meta simply hears nothing.
+  //   TEAM_KEY: the value of `?team=` that marks a browser as ours (worker/audience.ts).
   "name": "agentica-landing",
   "compatibility_date": "2026-09-18",
 
@@ -41,6 +42,14 @@
     // The export writes out/404.html. Without this, an unknown path returns a
     // bare 404 with no page.
     "not_found_handling": "404-page"
+  },
+
+  // Who Meta hears about (worker/audience.ts): "meta" is people who came from
+  // Meta, "all" is every real person. Bots, hosting networks and the team
+  // never; EXCLUDE_COUNTRIES adds whole countries, e.g. "BG".
+  "vars": {
+    "META_AUDIENCE": "meta",
+    "EXCLUDE_COUNTRIES": ""
   },
 
   "observability": {

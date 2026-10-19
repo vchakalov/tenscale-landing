@@ -1,17 +1,20 @@
 /**
- * The page's engagement events, on their way to Meta's Conversions API.
+ * The page's events, on their way to Meta's Conversions API.
  *
  * The browser sends each one to the pixel and here, with the same event id, so
  * Meta keeps one copy when both arrive and still gets ours when an ad blocker
  * stopped the pixel. This endpoint is open to anyone, so it takes only these
  * names with these values and nothing else: no free text reaches the dataset.
+ *
+ * PageView comes this way too, sent by the page once its script runs. It used
+ * to go out with every HTML download, which counted every scanner as a visit.
  */
 export const VIDEO_IDS = ['vsl', 'thank_you'] as const;
 export const VIDEO_PERCENTS = [25, 50, 75, 95] as const;
 export const BUTTON_IDS = ['hero_desktop', 'hero_mobile', 'after_benefits', 'after_objections', 'sticky_mobile'] as const;
 
 export interface EngagementEvent {
-  eventName: 'VideoProgress' | 'ViewContent' | 'ButtonClick';
+  eventName: 'PageView' | 'VideoProgress' | 'ViewContent' | 'ButtonClick';
   eventId: string;
   customData: Record<string, string | number>;
   /** The page, without its query: the thank-you URL carries the lead's email. */
@@ -42,6 +45,8 @@ export function parseEngagement(body: unknown, siteOrigin: string): EngagementEv
   const base = { eventId: b.event_id, sourceUrl };
 
   switch (b.event_name) {
+    case 'PageView':
+      return { ...base, eventName: 'PageView', customData: {} };
     case 'VideoProgress':
       if (!oneOf(VIDEO_IDS, params.video_id) || !oneOf(VIDEO_PERCENTS, params.percent)) return null;
       return { ...base, eventName: 'VideoProgress', customData: { video_id: params.video_id, percent: params.percent } };

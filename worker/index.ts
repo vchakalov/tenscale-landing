@@ -1,14 +1,17 @@
 /// <reference types="@cloudflare/workers-types" />
+import { TEAM_COOKIE, verdictFor, type AudienceEnv } from './audience.js';
 import { sendCapi, sha256Hex } from './capi.js';
 import { parseCookie, readContext, serializeCookie } from './context.js';
 import { buildMetaCookie, buildSetCookie, readRawCookie } from './cookie.js';
 import { parseEngagement } from './events.js';
 
-export interface Env {
+export interface Env extends AudienceEnv {
   ASSETS: Fetcher;
   META_PIXEL_ID?: string;
   META_CAPI_TOKEN?: string;
   META_TEST_EVENT_CODE?: string;
+  /** The value of `?team=` that marks a browser as ours (a secret; see TEAM_COOKIE). */
+  TEAM_KEY?: string;
 }
 
 /** Meta's answer, one line per event, so `wrangler tail` shows what was accepted. */
@@ -85,7 +88,7 @@ export default {
     const asset = await env.ASSETS.fetch(request);
     try {
       // A copy: tracking reads the body, and the fallback needs it unread.
-      return await withTracking(request, url, asset.clone(), env, ctx);
+      return await withTracking(request, url, asset.clone(), env);
     } catch (error) {
       // The page must never break because of tracking. Serve it untouched.
       console.log(JSON.stringify({ level: 'error', message: `tracking failed: ${String(error)}` }));
@@ -95,8 +98,10 @@ export default {
 };
 
 /**
- * A video milestone or a button click from the page, sent on to Meta with what
- * only the server knows: the visitor's address, browser and stored ids.
+ * A page view, a video milestone or a button click from the page, sent on to
+ * Meta with what only the server knows: the visitor's address, browser and
+ * stored ids. Only for a visitor Meta may hear about (see audience.ts); the
+ * others are logged with the reason, so what the filter drops stays visible.
  */
 async function forwardEngagement(request: Request, url: URL, env: Env, ctx: ExecutionContext): Promise<void> {
   if (!env.META_PIXEL_ID || !env.META_CAPI_TOKEN) return;
@@ -109,6 +114,12 @@ async function forwardEngagement(request: Request, url: URL, env: Env, ctx: Exec
 
   const cookie = request.headers.get('cookie');
   const stored = parseCookie(cookie);
+  // `_fbc` exists only after a Meta ad click, whether we or the pixel wrote it.
+  const verdict = verdictFor(request, { ...stored, fbc: readRawCookie(cookie, '_fbc') ?? stored?.fbc ?? null }, env);
+  if (verdict !== 'report') {
+    console.log(JSON.stringify({ level: 'info', message: `meta skipped ${event.eventName}: ${verdict}` }));
+    return;
+  }
   ctx.waitUntil(
     sendCapi(
       env.META_PIXEL_ID,
@@ -136,13 +147,31 @@ async function forwardEngagement(request: Request, url: URL, env: Env, ctx: Exec
   );
 }
 
-async function withTracking(request: Request, url: URL, asset: Response, env: Env, ctx: ExecutionContext): Promise<Response> {
+/**
+ * The page response: the first-party cookies, and the values the page's
+ * scripts read from `window.__ag`.
+ *
+ * No event goes to Meta from here. Until October 2026 every HTML response sent
+ * a server PageView, and from the 14th most of those were scanners on hosting
+ * networks, thousands a day, each a new "visitor": 98% of the dataset's
+ * PageViews were not people. The page now sends its PageView itself once its
+ * script runs (MetaPixel), with the pixel's event id, and it comes back
+ * through /booking/prep like every other event. A download that never runs the
+ * page never counts.
+ *
+ * `report` tells the page whether to start the pixel at all: the same verdict
+ * the server applies (audience.ts), so the browser and the server copies agree.
+ */
+async function withTracking(request: Request, url: URL, asset: Response, env: Env): Promise<Response> {
     const type = asset.headers.get('content-type') ?? '';
     if (!type.includes('text/html')) return asset;
 
     const now = Date.now();
     const context = readContext(url, request.headers.get('cookie'), now, () => crypto.randomUUID());
     const eventId = crypto.randomUUID();
+    // The team link: the browser that opens it is ours from now on.
+    const joinsTeam = !!env.TEAM_KEY && url.searchParams.get('team') === env.TEAM_KEY;
+    const verdict = joinsTeam ? 'team' : verdictFor(request, context, env);
 
     const injected = {
       fbc: context.fbc,
@@ -155,6 +184,7 @@ async function withTracking(request: Request, url: URL, asset: Response, env: En
       externalIdHash: await sha256Hex(context.externalId),
       pageViewEventId: eventId,
       pixelId: env.META_PIXEL_ID ?? null,
+      report: verdict === 'report',
     };
 
     // A text insert, not HTMLRewriter: the pages are a small static export, and
@@ -167,33 +197,7 @@ async function withTracking(request: Request, url: URL, asset: Response, env: En
     response.headers.append('Set-Cookie', buildSetCookie(serializeCookie(context)));
     if (context.fbp) response.headers.append('Set-Cookie', buildMetaCookie('_fbp', context.fbp, url.hostname, CANONICAL_HOST));
     if (context.fbc) response.headers.append('Set-Cookie', buildMetaCookie('_fbc', context.fbc, url.hostname, CANONICAL_HOST));
-
-    if (env.META_PIXEL_ID && env.META_CAPI_TOKEN) {
-      ctx.waitUntil(
-        sendCapi(
-          env.META_PIXEL_ID,
-          env.META_CAPI_TOKEN,
-          {
-            eventName: 'PageView',
-            eventId,
-            eventTime: Math.floor(now / 1000),
-            eventSourceUrl: url.toString(),
-            actionSource: 'website',
-            userData: {
-              externalId: context.externalId,
-              fbc: context.fbc,
-              fbp: context.fbp,
-              clientIp: request.headers.get('cf-connecting-ip'),
-              clientUserAgent: request.headers.get('user-agent'),
-            },
-          },
-          fetch,
-          env.META_TEST_EVENT_CODE,
-        )
-          .then((result) => logCapi('PageView', result))
-          .catch(() => undefined),
-      );
-    }
+    if (joinsTeam) response.headers.append('Set-Cookie', buildSetCookie('1', TEAM_COOKIE));
 
     return response;
 }
