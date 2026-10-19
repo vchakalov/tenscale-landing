@@ -98,9 +98,18 @@ export function BookingModal() {
   const panelRef = useRef<HTMLDivElement>(null);
   const widgetRef = useRef<HTMLDivElement>(null);
 
-  // The Worker stamps utm/fbc/fbp onto the page; carry them into the booking.
-  const [widgetUrl] = useState(() => bookingUrlWithContext(BOOKING_WIDGET_URL, injectedContext()));
   const openerRef = useRef<Element | null>(null);
+
+  // The Worker stamps utm/fbc/fbp, the visitor id and the first touch onto the
+  // page; carry them into the booking. Set on the element after hydration, not
+  // rendered: the page is prerendered without `window.__ag`, and React keeps an
+  // attribute from the server HTML rather than patching it, so a rendered value
+  // stayed the bare link until October 2026 and iClosed only ever saw what it
+  // read off the page by itself (the latest UTMs and the Meta cookies). This
+  // effect runs before the loader below, which is what reads `data-url`.
+  useEffect(() => {
+    widgetRef.current?.setAttribute("data-url", bookingUrlWithContext(BOOKING_WIDGET_URL, injectedContext()));
+  }, []);
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -247,7 +256,7 @@ export function BookingModal() {
             <div
               ref={widgetRef}
               className="iclosed-widget h-full w-full"
-              data-url={widgetUrl}
+              data-url={BOOKING_WIDGET_URL}
               title="Book Free Demo"
             />
           </div>
