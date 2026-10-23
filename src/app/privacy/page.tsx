@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter } from "@/components/ec/SiteFooter";
+import { landingFonts } from "../landing-fonts";
 
 export const metadata: Metadata = {
   title: "Tenscale: privacy policy",
@@ -228,7 +229,7 @@ const SECTIONS: Section[] = [
 
 export default function Page() {
   return (
-    <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
+    <div className={`${landingFonts} ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]`}>
       <main className="mx-auto max-w-[760px] px-[40px] pt-[80px] max-[800px]:px-[20px] max-[800px]:pt-[48px]">
         <Link
           href="/"

@@ -5,12 +5,15 @@ import localFont from "next/font/local";
 import { Inter, Libre_Baskerville, PT_Serif, Poppins } from "next/font/google";
 import "./globals.css";
 
-// Eleven Cloud's pairing, used by the `.ec-landing` page only.
+// Eleven Cloud's pairing, used by the `.ec-landing` pages. Declared here
+// without a preload so the variables exist on every route; the pages that
+// draw them preload their own copy (app/landing-fonts.ts).
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   adjustFontFallback: false,
+  preload: false,
 });
 
 const libreBaskerville = Libre_Baskerville({
@@ -18,6 +21,7 @@ const libreBaskerville = Libre_Baskerville({
   subsets: ["latin"],
   weight: ["700"],
   adjustFontFallback: false,
+  preload: false,
 });
 
 const ptSerif = PT_Serif({
@@ -25,6 +29,7 @@ const ptSerif = PT_Serif({
   subsets: ["latin"],
   weight: ["400", "700"],
   adjustFontFallback: false,
+  preload: false,
 });
 
 const poppins = Poppins({
@@ -32,6 +37,7 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "700"],
   adjustFontFallback: false,
+  preload: false,
 });
 
 // jace's type pairing, self-hosted: Geist (body) + Gelica (serif display).

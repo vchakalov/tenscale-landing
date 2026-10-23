@@ -8,6 +8,7 @@ import { ResultShots } from "@/components/ec/ResultShots";
 import { SiteFooter } from "@/components/ec/SiteFooter";
 import { StickyCta } from "@/components/ec/StickyCta";
 import { landingMetadata } from "@/lib/landing-metadata";
+import { landingFonts } from "../landing-fonts";
 
 export const metadata: Metadata = {
   ...landingMetadata("/landing-sp-blue/"),
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
  */
 export default function Page() {
   return (
-    <div className="ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]">
+    <div className={`${landingFonts} ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]`}>
       <HeroFold callout="lead-gen" />
       {/*
         The same wall the thank-you page carries, in navy rather than blue and

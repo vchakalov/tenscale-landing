@@ -6,6 +6,7 @@ import { NextSteps } from "@/components/ec/NextSteps";
 import { ResultShots } from "@/components/ec/ResultShots";
 import { SiteFooter } from "@/components/ec/SiteFooter";
 import { ThankYouFold } from "@/components/ec/ThankYouFold";
+import { landingFonts } from "../landing-fonts";
 
 export const metadata: Metadata = {
   title: "Tenscale: your call is booked",
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
  */
 export default function Page() {
   return (
-    <div className="ec-landing ec-theme-light min-h-screen w-full overflow-x-hidden">
+    <div className={`${landingFonts} ec-landing ec-theme-light min-h-screen w-full overflow-x-hidden`}>
       <ThankYouFold brandMark />
       <BreakoutVideos />
       <ResultShots title="Some Of Our Recent Successes." />

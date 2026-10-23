@@ -39,8 +39,16 @@ export function initAnalytics(): void {
     capture_pageleave: true,
     enable_heatmaps: true,
     session_recording: { maskAllInputs: true },
+    // The recorder is 68 KB. Started with the page, it competed with the
+    // headline's fonts and the first video on a phone; it starts once the page
+    // has loaded and gone quiet instead, which loses the first second or two
+    // of a recording and nothing else.
+    disable_session_recording: true,
     ...(externalId ? { bootstrap: { distinctID: externalId } } : {}),
   });
+  const startRecording = () => window.setTimeout(() => posthog.startSessionRecording(), 1500);
+  if (document.readyState === "complete") startRecording();
+  else window.addEventListener("load", startRecording, { once: true });
 }
 
 /** One event to PostHog. Never throws: analytics must not break the page. */

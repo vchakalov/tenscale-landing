@@ -12,6 +12,7 @@ import { Comparison } from "@/components/v2/Comparison";
 import { Security } from "@/components/v2/Security";
 import { Faq } from "@/components/v2/Faq";
 import { Footer } from "@/components/v2/Footer";
+import { landingFonts } from "../landing-fonts";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/v2/" },
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
  */
 export default function Page() {
   return (
-    <div className="ec-landing ec-theme-light v2-home min-h-screen w-full overflow-x-hidden">
+    <div className={`${landingFonts} ec-landing ec-theme-light v2-home min-h-screen w-full overflow-x-hidden`}>
       <Header />
       <main>
         <Hero />

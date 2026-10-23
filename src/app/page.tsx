@@ -13,6 +13,7 @@ import { WhyTenscale } from "@/components/home/WhyTenscale";
 import { Andromeda } from "@/components/home/Andromeda";
 import { HomeFaq } from "@/components/home/HomeFaq";
 import { SectionViews } from "@/components/home/SectionViews";
+import { siteFonts } from "./site-fonts";
 import { HomeFooter } from "@/components/home/HomeFooter";
 
 /** The one address for this page, whichever host or query reached it. */
@@ -59,7 +60,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA).replace(/</g, "\\u003c") }}
       />
-      <div className="home w-full">
+      <div className={`${siteFonts} site-fonts home w-full`}>
         <HomeHeader />
         {/*
           Hyros' order: the offer and the product, the mechanism with a name,
@@ -83,10 +84,10 @@ export default function Home() {
           <div data-section="faq"><HomeFaq /></div>
         </main>
         <HomeFooter />
+        <SectionViews />
+        {/* Same dialog, same calendar, as the offer page, drawn in this page's fonts. */}
+        <BookingModal />
       </div>
-      <SectionViews />
-      {/* Same dialog, same calendar, as the offer page. */}
-      <BookingModal />
     </>
   );
 }
