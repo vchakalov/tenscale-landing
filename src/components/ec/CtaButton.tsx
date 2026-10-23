@@ -1,11 +1,11 @@
 "use client";
 
 import { metaEvent } from "@/lib/analytics";
-import { openBooking, warmBooking } from "@/lib/booking";
+import { BOOKING_WIDGET_URL, openBooking, warmBooking } from "@/lib/booking";
 import { cn } from "@/lib/utils";
 import { LongArrowRightIcon } from "./icons";
 
-export const CALENDAR_URL = "https://app.iclosed.io/e/agentica/meet";
+export const CALENDAR_URL = BOOKING_WIDGET_URL;
 
 type CtaVariant = "blue" | "blueRaised" | "cream";
 
@@ -55,7 +55,7 @@ export function CtaButton({
         // Let modified clicks open the calendar in a new tab as usual.
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
         event.preventDefault();
-        openBooking();
+        openBooking(trackId);
       }}
       onPointerEnter={warmBooking}
       onTouchStart={warmBooking}

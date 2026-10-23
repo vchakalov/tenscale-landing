@@ -23,9 +23,9 @@ const ACCOUNTS = [
 
 const STATS = [
   {
-    value: "6.65%",
-    label: "average click-through rate across an account in August",
-    note: "Best campaign 8.47%, a video hook.",
+    value: "4.3%+",
+    label: "average click-through rate across our accounts",
+    note: "Best campaign so far: 8.47%.",
     proof: "/proof/ctr-three-months.webp",
   },
   {
@@ -124,7 +124,7 @@ export function ProofBand() {
         </div>
 
         <Reveal className="mt-14 flex flex-col items-center gap-4 text-center sm:mt-16">
-          <BookCallButton size="lg" tone="light">
+          <BookCallButton size="lg" tone="light" source="proof">
             Book a demo
           </BookCallButton>
           <p className="text-[13px] text-white/50">Results vary with the offer, the traffic and the sales process.</p>

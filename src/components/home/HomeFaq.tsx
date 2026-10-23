@@ -11,7 +11,7 @@ const faqs: FaqItem[] = [
   {
     question: 'What exactly is the guarantee?',
     answer:
-      "We automate your client fulfillment in 30 days and make it better. If we don't, you don't pay. Period.",
+      "Run Tenscale for 30 days. If you're not happy with it, we give you your money back. No questions asked.",
   },
   {
     question: 'Where can I see results?',

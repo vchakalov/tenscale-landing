@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { SHOTS, type Shot } from "@/components/ec/ResultShots";
+import { track } from "@/lib/analytics";
 
 /**
  * Every number on the home page opens the screenshot it was read from.
@@ -61,7 +62,7 @@ export function ProofLightbox({ shot, onClose }: { shot: Shot; onClose: () => vo
 
 /**
  * A button that opens one screenshot. Children are the label; the default is
- * the small "See screenshot" pill used under every number.
+ * the small "See proof" pill used under every number.
  */
 export function ProofButton({
   src,
@@ -82,7 +83,10 @@ export function ProofButton({
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          track("proof_open", { proof: src });
+          setOpen(true);
+        }}
         className={
           className ??
           `group inline-flex items-center gap-2 rounded-full py-1.5 pr-1.5 pl-3.5 text-[13px] font-medium transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
@@ -92,7 +96,7 @@ export function ProofButton({
           }`
         }
       >
-        {children ?? "See screenshot"}
+        {children ?? "See proof"}
         {/* A caller that styles the button draws its own arrow. */}
         {!className && (
           <span

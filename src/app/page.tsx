@@ -12,6 +12,7 @@ import { BeforeAfter } from "@/components/home/BeforeAfter";
 import { WhyTenscale } from "@/components/home/WhyTenscale";
 import { Andromeda } from "@/components/home/Andromeda";
 import { HomeFaq } from "@/components/home/HomeFaq";
+import { SectionViews } from "@/components/home/SectionViews";
 import { HomeFooter } from "@/components/home/HomeFooter";
 
 /** The one address for this page, whichever host or query reached it. */
@@ -67,22 +68,23 @@ export default function Home() {
           the two closing lists, the safeguards and the FAQ.
         */}
         <main className="w-full">
-          <HomeHero />
-          <Mechanism />
-          <ProblemFix />
-          <HowItWorks />
+          <div data-section="hero"><HomeHero /></div>
+          <div data-section="mechanism"><Mechanism /></div>
+          <div data-section="problem"><ProblemFix /></div>
+          <div data-section="how"><HowItWorks /></div>
           <div className="flex flex-col gap-3 sm:gap-4">
-            <Guarantee />
-            <ProofBand />
+            <div data-section="guarantee"><Guarantee /></div>
+            <div data-section="proof"><ProofBand /></div>
           </div>
-          <ResultsWall />
-          <BeforeAfter />
-          <WhyTenscale />
-          <Andromeda />
-          <HomeFaq />
+          <div data-section="wall"><ResultsWall /></div>
+          <div data-section="before-after"><BeforeAfter /></div>
+          <div data-section="why"><WhyTenscale /></div>
+          <div data-section="andromeda"><Andromeda /></div>
+          <div data-section="faq"><HomeFaq /></div>
         </main>
         <HomeFooter />
       </div>
+      <SectionViews />
       {/* Same dialog, same calendar, as the offer page. */}
       <BookingModal />
     </>

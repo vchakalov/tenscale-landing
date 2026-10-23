@@ -1,8 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { Clip } from "@/components/home/Clip";
 import { ProofButton } from "@/components/home/Proof";
+import { track } from "@/lib/analytics";
 
 /**
  * The product, in the first screen.
@@ -12,19 +13,23 @@ import { ProofButton } from "@/components/home/Proof";
  * jobs Tenscale does, in the order it does them, and every outcome line is a
  * number someone can click through to the screenshot it came from.
  *
+ * Each scene is a short clip of the real app (staging, with the odd card
+ * drawn in for the take), and lasts as long as its clip.
+ *
  * The timer is the progress bar itself: a CSS animation on the active tab,
  * and its `animationend` moves to the next scene. Hovering the tour, or
  * scrolling it out of view, pauses that animation, so the pause needs no
- * bookkeeping. Under reduced motion the bar never runs and the tour stays
- * where the visitor puts it.
+ * bookkeeping. Under reduced motion the bar never runs, the clips show their
+ * posters, and the tour stays where the visitor puts it.
  */
 
 interface Scene {
   tab: string;
   path: string;
-  image: string;
-  width: number;
-  height: number;
+  video: string;
+  poster: string;
+  /** Seconds: the clip's length, which is how long the scene holds. */
+  seconds: number;
   alt: string;
   lead: string;
   result: string;
@@ -35,10 +40,10 @@ const SCENES: Scene[] = [
   {
     tab: "Angles",
     path: "angles",
-    image: "/images/tenscale/tour-angles.webp",
-    width: 1600,
-    height: 894,
-    alt: "Angle Evaluator: every angle sorted into winning, testing and losers by ROAS and CPA",
+    video: "/videos/tour-angles.mp4",
+    poster: "/videos/tour-angles.webp",
+    seconds: 12.8,
+    alt: "Generating new angles from one line of focus, the new ideas landing on the angles board, then one angle opened",
     lead: "Every angle ranked by real CPA.",
     result: "6 angles, 18 audiences, live before lunch.",
     proof: "/proof/onboarded-before-lunch.webp",
@@ -46,40 +51,37 @@ const SCENES: Scene[] = [
   {
     tab: "Creatives",
     path: "creatives",
-    image: "/images/tenscale/tour-creatives.webp",
-    width: 1600,
-    height: 968,
-    alt: "Creative library: ready ads generated for each angle and audience",
+    video: "/videos/tour-creatives.mp4",
+    poster: "/videos/tour-creatives.webp",
+    seconds: 17.7,
+    alt: "Generating creatives: the engine reads the best hooks and winning ads, then six new creatives land in the library",
     lead: "A fresh creative for every angle and audience.",
-    result: "6.65% average CTR.",
+    result: "4.3%+ average CTR.",
     proof: "/proof/ctr-three-months.webp",
   },
   {
     tab: "Pages",
-    path: "pages",
-    image: "/images/tenscale/tour-pages.webp",
-    width: 1600,
-    height: 894,
-    alt: "The same landing page personalized for Audi owners and for Honda owners",
+    path: "funnels",
+    video: "/videos/tour-pages.mp4",
+    poster: "/videos/tour-pages.webp",
+    seconds: 11.7,
+    alt: "Two ads for two angles go through a router to the same landing page, rewritten for each angle, and the conversion rate climbs over 300%",
     lead: "Every ad gets its own landing page.",
     result: "£1.46 per purchase on the top ad.",
     proof: "/proof/ads-manager.webp",
   },
   {
     tab: "Automation",
-    path: "rules",
-    image: "/images/tenscale/tour-rules.webp",
-    width: 1600,
-    height: 894,
-    alt: "A workflow rule: pause and recreate an ad when spend passes €22 with no results",
+    path: "automation",
+    video: "/videos/tour-rules.mp4",
+    poster: "/videos/tour-rules.webp",
+    seconds: 14.5,
+    alt: "Building a rule that replaces creatives when ROAS drops below 1.5, and the rule joining the active ones",
     lead: "Rules pause, replace and scale ads 24/7.",
     result: "Record $41k week, CPA flat.",
     proof: "/proof/record-spend.webp",
   },
 ];
-
-/** Seconds each scene holds before the next. */
-const HOLD = 6;
 
 export function ProductTour() {
   const [active, setActive] = useState(0);
@@ -125,21 +127,22 @@ export function ProductTour() {
               <span className="w-[42px]" aria-hidden="true" />
             </div>
 
-            {/* A phone shows the left two thirds of the screen at a size that
-                reads; a wider screen shows all of it. */}
-            <div className="relative aspect-[5/4] w-full bg-[#f5f4f1] sm:aspect-[1600/894]">
+            <div className="relative aspect-[1280/716] w-full bg-[#f5f4f1]">
               {SCENES.map((s, i) => (
-                <Image
+                <div
                   key={s.path}
-                  src={s.image}
-                  alt={s.alt}
-                  width={s.width}
-                  height={s.height}
-                  priority={i === 0}
                   aria-hidden={i !== active}
-                  className="home-tour-shot absolute inset-0 h-full w-full object-cover object-left-top sm:object-top"
+                  className="home-tour-shot absolute inset-0"
                   data-active={i === active ? "" : undefined}
-                />
+                >
+                  <Clip
+                    src={s.video}
+                    poster={s.poster}
+                    label={s.alt}
+                    play={i === active && visible}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               ))}
             </div>
 
@@ -173,7 +176,10 @@ export function ProductTour() {
             type="button"
             role="tab"
             aria-selected={i === active}
-            onClick={() => setActive(i)}
+            onClick={() => {
+              track("tour_tab", { tab: s.path });
+              setActive(i);
+            }}
             className={`relative overflow-hidden rounded-full px-1 py-2 text-[12px] font-medium transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] sm:text-[13px] ${
               i === active ? "bg-[#0e0e0f] text-white" : "bg-black/[0.04] text-[#3a3a3d] hover:bg-black/[0.07]"
             }`}
@@ -187,7 +193,7 @@ export function ProductTour() {
                 key={active}
                 aria-hidden="true"
                 className="home-tour-fill absolute inset-y-0 left-0 bg-white/[0.14]"
-                style={{ animationDuration: `${HOLD}s` }}
+                style={{ animationDuration: `${s.seconds}s` }}
                 onAnimationEnd={() => setActive((active + 1) % SCENES.length)}
               />
             )}

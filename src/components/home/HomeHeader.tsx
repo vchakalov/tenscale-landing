@@ -35,7 +35,7 @@ export function HomeHeader() {
               </li>
             ))}
           </ul>
-          <BookCallButton size="sm">Book a demo</BookCallButton>
+          <BookCallButton size="sm" source="header">Book a demo</BookCallButton>
         </div>
       </nav>
     </header>

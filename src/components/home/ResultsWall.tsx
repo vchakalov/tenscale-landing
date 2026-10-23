@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 import { SHOTS, type Shot } from "@/components/ec/ResultShots";
 import { ProofLightbox } from "@/components/home/Proof";
+import { track } from "@/lib/analytics";
 import { Reveal } from "@/components/home/Reveal";
 
 /**
@@ -50,7 +51,10 @@ export function ResultsWall() {
                 <button
                   key={`${shot.src}-${i}`}
                   type="button"
-                  onClick={() => setOpen(shot)}
+                  onClick={() => {
+                    track("proof_open", { proof: shot.src, from: "wall" });
+                    setOpen(shot);
+                  }}
                   aria-hidden={i >= row.length}
                   tabIndex={i >= row.length ? -1 : 0}
                   aria-label={`Open: ${shot.alt}`}

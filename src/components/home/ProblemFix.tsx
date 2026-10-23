@@ -59,7 +59,7 @@ export function ProblemFix() {
               <div className="mt-6 flex flex-wrap items-center gap-3 text-[15px] text-white/70">
                 <span className="italic">“Noise angle scaled overnight. Best CPL on the account!”</span>
                 <ProofButton src="/proof/scaled-overnight.webp" tone="dark">
-                  See it
+                  See proof
                 </ProofButton>
               </div>
             </div>

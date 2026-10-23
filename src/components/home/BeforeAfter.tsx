@@ -32,7 +32,7 @@ export function BeforeAfter() {
             the testing and the scaling; the team keeps the clients.
           </p>
           <div className="mt-7">
-            <ProofButton src="/proof/ops-before-after.webp">See their report</ProofButton>
+            <ProofButton src="/proof/ops-before-after.webp">See proof</ProofButton>
           </div>
         </Reveal>
 

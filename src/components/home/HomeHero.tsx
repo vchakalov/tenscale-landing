@@ -21,12 +21,12 @@ const FIRST_FOLD: { value: string; label: string; proof?: string }[] = [
   { value: "4.3%+", label: "CTR on average", proof: "/proof/ctr-three-months.webp" },
 ];
 
-const FRICTIONS = ["Set up for you", "Results in days", "No changes to your ads"];
+const FRICTIONS = ["Set up for you", "Results in days", "30-day money-back guarantee"];
 
 export function HomeHero() {
   return (
     <section className="w-full px-4 pb-20 sm:px-8 sm:pb-28">
-      <div className="mx-auto grid w-full max-w-[1320px] items-center gap-12 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-14">
+      <div className="mx-auto grid w-full max-w-[1440px] items-center gap-12 lg:grid-cols-[minmax(0,0.84fr)_minmax(0,1.16fr)] lg:gap-12">
         <div className="flex min-w-0 flex-col items-center text-center lg:items-start lg:text-left">
           <span className="rounded-full bg-black/[0.04] px-3 py-1 text-[10px] font-medium tracking-[0.14em] text-[#3a3a3d] uppercase ring-1 ring-black/[0.06] sm:text-[11px] sm:tracking-[0.2em]">
             For marketing agencies running Meta ads
@@ -69,7 +69,7 @@ export function HomeHero() {
           {/* Two ways in, side by side: the call, and a quieter way down
               the page for whoever is not ready. */}
           <div className="mt-8 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center">
-            <BookCallButton size="lg">Book a demo</BookCallButton>
+            <BookCallButton size="lg" source="hero">Book a demo</BookCallButton>
             <a
               href="#how"
               className="group inline-flex h-14 items-center justify-center gap-2 rounded-full px-7 text-[17px] font-semibold text-[#0e0e0f] ring-1 ring-black/15 transition-colors duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-black/[0.04] active:scale-[0.98]"

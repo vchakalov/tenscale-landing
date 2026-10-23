@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Clip } from "@/components/home/Clip";
 import { ProofButton } from "@/components/home/Proof";
 import { Reveal } from "@/components/home/Reveal";
 
@@ -10,7 +10,7 @@ import { Reveal } from "@/components/home/Reveal";
  *
  * The numbering is real: angles feed the creatives, the creatives feed the
  * pages, and the rules run what the first three built. The bonus is the
- * Messenger agent, which sits beside the funnel rather than in it.
+ * video studio, which makes video ads for any angle.
  */
 
 interface Step {
@@ -23,9 +23,8 @@ interface Step {
   callout?: { eyebrow: string; headline: string; body: string };
   proofLine?: string;
   proof: string;
-  image: string;
-  width: number;
-  height: number;
+  video: string;
+  poster: string;
   alt: string;
   path: string;
 }
@@ -38,10 +37,9 @@ const STEPS: Step[] = [
     points: ["Scans Meta and TikTok", "New angles, nonstop", "Your rules pick the winners"],
     quote: { text: "First 80k day in the books. Zero new hires.", who: "Pete, marketing agency" },
     proof: "/proof/80k-day.webp",
-    image: "/images/tenscale/tour-angles.webp",
-    width: 1600,
-    height: 894,
-    alt: "Angle Evaluator with winning, testing and losing angles",
+    video: "/videos/tour-angles.mp4",
+    poster: "/videos/tour-angles.webp",
+    alt: "Generating new angles from one line of focus, the new ideas landing on the angles board, then one angle opened",
     path: "angles",
   },
   {
@@ -51,10 +49,9 @@ const STEPS: Step[] = [
     points: ["Built on proven winners", "Images and video", "The variety Andromeda rewards"],
     proofLine: "We're seeing ridiculously high CTRs across our accounts. Best one so far: 8.47%. Wow.",
     proof: "/proof/ctr-three-months.webp",
-    image: "/images/tenscale/tour-creatives.webp",
-    width: 1600,
-    height: 968,
-    alt: "Creative library with ready ads for each angle",
+    video: "/videos/tour-creatives.mp4",
+    poster: "/videos/tour-creatives.webp",
+    alt: "Generating creatives: the engine reads the best hooks and winning ads, then six new creatives land in the library",
     path: "creatives",
   },
   {
@@ -72,11 +69,10 @@ const STEPS: Step[] = [
       who: "Andre, marketing agency · £1.46 per purchase on the top ad",
     },
     proof: "/proof/ads-manager.webp",
-    image: "/images/tenscale/tour-pages.webp",
-    width: 1600,
-    height: 894,
-    alt: "One landing page personalized for Audi owners and for Honda owners",
-    path: "pages",
+    video: "/videos/tour-pages.mp4",
+    poster: "/videos/tour-pages.webp",
+    alt: "Two ads for two angles go through a router to the same landing page, rewritten for each angle, and the conversion rate climbs over 300%",
+    path: "funnels",
   },
   {
     label: "Step 4",
@@ -88,30 +84,28 @@ const STEPS: Step[] = [
       who: "Maya, marketing agency",
     },
     proof: "/proof/record-spend.webp",
-    image: "/images/tenscale/tour-rules.webp",
-    width: 1600,
-    height: 894,
-    alt: "A workflow rule that pauses and recreates an ad with no results",
-    path: "rules",
+    video: "/videos/tour-rules.mp4",
+    poster: "/videos/tour-rules.webp",
+    alt: "Building a rule that replaces creatives when ROAS drops below 1.5",
+    path: "automation",
   },
   {
     label: "Bonus",
-    title: "An AI That Answers Your Leads And Books The Call.",
-    body: "A sales agent in Messenger answers every lead in seconds, handles objections and books the call into your calendar.",
-    points: ["Replies day and night", "Qualifies every lead", "No warm lead goes cold"],
+    title: "Your Own AI Film Crew. Video Ads, Made For You.",
+    body: "Pick an angle. The studio casts the people, writes the script, shoots UGC-style video and cuts the ad, in any language. You approve each step from one chat.",
+    points: ["Cast, scripted, shot and cut by AI", "Any language, real-sounding voices", "You approve every step"],
     proof: "",
-    image: "/images/tenscale/tour-messenger.webp",
-    width: 1600,
-    height: 961,
-    alt: "Messenger sales agent: the bot's settings and a live preview of a conversation that ends with a captured lead",
-    path: "messenger",
+    video: "/videos/tour-studio.mp4",
+    poster: "/videos/tour-studio.webp",
+    alt: "The video studio: a request typed in the chat, then the first frames of three videos appear",
+    path: "studio",
   },
 ];
 
 export function HowItWorks() {
   return (
     <section id="how" className="w-full scroll-mt-24 px-4 py-24 sm:px-8 sm:py-36">
-      <div className="mx-auto w-full max-w-[1240px]">
+      <div className="mx-auto w-full max-w-[1440px]">
         <Reveal className="mx-auto flex max-w-[780px] flex-col items-center text-center">
           <span className="rounded-full bg-black/[0.04] px-3 py-1 text-[10px] font-medium tracking-[0.2em] text-[#3a3a3d] uppercase ring-1 ring-black/[0.06] sm:text-[11px]">
             The process
@@ -125,7 +119,9 @@ export function HowItWorks() {
           {STEPS.map((step, i) => (
             <article
               key={step.label}
-              className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16"
+              className={`grid items-center gap-10 lg:gap-14 ${
+                i % 2 === 1 ? "lg:grid-cols-[minmax(0,1.38fr)_minmax(0,0.62fr)]" : "lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1.38fr)]"
+              }`}
             >
               <Reveal className={`min-w-0 ${i % 2 === 1 ? "lg:order-2" : ""}`}>
                 <p className="flex items-center gap-3">
@@ -197,7 +193,7 @@ export function HowItWorks() {
 
               <Reveal delay={120} className={`min-w-0 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
                 <div className="rounded-[1.75rem] bg-[#f1f1ef] p-1.5 ring-1 ring-black/[0.05]">
-                  <div className="home-tour-field overflow-hidden rounded-[calc(1.75rem-0.375rem)] p-1.5 sm:p-3">
+                  <div className="home-tour-field overflow-hidden rounded-[calc(1.75rem-0.375rem)] p-1.5 sm:p-2">
                     <div className="overflow-hidden rounded-[12px] bg-white shadow-[0_30px_70px_-34px_rgba(14,14,15,0.45),0_0_0_1px_rgba(14,14,15,0.07)]">
                       <div className="flex items-center gap-3 border-b border-black/[0.06] bg-[#fbfaf8] px-4 py-2">
                         <span className="flex gap-1.5" aria-hidden="true">
@@ -208,15 +204,8 @@ export function HowItWorks() {
                         <span className="mx-auto font-mono text-[11px] text-[#5c5c60]">app.tenscale.ai/{step.path}</span>
                         <span className="w-[34px]" aria-hidden="true" />
                       </div>
-                      <div className="aspect-[5/4] w-full bg-[#f5f4f1] sm:aspect-[1600/894]">
-                        <Image
-                          src={step.image}
-                          alt={step.alt}
-                          width={step.width}
-                          height={step.height}
-                          loading="lazy"
-                          className="h-full w-full object-cover object-left-top sm:object-top"
-                        />
+                      <div className="aspect-[1280/716] w-full bg-[#f5f4f1]">
+                        <Clip src={step.video} poster={step.poster} label={step.alt} className="h-full w-full object-cover" />
                       </div>
                     </div>
                   </div>
@@ -233,7 +222,7 @@ export function HowItWorks() {
 function SeeIt({ src }: { src: string }) {
   return (
     <ProofButton src={src} className="home-mark group inline-flex items-center gap-1 text-[13px] font-semibold">
-      See it
+      See proof
       <span className="transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:-translate-y-px">↗</span>
     </ProofButton>
   );

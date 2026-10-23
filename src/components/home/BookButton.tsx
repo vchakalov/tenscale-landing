@@ -1,6 +1,6 @@
 "use client";
 
-import { openBooking, warmBooking } from "@/lib/booking";
+import { BOOKING_WIDGET_URL, openBooking, warmBooking } from "@/lib/booking";
 import { cn } from "@/lib/utils";
 
 // ── Real links ────────────────────────────────────────────────
@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
  * same one every button on the offer page opens. Two calendars meant two sets
  * of availability and two places a lead could be lost.
  */
-export const BOOK_CALL_URL = "https://app.iclosed.io/e/agentica/meet";
+export const BOOK_CALL_URL = BOOKING_WIDGET_URL;
 // ──────────────────────────────────────────────────────────────
 
 type Size = "sm" | "md" | "lg";
@@ -46,10 +46,13 @@ function ArrowUpRight() {
 export function BookCallButton({
   size = "md",
   tone = "dark",
+  source,
   className,
   children = "Book a call",
 }: {
   size?: Size;
+  /** Where on the page the button sits, sent to PostHog with booking_open. */
+  source?: string;
   /** `light` is the same pill turned over, for the dark sections. */
   tone?: "dark" | "light";
   className?: string;
@@ -62,7 +65,7 @@ export function BookCallButton({
         // Let a modified click open the calendar in a new tab as usual.
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
         event.preventDefault();
-        openBooking();
+        openBooking(source);
       }}
       onPointerEnter={warmBooking}
       onTouchStart={warmBooking}

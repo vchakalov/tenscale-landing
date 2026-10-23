@@ -8,6 +8,10 @@ import { Reveal } from "@/components/home/Reveal";
  * entry, so the reader has a name for what is different before reading how
  * it works. Ours is the personalized funnel: an ad and its own landing page
  * for every buyer, built and run automatically, which no team can do by hand.
+ *
+ * The numbers sit on a dark card in lime, the one place below the fold where
+ * lime is type: on ink it reads, on white it would not. The sentence that
+ * closes the argument keeps a lime underline instead of a colour of its own.
  */
 export function Mechanism() {
   return (
@@ -25,27 +29,29 @@ export function Mechanism() {
           </p>
           <p className="mt-5 max-w-[600px] text-[18px] leading-[30px] text-[#2e2e30] sm:text-[20px] sm:leading-[33px]">
             No team can build this by hand. Hundreds of ads, hundreds of pages, every one matched, every day.{" "}
-            <span className="home-mark font-semibold">Tenscale does it on autopilot.</span>
+            <span className="font-semibold text-[#0e0e0f] underline decoration-[#e2f93b] decoration-4 underline-offset-[5px]">
+              Tenscale does it on autopilot.
+            </span>
           </p>
         </Reveal>
 
         <Reveal delay={120} className="min-w-0">
-          <div className="rounded-[2rem] bg-black/[0.03] p-1.5 ring-1 ring-black/[0.06]">
-            <div className="divide-y divide-black/[0.06] rounded-[calc(2rem-0.375rem)] bg-white shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_24px_60px_-40px_rgba(14,14,15,0.35)]">
+          <div className="rounded-[2rem] bg-black/[0.04] p-1.5 ring-1 ring-black/[0.06]">
+            <div className="divide-y divide-white/[0.08] rounded-[calc(2rem-0.375rem)] bg-[#0e0e0f] text-[#f4f2ee] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_24px_60px_-34px_rgba(14,14,15,0.55)]">
               <Stat
                 value="−32% to −60%"
                 label="cost per lead, across our five most recent client accounts"
                 proof="/proof/multiple-clients.webp"
               />
               <Stat value="10×" label="more ads live, with the same four-person team" proof="/proof/ops-before-after.webp" />
-              <div className="grid grid-cols-2 divide-x divide-black/[0.06]">
+              <div className="grid grid-cols-2 divide-x divide-white/[0.08]">
                 <div className="p-6 sm:p-8">
-                  <p className="font-[family-name:var(--font-gelica)] text-[40px] leading-none font-light text-[#0e0e0f] sm:text-[52px]">300+</p>
-                  <p className="mt-3 text-[15px] leading-[22px] text-[#0e0e0f]">client accounts running on Tenscale</p>
+                  <p className="font-[family-name:var(--font-gelica)] text-[40px] leading-none font-light text-white sm:text-[52px]">300+</p>
+                  <p className="mt-3 text-[15px] leading-[22px] text-white/70">client accounts running on Tenscale</p>
                 </div>
                 <div className="p-6 sm:p-8">
-                  <p className="font-[family-name:var(--font-gelica)] text-[40px] leading-none font-light text-[#0e0e0f] sm:text-[52px]">$3M+</p>
-                  <p className="mt-3 text-[15px] leading-[22px] text-[#0e0e0f]">in Meta ad spend through it every month</p>
+                  <p className="font-[family-name:var(--font-gelica)] text-[40px] leading-none font-light text-white sm:text-[52px]">$3M+</p>
+                  <p className="mt-3 text-[15px] leading-[22px] text-white/70">in Meta ad spend through it every month</p>
                 </div>
               </div>
             </div>
@@ -59,12 +65,12 @@ export function Mechanism() {
 function Stat({ value, label, proof }: { value: string; label: string; proof: string }) {
   return (
     <div className="flex flex-col gap-3 p-6 sm:p-8">
-      <p className="font-[family-name:var(--font-gelica)] text-[44px] leading-none font-light whitespace-nowrap text-[#0b0b0c] sm:text-[52px]">
-        <span className="home-mark">{value}</span>
+      <p className="font-[family-name:var(--font-gelica)] text-[44px] leading-none font-light whitespace-nowrap text-[#e2f93b] sm:text-[52px]">
+        {value}
       </p>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-[16px] leading-[24px] text-[#0e0e0f]">{label}</p>
-        <ProofButton src={proof} />
+        <p className="text-[16px] leading-[24px] text-white/80">{label}</p>
+        <ProofButton src={proof} tone="dark" />
       </div>
     </div>
   );

@@ -3,8 +3,9 @@ import { Reveal } from "@/components/home/Reveal";
 
 /**
  * The risk reversal, said plainly and said twice: once after the process,
- * once at the end. It is the offer the landing makes, word for word in
- * substance; change the two together.
+ * once at the end in the footer. The offer, from Ben on 2026-10-23: not
+ * happy with Tenscale after 30 days, your money back, no questions asked.
+ * Change every copy of it together.
  */
 export function Guarantee() {
   return (
@@ -24,14 +25,13 @@ export function Guarantee() {
               Guaranteed
             </span>
             <h2 className="mt-6 font-[family-name:var(--font-gelica)] text-[38px] leading-[1.05] font-light text-balance sm:text-[64px]">
-              Automated In 30 Days. Or You Don&apos;t Pay.
+              Not Happy After 30 Days? Your Money Back.
             </h2>
             <p className="mt-5 max-w-[560px] text-[16px] leading-[26px] text-black/75 sm:text-[18px] sm:leading-[28px]">
-              We automate your client fulfillment in 30 days and make it better. If we don&apos;t, you don&apos;t pay.
-              Period.
+              Run Tenscale for 30 days. If you&apos;re not happy with it, we refund you in full. No questions asked.
             </p>
             <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row">
-              <BookCallButton size="lg">
+              <BookCallButton size="lg" source="guarantee">
                 Book a demo
               </BookCallButton>
               <p className="text-[14px] text-black/70">

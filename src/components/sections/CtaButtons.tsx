@@ -1,6 +1,6 @@
 "use client";
 
-import { openBooking, warmBooking } from "@/lib/booking";
+import { BOOKING_WIDGET_URL, openBooking, warmBooking } from "@/lib/booking";
 import { cn } from "@/lib/utils";
 
 // ── Real links ────────────────────────────────────────────────
@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
  * same one every button on the offer page opens. Two calendars meant two sets
  * of availability and two places a lead could be lost.
  */
-export const BOOK_CALL_URL = "https://app.iclosed.io/e/agentica/meet";
+export const BOOK_CALL_URL = BOOKING_WIDGET_URL;
 // ──────────────────────────────────────────────────────────────
 
 type Size = "sm" | "md" | "lg";

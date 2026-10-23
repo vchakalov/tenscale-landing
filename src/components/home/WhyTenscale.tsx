@@ -15,7 +15,7 @@ const WHY = [
 const HOW = [
   { title: "Real accounts", body: "Every number on this page opens the screenshot it came from." },
   { title: "300+ accounts, $3M+ a month", body: "That much Meta spend runs through it. One agency went from 12 to 24 clients with the same team." },
-  { title: "Guaranteed", body: "Fulfillment automated in 30 days, or you don't pay." },
+  { title: "Guaranteed", body: "Not happy after 30 days? Your money back, no questions asked." },
 ];
 
 export function WhyTenscale() {

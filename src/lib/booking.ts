@@ -19,7 +19,12 @@
 
 import { track } from "./analytics";
 
-export const BOOKING_WIDGET_URL = "https://app.iclosed.io/e/agentica/meet";
+/**
+ * The one calendar every booking button opens. Since 2026-10-23 it is the
+ * Tenscale automation call; it was /e/agentica/meet before. The bridge treats
+ * every event except call 2 as call 1, so a booking here is a Schedule.
+ */
+export const BOOKING_WIDGET_URL = "https://app.iclosed.io/e/agentica/tenscale-automate";
 export const BOOKING_SCRIPT_URL = "https://app.iclosed.io/assets/widget.js";
 
 type Listener = () => void;
@@ -33,8 +38,9 @@ export function onOpenBooking(listener: Listener): () => void {
   };
 }
 
-export function openBooking(): void {
-  track("booking_open");
+/** `source` says which button opened it (hero, header, footer...), for PostHog. */
+export function openBooking(source?: string): void {
+  track("booking_open", source ? { source } : {});
   listeners.forEach((listener) => listener());
 }
 
