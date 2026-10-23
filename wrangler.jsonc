@@ -26,6 +26,7 @@
       "/",
       "/landing*",
       "/v2", "/v2/*",
+      "/old", "/old/*",
       "/thank-you", "/thank-you/*",
       "/thank-you-blue", "/thank-you-blue/*",
       "/thank-you-bl", "/thank-you-bl/*",

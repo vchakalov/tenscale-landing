@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import { BookingModal } from "@/components/ec/BookingModal";
-import { Header } from "@/components/sections/Header";
-import { Hero } from "@/components/sections/Hero";
-import { Logos } from "@/components/sections/Logos";
-import { Reclaim } from "@/components/sections/Reclaim";
-import { Features } from "@/components/sections/Features";
-import { Demo } from "@/components/sections/Demo";
-import { Testimonial } from "@/components/sections/Testimonial";
-import { Pricing } from "@/components/sections/Pricing";
-import { Comparison } from "@/components/sections/Comparison";
-import { Security } from "@/components/sections/Security";
-import { Faq } from "@/components/sections/Faq";
-import { Footer } from "@/components/sections/Footer";
+import { HomeHeader } from "@/components/home/HomeHeader";
+import { HomeHero } from "@/components/home/HomeHero";
+import { Mechanism } from "@/components/home/Mechanism";
+import { ProblemFix } from "@/components/home/ProblemFix";
+import { HowItWorks } from "@/components/home/HowItWorks";
+import { Guarantee } from "@/components/home/Guarantee";
+import { ProofBand } from "@/components/home/ProofBand";
+import { ResultsWall } from "@/components/home/ResultsWall";
+import { BeforeAfter } from "@/components/home/BeforeAfter";
+import { WhyTenscale } from "@/components/home/WhyTenscale";
+import { Andromeda } from "@/components/home/Andromeda";
+import { HomeFaq } from "@/components/home/HomeFaq";
+import { HomeFooter } from "@/components/home/HomeFooter";
 
 /** The one address for this page, whichever host or query reached it. */
 export const metadata: Metadata = {
@@ -57,22 +58,31 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA).replace(/</g, "\\u003c") }}
       />
-      <Header />
-      <main>
-        <Hero />
-        <div className="bg-[#FAF9F7] w-full flex flex-col items-start">
-          <Logos />
-          <Reclaim />
-          <Features />
-          <Demo />
-          <Testimonial />
-          <Pricing />
-          <Comparison />
-          <Security />
-          <Faq />
-        </div>
-      </main>
-      <Footer />
+      <div className="home w-full">
+        <HomeHeader />
+        {/*
+          Hyros' order: the offer and the product, the mechanism with a name,
+          the problem and the fix, the process step by step with a message
+          after each step, the guarantee, then an unreasonable amount of proof,
+          the two closing lists, the safeguards and the FAQ.
+        */}
+        <main className="w-full">
+          <HomeHero />
+          <Mechanism />
+          <ProblemFix />
+          <HowItWorks />
+          <div className="flex flex-col gap-3 sm:gap-4">
+            <Guarantee />
+            <ProofBand />
+          </div>
+          <ResultsWall />
+          <BeforeAfter />
+          <WhyTenscale />
+          <Andromeda />
+          <HomeFaq />
+        </main>
+        <HomeFooter />
+      </div>
       {/* Same dialog, same calendar, as the offer page. */}
       <BookingModal />
     </>

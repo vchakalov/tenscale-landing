@@ -32,14 +32,14 @@ import { useCallback, useEffect, useState } from "react";
  * which for an unordered wall of evidence costs nothing.
  */
 
-interface Shot {
+export interface Shot {
   src: string;
   width: number;
   height: number;
   alt: string;
 }
 
-const SHOTS: Shot[] = [
+export const SHOTS: Shot[] = [
   { src: "/proof/cpl-before-after.webp", width: 1400, height: 1165, alt: "Ads Manager before and after: cost per lead from $24.48 to $14.69 on the same budget" },
   { src: "/proof/onboarded-before-lunch.webp", width: 1236, height: 724, alt: "Slack: client signed at 9am, 112 ads live by 1:40pm, every ad with its own landing page" },
   { src: "/proof/record-spend.webp", width: 1400, height: 685, alt: "Record ad spend day in the account" },

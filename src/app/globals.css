@@ -351,3 +351,147 @@ body {
   background: var(--ec-frame);
   color: var(--ec-on-frame);
 }
+
+/* ---------------------------------------------------------------------------
+ * The home page (src/components/home).
+ *
+ * One easing for everything that moves, a heavy spring that settles rather
+ * than slides. Only transform, opacity and a light blur are animated.
+ * ------------------------------------------------------------------------ */
+:root {
+  --home-ease: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Blocks below the fold rise into place. The hidden start applies only when
+   scripts run, so without JavaScript every section is simply there. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .home-reveal {
+    transition:
+      opacity 0.9s var(--home-ease),
+      transform 0.9s var(--home-ease),
+      filter 0.9s var(--home-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .home-reveal:not([data-in]) {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(4px);
+  }
+}
+
+/* The ground the product windows float on: a neutral grey with faint
+   diagonal bands, Hyros' lavender waves without the colour. */
+.home-tour-field {
+  background:
+    radial-gradient(90% 70% at 0% 100%, rgba(14, 14, 15, 0.06), transparent 60%),
+    repeating-linear-gradient(-28deg, rgba(255, 255, 255, 0) 0 46px, rgba(255, 255, 255, 0.6) 46px 92px),
+    #ececea;
+}
+
+/* The page runs white, ink and chartreuse. Lime is never type on white, it
+   cannot be read there: it is a fill, a dot, or type on the dark sections.
+   Words that need colour on white take the accent, a violet chosen against
+   the lime (nearly opposite it on the wheel) and away from Meta's blue, at
+   6.6:1 against white. */
+:root {
+  --home-accent: #6a2cff;
+}
+.home {
+  background: #ffffff;
+}
+.home ::selection {
+  background: #e2f93b;
+  color: #0b0b0c;
+}
+.home-mark {
+  color: var(--home-accent);
+}
+
+.home-tour-shot {
+  opacity: 0;
+  transform: scale(1.015);
+  transition:
+    opacity 0.7s var(--home-ease),
+    transform 1.2s var(--home-ease);
+}
+.home-tour-shot[data-active] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.home-tour-caption {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition:
+    opacity 0.5s var(--home-ease),
+    transform 0.5s var(--home-ease);
+}
+.home-tour-caption[data-active] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* The active tab fills like a clock; its end moves the tour on. A clock is
+   the one thing here that should run at a constant rate. */
+@keyframes home-tour-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.home-tour-fill {
+  width: 100%;
+  transform-origin: left center;
+  animation-name: home-tour-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+.home-tour[data-paused] .home-tour-fill {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-tour-fill { animation: none; transform: scaleX(0); }
+  .home-tour-shot, .home-tour-caption { transition: none; }
+}
+
+/* The wall drifts; hover or focus holds a row still. */
+@keyframes home-wall-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes home-wall-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+.home-wall-track {
+  width: max-content;
+  padding-block: 6px;
+  animation: home-wall-left 110s linear infinite;
+}
+.home-wall-track--reverse {
+  animation-name: home-wall-right;
+}
+.home-wall-row:hover .home-wall-track,
+.home-wall-row:focus-within .home-wall-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-wall-row { overflow-x: auto; }
+  .home-wall-track { animation: none; }
+}
+
+/* The headline reel: the arriving line rolls up from below, the leaving line
+   rolls out of the top with a little blur, and the rest wait below unseen. */
+.home-reel {
+  transition:
+    transform 0.75s var(--home-ease),
+    opacity 0.75s var(--home-ease),
+    filter 0.75s var(--home-ease);
+}
+.home-reel[data-state="in"] { transform: translateY(0); opacity: 1; filter: none; }
+.home-reel[data-state="out"] { transform: translateY(-105%); opacity: 0; filter: blur(6px); }
+.home-reel[data-state="wait"] { transform: translateY(105%); opacity: 0; filter: blur(6px); transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .home-reel { transition: none; }
+}
+

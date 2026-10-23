@@ -5,11 +5,11 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  // The home page sections are cloned markup with plain anchors to "/" and
-  // "/#section". In a static export a plain anchor is a full page load, which
+  // The home page sections, and the redesign's header and footer copied from
+  // them, are cloned markup with plain anchors to "/" and "/#section". In a static export a plain anchor is a full page load, which
   // is fine here; the rule exists for the Pages Router.
   {
-    files: ["src/components/sections/**"],
+    files: ["src/components/sections/**", "src/components/home/HomeHeader.tsx", "src/components/home/HomeFooter.tsx"],
     rules: { "@next/next/no-html-link-for-pages": "off" },
   },
   // Override default ignores of eslint-config-next.
