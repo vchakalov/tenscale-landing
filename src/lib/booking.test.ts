@@ -36,6 +36,15 @@ describe('bookingUrlWithContext', () => {
     expect(parsed.searchParams.get('first_utm_content')).toBe('120251142698200305');
   });
 
+  it('carries the browser\'s user agent as ua, for the Lead the bridge sends', () => {
+    const url = bookingUrlWithContext(
+      'https://app.iclosed.io/e/agentica/meet',
+      { fbc: null, fbp: null, utm: {}, firstUtm: {}, externalId: 'ext-1', pageViewEventId: 'ev', pixelId: null },
+      'Mozilla/5.0 (iPhone)',
+    );
+    expect(new URL(url).searchParams.get('ua')).toBe('Mozilla/5.0 (iPhone)');
+  });
+
   it('returns the plain url when there is no context', () => {
     expect(bookingUrlWithContext('https://app.iclosed.io/e/agentica/meet', null)).toBe('https://app.iclosed.io/e/agentica/meet');
   });

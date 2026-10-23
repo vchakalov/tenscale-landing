@@ -17,7 +17,7 @@
  * After the first open the widget stays mounted, so every later open is instant.
  */
 
-import { track } from "./analytics";
+import { metaEvent, track } from "./analytics";
 
 /**
  * The one calendar every booking button opens. Since 2026-10-23 it is the
@@ -38,9 +38,22 @@ export function onOpenBooking(listener: Listener): () => void {
   };
 }
 
-/** `source` says which button opened it (hero, header, footer...), for PostHog. */
+let calendarOpenSent = false;
+
+/**
+ * `source` says which button opened it (hero, header, footer...), for PostHog.
+ *
+ * The first open on a page also goes to Meta as CalendarOpen: the step before
+ * the form, frequent enough (dozens a week) for a campaign to learn from while
+ * Schedule is still a handful. Once per page view, so a visitor who opens and
+ * closes the calendar three times counts once.
+ */
 export function openBooking(source?: string): void {
   track("booking_open", source ? { source } : {});
+  if (!calendarOpenSent) {
+    calendarOpenSent = true;
+    metaEvent("CalendarOpen", { source: source ?? "other" });
+  }
   listeners.forEach((listener) => listener());
 }
 
@@ -89,8 +102,14 @@ export interface InjectedContext {
  * this person as `first_utm_*`, which the bridge files under the GHL fields of
  * the same names. Until October 2026 only the latest went, and those fields
  * stayed empty.
+ *
+ * The browser's user agent goes too, as `ua`. Meta will not take a website
+ * event without one, and iClosed's "Contact created" webhook, which the bridge
+ * turns into Lead the moment someone fills in the form, does not carry it.
+ * iClosed keeps every query parameter with the contact, so this one reaches
+ * the bridge with the rest.
  */
-export function bookingUrlWithContext(base: string, context: InjectedContext | null): string {
+export function bookingUrlWithContext(base: string, context: InjectedContext | null, userAgent?: string): string {
   if (!context) return base;
   const url = new URL(base);
   for (const [key, value] of Object.entries(context.utm)) url.searchParams.set(key, value);
@@ -98,6 +117,7 @@ export function bookingUrlWithContext(base: string, context: InjectedContext | n
   if (context.fbc) url.searchParams.set("fbc", context.fbc);
   if (context.fbp) url.searchParams.set("fbp", context.fbp);
   url.searchParams.set("external_id", context.externalId);
+  if (userAgent) url.searchParams.set("ua", userAgent);
   return url.toString();
 }
 

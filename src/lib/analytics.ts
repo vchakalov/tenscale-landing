@@ -17,6 +17,8 @@ declare global {
   interface Window {
     /** `report`: whether Meta may hear about this visitor at all (worker/audience.ts). */
     __ag?: { externalId?: string | null; pixelId?: string | null; report?: boolean };
+    /** The thank-you page's query as iClosed sent it, before the pixel script took the lead's details out of the URL. */
+    __agSearch?: string;
     fbq?: (...args: unknown[]) => void;
   }
 }
@@ -74,11 +76,11 @@ export function pixelEvent(name: string, params: Record<string, string | number>
 /**
  * A Meta event the page sends twice: to the pixel, and through our Worker to
  * the Conversions API, which an ad blocker cannot stop. The Worker only lets
- * through VideoProgress, ViewContent and ButtonClick with known values, and
+ * through VideoProgress, ViewContent, ButtonClick and CalendarOpen with known values, and
  * only for a visitor Meta may hear about; the page skips the others itself.
  */
 export function metaEvent(
-  name: "VideoProgress" | "ViewContent" | "ButtonClick",
+  name: "VideoProgress" | "ViewContent" | "ButtonClick" | "CalendarOpen",
   params: Record<string, string | number>,
 ): void {
   try {

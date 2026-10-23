@@ -108,7 +108,7 @@ export function BookingModal() {
   // read off the page by itself (the latest UTMs and the Meta cookies). This
   // effect runs before the loader below, which is what reads `data-url`.
   useEffect(() => {
-    widgetRef.current?.setAttribute("data-url", bookingUrlWithContext(BOOKING_WIDGET_URL, injectedContext()));
+    widgetRef.current?.setAttribute("data-url", bookingUrlWithContext(BOOKING_WIDGET_URL, injectedContext(), navigator.userAgent));
   }, []);
 
   const close = useCallback(() => setOpen(false), []);

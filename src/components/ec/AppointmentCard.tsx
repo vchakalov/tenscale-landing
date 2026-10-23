@@ -179,7 +179,7 @@ export function AppointmentCard({ className = "" }: { className?: string }) {
        external system, and setting state straight from an effect body makes
        React re-render twice before the browser has painted once. */
     const frame = requestAnimationFrame(() => {
-      const appointment = readAppointment(window.location.search);
+      const appointment = readAppointment(window.__agSearch ?? window.location.search);
       if (!appointment) {
         setState({ status: "unknown" });
         return;

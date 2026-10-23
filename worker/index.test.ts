@@ -223,6 +223,14 @@ describe('engagement events to Meta', () => {
     const [view] = await post({ ...video, event_name: 'ViewContent', params: { content_name: 'vsl' } });
     expect(view.custom_data).toEqual({ content_name: 'vsl' });
   });
+
+  it('accepts CalendarOpen from a known button, and nothing else under that name', async () => {
+    const [open] = await post({ ...video, event_name: 'CalendarOpen', params: { source: 'hero' } });
+    expect(open).toMatchObject({ event_name: 'CalendarOpen', custom_data: { source: 'hero' } });
+    const [fromLanding] = await post({ ...video, event_name: 'CalendarOpen', params: { source: 'sticky_mobile' } });
+    expect(fromLanding.custom_data).toEqual({ source: 'sticky_mobile' });
+    expect(await post({ ...video, event_name: 'CalendarOpen', params: { source: 'anything' } })).toEqual([]);
+  });
 });
 
 describe('canonical host', () => {

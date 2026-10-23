@@ -12,9 +12,11 @@
 export const VIDEO_IDS = ['vsl', 'thank_you'] as const;
 export const VIDEO_PERCENTS = [25, 50, 75, 95] as const;
 export const BUTTON_IDS = ['hero_desktop', 'hero_mobile', 'after_benefits', 'after_objections', 'sticky_mobile'] as const;
+/** Where the calendar was opened from: the landing's buttons, the home page's, or anything else. */
+export const CALENDAR_SOURCES = [...BUTTON_IDS, 'hero', 'header', 'guarantee', 'proof', 'footer', 'other'] as const;
 
 export interface EngagementEvent {
-  eventName: 'PageView' | 'VideoProgress' | 'ViewContent' | 'ButtonClick';
+  eventName: 'PageView' | 'VideoProgress' | 'ViewContent' | 'ButtonClick' | 'CalendarOpen';
   eventId: string;
   customData: Record<string, string | number>;
   /** The page, without its query: the thank-you URL carries the lead's email. */
@@ -56,6 +58,9 @@ export function parseEngagement(body: unknown, siteOrigin: string): EngagementEv
     case 'ButtonClick':
       if (!oneOf(BUTTON_IDS, params.button_id)) return null;
       return { ...base, eventName: 'ButtonClick', customData: { button_id: params.button_id } };
+    case 'CalendarOpen':
+      if (!oneOf(CALENDAR_SOURCES, params.source)) return null;
+      return { ...base, eventName: 'CalendarOpen', customData: { source: params.source } };
     default:
       return null;
   }

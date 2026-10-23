@@ -19,11 +19,26 @@ import Script from "next/script";
  * `autoConfig` off: the pixel would otherwise report button clicks and page
  * metadata it finds by itself. The dataset holds the events we chose, nothing
  * else.
+ *
+ * On the thank-you page iClosed puts the lead's name, email and phone in the
+ * URL, and the pixel reports the page's full URL with every event. So before
+ * anything else the query is kept aside in `window.__agSearch` (the page reads
+ * the booking from there) and those fields are taken out of the address bar.
+ * Meta restricts a dataset that receives personal data in URLs.
  */
 export function MetaPixel() {
   return (
     <Script id="meta-pixel" strategy="afterInteractive">
       {`(function(){
+  try {
+    if (location.pathname.indexOf('/thank-you') === 0 && location.search) {
+      window.__agSearch = location.search;
+      var q = new URLSearchParams(location.search), out = new URLSearchParams();
+      q.forEach(function (v, k) { if (!/(name|mail|phone|first|last|invitee|number)/i.test(k)) out.append(k, v); });
+      var rest = out.toString();
+      history.replaceState(history.state, '', location.pathname + (rest ? '?' + rest : '') + location.hash);
+    }
+  } catch (e) {}
   var ag = window.__ag;
   if (!ag || !ag.pixelId || !ag.report) return;
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
