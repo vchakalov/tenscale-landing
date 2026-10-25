@@ -5,6 +5,7 @@
   //   META_PIXEL_ID, META_CAPI_TOKEN, and optionally META_TEST_EVENT_CODE.
   // Without the first two the site still works; Meta simply hears nothing.
   //   TEAM_KEY: the value of `?team=` that marks a browser as ours (worker/audience.ts).
+  //   BRIDGE_TOKEN: integration-bridge's webhook token, for filing resource signups (worker/signup.ts).
   "name": "agentica-landing",
   "compatibility_date": "2026-09-18",
 
@@ -31,6 +32,7 @@
       "/thank-you-blue", "/thank-you-blue/*",
       "/thank-you-bl", "/thank-you-bl/*",
       "/privacy", "/privacy/*",
+      "/resources", "/resources/*",
       "/robots.txt", "/sitemap.xml",
       "/relay", "/relay/*",
       "/booking/prep"
@@ -50,7 +52,10 @@
   // never; EXCLUDE_COUNTRIES adds whole countries, e.g. "BG".
   "vars": {
     "META_AUDIENCE": "meta",
-    "EXCLUDE_COUNTRIES": ""
+    "EXCLUDE_COUNTRIES": "",
+    // Where a resource signup is filed (worker/signup.ts). BRIDGE_TOKEN, the
+    // bridge's webhook token, is a secret.
+    "BRIDGE_URL": "https://integration-bridge-t3ze753aka-ew.a.run.app"
   },
 
   "observability": {

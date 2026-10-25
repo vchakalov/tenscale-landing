@@ -105,6 +105,20 @@ const SECTIONS: Section[] = [
     ),
   },
   {
+    heading: "What we collect when you take a free resource",
+    body: (
+      <>
+        <p>
+          A free template asks for your email address. We check that it can
+          receive mail by looking up its domain, and we turn away temporary
+          inboxes. We keep the address in GoHighLevel with the name of the
+          resource and how you first found the site, and we may email you about
+          it. Every email has an unsubscribe link.
+        </p>
+      </>
+    ),
+  },
+  {
     heading: "Who else sees it",
     body: (
       <>

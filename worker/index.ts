@@ -4,8 +4,9 @@ import { sendCapi, sha256Hex } from './capi.js';
 import { parseCookie, readContext, serializeCookie } from './context.js';
 import { buildMetaCookie, buildSetCookie, readRawCookie } from './cookie.js';
 import { parseEngagement } from './events.js';
+import { SIGNUP_PATH, handleSignup, type SignupEnv } from './signup.js';
 
-export interface Env extends AudienceEnv {
+export interface Env extends AudienceEnv, SignupEnv {
   ASSETS: Fetcher;
   META_PIXEL_ID?: string;
   META_CAPI_TOKEN?: string;
@@ -78,6 +79,11 @@ export default {
 
     const redirect = canonicalRedirect(request, url);
     if (redirect) return redirect;
+
+    if (url.pathname === SIGNUP_PATH || url.pathname === `${SIGNUP_PATH}/`) {
+      const stored = parseCookie(request.headers.get('cookie'));
+      return handleSignup(request, url, env, ctx, stored?.firstUtm ?? {});
+    }
 
     if (request.method === 'POST' && url.pathname === EVENT_PATH) {
       await forwardEngagement(request, url, env, ctx).catch(() => undefined);
