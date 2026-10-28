@@ -89,7 +89,7 @@ export function OfferHero() {
                       {" "}
                       <ProofButton
                         src={fact.proof}
-                        className="cursor-zoom-in text-[14px] font-semibold whitespace-nowrap text-[#e2f93b] underline decoration-[#e2f93b]/40 underline-offset-4 hover:opacity-75"
+                        className="-my-2.5 inline-block cursor-zoom-in py-2.5 text-[14px] font-semibold whitespace-nowrap text-[#e2f93b] underline decoration-[#e2f93b]/40 underline-offset-4 hover:opacity-75"
                       >
                         <SeeProof />
                       </ProofButton>

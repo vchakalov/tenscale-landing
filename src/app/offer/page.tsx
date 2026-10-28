@@ -7,6 +7,7 @@ import { Core } from "@/components/offer/Core";
 import { Means } from "@/components/offer/Means";
 import { OfferGuarantee } from "@/components/offer/OfferGuarantee";
 import { OfferHero } from "@/components/offer/OfferHero";
+import { OfferProcess } from "@/components/offer/OfferProcess";
 import { Team } from "@/components/offer/Team";
 import { siteFonts } from "../site-fonts";
 
@@ -21,8 +22,8 @@ export const metadata: Metadata = {
 /**
  * The offer page: a short direct-response page in the shape of Russell
  * Brunson's and Gymlaunch's. What Tenscale is in two sentences, the ask,
- * the three parts of the engine, what they mean for an agency, the ask, the
- * bonus stack, the guarantee, the team, and the last ask with what the call
+ * the three parts of the engine, what they mean for an agency, the ask, what
+ * happens when you join, the bonus stack, the guarantee, the team, and the last ask with what the call
  * covers. Big type, big buttons, one column, few words.
  *
  * Drawn in the home page's Geist, at its heaviest weights, and the brand's
@@ -35,6 +36,7 @@ export default function OfferPage() {
         <div data-section="hero"><OfferHero /></div>
         <div data-section="core"><Core /></div>
         <div data-section="means"><Means /></div>
+        <div data-section="process"><OfferProcess /></div>
         <div data-section="bonuses"><Bonuses /></div>
         <div data-section="guarantee"><OfferGuarantee /></div>
         <div data-section="team"><Team /></div>

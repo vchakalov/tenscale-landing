@@ -63,16 +63,17 @@ export function Team() {
                 <h3 className="bg-[#0b0b0c] px-4 py-3.5 text-center text-[15px] leading-[20px] font-bold text-white">
                   {person.name}, <span className="text-[#e2f93b]">{person.role}</span>
                 </h3>
-                <div className="flex flex-1 flex-col items-center px-6 py-8">
+                {/* On a phone the photo sits beside the bio, so four cards are not four screens. */}
+                <div className="flex flex-1 items-start gap-4 px-5 py-5 sm:flex-col sm:items-center sm:gap-0 sm:px-6 sm:py-8">
                   <Image
                     src={person.photo}
                     alt={`${person.name}, ${person.role}`}
                     width={112}
                     height={112}
                     loading="lazy"
-                    className="h-[112px] w-[112px] rounded-full object-cover ring-1 ring-[#0b0b0c] ring-offset-4 ring-offset-white"
+                    className="h-[72px] w-[72px] shrink-0 rounded-full object-cover ring-1 ring-[#0b0b0c] ring-offset-2 ring-offset-white sm:h-[112px] sm:w-[112px] sm:ring-offset-4"
                   />
-                  <p className="mt-6 text-center text-[15px] leading-[23px] text-[#2e2e30]">{person.bio}</p>
+                  <p className="text-left text-[14px] leading-[21px] text-[#2e2e30] sm:mt-6 sm:text-center sm:text-[15px] sm:leading-[23px]">{person.bio}</p>
                 </div>
               </article>
             </div>
