@@ -4,10 +4,10 @@ import { Shout } from "@/components/offer/parts";
 
 /**
  * Russell Brunson's stack: every extra named and shown as it looks when you
- * have it (offer/BonusVisuals.tsx), then the total. Ben's list (2026-10-28)
- * splits the weekly 1-on-1 calls and the chat support out as assets of their
- * own. Nothing is priced: Tenscale shows no prices, so where the stack would
- * add up a dollar total it says "It all comes free" (Ben, 2026-10-28).
+ * have it (offer/BonusVisuals.tsx). Ben's list (2026-10-28) splits the weekly
+ * 1-on-1 calls and the chat support out as assets of their own; the install
+ * and the training are in the section before (offer/OfferProcess.tsx). No
+ * values and no total: Tenscale shows no prices.
  *
  * DRAFT: bonus #5 is a stand-in until Ben says what the bonus "from Meta" is.
  * Before it ships it must not read as a Meta partnership or endorsement: the
@@ -26,8 +26,8 @@ const BONUSES: Bonus[] = [
     visual: "call",
   },
   {
-    title: "Done-With-You Installation, Team Training & VIP Chat Support (Slack, Discord, Telegram)",
-    body: "We install the Engine with you in live working sessions and train your entire team to run it. Need help mid-launch? Message your dedicated VIP support channel on Slack, Discord, or Telegram for instant answers.",
+    title: "VIP Chat Support (Slack, Discord, Telegram)",
+    body: "Need help mid-launch? Message your dedicated VIP channel on Slack, Discord, or Telegram and our team answers, fast.",
     visual: "support",
   },
   {
@@ -55,20 +55,19 @@ export function Bonuses() {
           Everything You Get On Top Of The AI Engine <span className="text-[#e2f93b]">(Included FREE)</span>
         </Shout>
         <p className="mt-6 max-w-[780px] text-[17px] leading-[28px] text-white/75 sm:text-[19px] sm:leading-[31px]">
-          We don’t just install the tech and disappear. You get hands-on training, our internal AI systems, direct
-          Slack/Telegram access, and weekly 1-on-1 strategy calls:
+          On top of the install, you get weekly 1-on-1 strategy calls, direct Slack/Telegram access, our internal AI
+          systems and live US market intel:
         </p>
       </div>
 
       <ol className="mx-auto mt-14 flex w-full max-w-[1000px] flex-col gap-4 sm:mt-20 sm:gap-5">
-        {BONUSES.map((bonus, i) => (
+        {BONUSES.map((bonus) => (
           <li key={bonus.title}>
             <div>
               <div className="grid items-center gap-7 rounded-[24px] bg-white p-5 text-[#0b0b0c] sm:p-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-10 md:p-10">
                 <BonusVisual kind={bonus.visual} />
                 <div className="min-w-0 text-center md:text-left">
-                  <p className="text-[13px] font-black tracking-[0.16em] text-[#6a2cff] uppercase sm:text-[14px]">Free bonus #{i + 1}</p>
-                  <h3 className="mt-2 text-[24px] leading-[1.08] font-black tracking-[-0.02em] sm:text-[32px]">{bonus.title}</h3>
+                  <h3 className="text-[24px] leading-[1.08] font-black tracking-[-0.02em] sm:text-[32px]">{bonus.title}</h3>
                   <p className="mt-4 text-[16px] leading-[26px] text-[#3a3a3d] sm:text-[17px] sm:leading-[28px]">{bonus.body}</p>
                 </div>
               </div>
@@ -78,14 +77,7 @@ export function Bonuses() {
       </ol>
 
       <div className="mx-auto mt-10 flex w-full max-w-[1000px] flex-col items-center text-center sm:mt-14">
-        <div className="w-full rounded-[24px] border-2 border-dashed border-[#e2f93b]/60 px-6 py-8 sm:py-10">
-          <p className="text-[14px] font-bold tracking-[0.14em] text-white/60 uppercase">
-            The full implementation + all {BONUSES.length} bonuses
-          </p>
-          <p className="mt-3 text-[44px] leading-[0.95] font-black tracking-[-0.03em] text-[#e2f93b] uppercase sm:text-[72px]">It All Comes Free</p>
-          <p className="mt-4 text-[18px] font-bold text-white sm:text-[22px]">When You Join Tenscale!</p>
-        </div>
-        <OfferButton source="offer_bonuses" className="mt-12" />
+        <OfferButton source="offer_bonuses" />
         <p className="mt-5 max-w-[560px] text-[15px] leading-[23px] text-white/60 sm:text-[16px]">
           Find out how we can install this entire stack into your agency in days, not months.
         </p>

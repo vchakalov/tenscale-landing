@@ -34,9 +34,6 @@ export function OfferProcess() {
         <Shout className="text-[clamp(34px,7vw,72px)] leading-[0.98] text-[#0b0b0c] uppercase">
           Here’s Exactly What Happens <span className="text-[#6a2cff]">When You Join</span>
         </Shout>
-        <p className="mt-6 max-w-[680px] text-[18px] leading-[28px] font-semibold text-[#2e2e30] sm:text-[21px] sm:leading-[31px]">
-          You don’t get a login and a “good luck” email. You get our team, inside yours:
-        </p>
       </div>
 
       <div className="mx-auto mt-12 grid w-full max-w-[1120px] gap-4 sm:mt-16 lg:grid-cols-2">
