@@ -11,15 +11,19 @@ import Link from "next/link";
  * The Facebook disclaimer is not decoration. Meta requires advertisers not to
  * imply endorsement, and a results claim needs its own qualifier.
  */
-// "Terms of Service" used to sit here pointing at "#". A dead link in the
-// footer of a page Meta reviews is worse than no link, and the terms that
-// actually bind anyone are in the install agreement, not on the site. Put it
-// back when there is a real page to point at.
+// Meta's App Review opens the terms and the data deletion page from the app
+// settings, so both are real pages and both are linked from every footer.
 const LINKS = [
   { href: "/", label: "Home" },
   { href: "/privacy/", label: "Privacy Policy" },
+  { href: "/terms/", label: "Terms of Service" },
+  { href: "/data-deletion/", label: "Data Deletion" },
   { href: "mailto:team@tenscale.ai", label: "Contact" },
 ] as const;
+
+// Meta's business verification checks that the site belongs to the legal
+// entity being verified, and nothing else on the site names it.
+const OPERATOR = "tenscale.ai is operated by “RePharma Health” Ltd.";
 
 // Meta's Business Tools terms ask for a plain notice that these tools are in
 // use and a route to opt out. The link goes to the page that explains the rest.
@@ -70,6 +74,10 @@ export function SiteFooter() {
 
       <p className="mx-auto mt-[14px] max-w-[760px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[21px] text-[rgba(var(--ec-ink-rgb),0.45)] max-[800px]:text-[12px] max-[800px]:leading-[19px]">
         {DISCLAIMER}
+      </p>
+
+      <p className="mx-auto mt-[14px] max-w-[760px] text-center font-[family-name:var(--font-inter)] text-[13px] leading-[21px] text-[rgba(var(--ec-ink-rgb),0.45)] max-[800px]:text-[12px] max-[800px]:leading-[19px]">
+        {OPERATOR}
       </p>
     </footer>
   );

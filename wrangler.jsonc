@@ -32,6 +32,8 @@
       "/thank-you-blue", "/thank-you-blue/*",
       "/thank-you-bl", "/thank-you-bl/*",
       "/privacy", "/privacy/*",
+      "/terms", "/terms/*",
+      "/data-deletion", "/data-deletion/*",
       "/resources", "/resources/*",
       "/robots.txt", "/sitemap.xml",
       "/relay", "/relay/*",

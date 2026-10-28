@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { SiteFooter } from "@/components/ec/SiteFooter";
-import { landingFonts } from "../landing-fonts";
+import { CONTACT_EMAIL, LegalPage, type LegalSection } from "@/components/ec/LegalPage";
 
 export const metadata: Metadata = {
   title: "Tenscale: privacy policy",
   alternates: { canonical: "/privacy/" },
   description:
-    "What Tenscale collects when you visit this site or book a call, why, who we share it with, and how to opt out.",
+    "What Tenscale collects when you visit this site, book a call or connect a Meta account to the Tenscale app, why, who we share it with, and how to opt out or have it deleted.",
 };
 
 /**
@@ -19,22 +17,26 @@ export const metadata: Metadata = {
  * require a clear notice naming the tools and a route to opt out, and a page
  * that lists tools we do not use would be worse than none.
  *
+ * The same holds for the Tenscale app (the Agentica platform behind the Meta app
+ * "Tenscale LLC"). Meta's App Review reads this page against the permissions the
+ * app asks for, so the section on connected Meta accounts names what the app
+ * actually stores, not everything the permissions would allow.
+ *
  * `LAST_UPDATED` is edited by hand. A date that moves on every deploy tells the
  * reader nothing about when the terms changed.
  */
-const LAST_UPDATED = "11 October 2026";
-const CONTACT_EMAIL = "team@tenscale.ai";
+const LAST_UPDATED = "28 October 2026";
 
-type Section = { heading: string; body: React.ReactNode };
-
-const SECTIONS: Section[] = [
+const SECTIONS: LegalSection[] = [
   {
     heading: "Who we are",
     body: (
       <p>
         Tenscale builds and runs Meta advertising systems for agencies. This site
-        presents that service and lets you book a call with us. Questions about
-        this policy or about your data go to{" "}
+        presents that service and lets you book a call with us, and the Tenscale
+        app is the software we run those systems with. Both are operated by
+        &ldquo;RePharma Health&rdquo; Ltd, which is responsible for the personal
+        data described here. Questions about this policy or about your data go to{" "}
         <a className="underline" href={`mailto:${CONTACT_EMAIL}`}>
           {CONTACT_EMAIL}
         </a>
@@ -114,6 +116,64 @@ const SECTIONS: Section[] = [
           inboxes. We keep the address in GoHighLevel with the name of the
           resource and how you first found the site, and we may email you about
           it. Every email has an unsubscribe link.
+        </p>
+      </>
+    ),
+  },
+  {
+    heading: "What the Tenscale app receives from Meta",
+    body: (
+      <>
+        <p>
+          A business that works with us can connect its Meta business portfolio
+          to the Tenscale app with Facebook Login for Business. The business
+          chooses which ad accounts, Facebook Pages and Instagram accounts the app
+          may use, and can remove that access at any time. The app then receives
+          and keeps:
+        </p>
+        <ul>
+          <li>
+            the business portfolio&rsquo;s name and ID, and an access token for a
+            system user the app creates in that portfolio. Tokens are stored
+            encrypted and never shown in the app;
+          </li>
+          <li>
+            the chosen ad accounts and their campaigns, ad sets, ads, creatives
+            and performance reports, which the app reads and changes to run the
+            business&rsquo;s advertising;
+          </li>
+          <li>
+            the chosen Pages and their own access tokens, to publish ads from the
+            Page and to receive its messages and comments;
+          </li>
+          <li>
+            messages sent to the Page on Messenger and comments under its posts and
+            ads on Facebook and Instagram: the text, the time, and the sender&rsquo;s
+            name and the ID Meta gives them for that Page. The app uses them to
+            answer in the business&rsquo;s name and to hide comments the business
+            does not want on its ads;
+          </li>
+          <li>
+            the instant forms the business runs with its ads and, when the
+            business has the app collect them, the leads submitted through those
+            forms (name, email address, phone number and form answers), so the
+            business can follow up with those people.
+          </li>
+        </ul>
+        <p>
+          We use this data only to provide the service to the business that
+          connected the account. We do not sell it, do not use it to advertise to
+          the people in it, and do not combine it across businesses. The text of
+          messages, comments and leads may be passed to an AI model to draft a
+          reply or a call summary; the model provider processes it for that
+          request only.
+        </p>
+        <p>
+          The app&rsquo;s data is stored with <strong>Supabase</strong> and runs
+          on <strong>Google Cloud</strong>. AI requests go through{" "}
+          <strong>OpenRouter</strong> or <strong>Google</strong>, and are logged in{" "}
+          <strong>Langfuse</strong> so we can check the quality of what the app
+          writes.
         </p>
       </>
     ),
@@ -226,7 +286,13 @@ const SECTIONS: Section[] = [
         Contact details and booking records stay while we may still do business
         together, and for three years after our last contact. Call recordings and
         transcripts are deleted after twelve months. The visit cookie expires after
-        400 days, or sooner if you delete it.
+        400 days, or sooner if you delete it. Data the Tenscale app receives from
+        Meta stays while the business uses the app; when it disconnects or asks us
+        to, we delete it within 30 days. How to ask is on our{" "}
+        <a className="underline" href="/data-deletion/">
+          data deletion page
+        </a>
+        .
       </p>
     ),
   },
@@ -242,36 +308,5 @@ const SECTIONS: Section[] = [
 ];
 
 export default function Page() {
-  return (
-    <div className={`${landingFonts} ec-landing min-h-screen w-full overflow-x-hidden bg-[#f4f1ea]`}>
-      <main className="mx-auto max-w-[760px] px-[40px] pt-[80px] max-[800px]:px-[20px] max-[800px]:pt-[48px]">
-        <Link
-          href="/"
-          className="font-[family-name:var(--font-inter)] text-[15px] text-[rgba(0,18,50,0.6)] underline transition-colors hover:text-[#001232]"
-        >
-          ← Back to Tenscale
-        </Link>
-
-        <h1 className="mt-[24px] font-[family-name:var(--font-gelica)] text-[44px] leading-[52px] text-[#001232] max-[800px]:text-[32px] max-[800px]:leading-[40px]">
-          Privacy policy
-        </h1>
-        <p className="mt-[10px] font-[family-name:var(--font-inter)] text-[14px] text-[rgba(0,18,50,0.55)]">
-          Last updated {LAST_UPDATED}
-        </p>
-
-        <div className="mt-[40px] flex flex-col gap-[36px] font-[family-name:var(--font-inter)] text-[16px] leading-[26px] text-[rgba(0,18,50,0.82)] [&_code]:rounded-[4px] [&_code]:bg-[rgba(0,18,50,0.06)] [&_code]:px-[5px] [&_code]:py-[1px] [&_code]:text-[14px] [&_li]:mt-[8px] [&_p+p]:mt-[14px] [&_ul]:mt-[10px] [&_ul]:list-disc [&_ul]:pl-[22px]">
-          {SECTIONS.map((section) => (
-            <section key={section.heading}>
-              <h2 className="font-[family-name:var(--font-gelica)] text-[24px] leading-[32px] text-[#001232] max-[800px]:text-[21px] max-[800px]:leading-[28px]">
-                {section.heading}
-              </h2>
-              <div className="mt-[12px]">{section.body}</div>
-            </section>
-          ))}
-        </div>
-      </main>
-
-      <SiteFooter />
-    </div>
-  );
+  return <LegalPage title="Privacy policy" lastUpdated={LAST_UPDATED} sections={SECTIONS} />;
 }
