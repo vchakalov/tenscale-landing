@@ -93,6 +93,8 @@ export interface InjectedContext {
   externalId: string;
   pageViewEventId: string;
   pixelId: string | null;
+  /** Whether Meta may hear about this browser (worker/audience.ts). */
+  report?: boolean;
 }
 
 /**
@@ -108,6 +110,11 @@ export interface InjectedContext {
  * turns into Lead the moment someone fills in the form, does not carry it.
  * iClosed keeps every query parameter with the contact, so this one reaches
  * the bridge with the rest.
+ *
+ * `meta_report=0` when the Worker said Meta must not hear about this browser:
+ * the team's own, a bot's, or one that never came from Meta. The bridge only
+ * sees an email, and a teammate testing from a personal address looked like
+ * a real booking to it (October 2026).
  */
 export function bookingUrlWithContext(base: string, context: InjectedContext | null, userAgent?: string): string {
   if (!context) return base;
@@ -118,6 +125,7 @@ export function bookingUrlWithContext(base: string, context: InjectedContext | n
   if (context.fbp) url.searchParams.set("fbp", context.fbp);
   url.searchParams.set("external_id", context.externalId);
   if (userAgent) url.searchParams.set("ua", userAgent);
+  if (context.report === false) url.searchParams.set("meta_report", "0");
   return url.toString();
 }
 

@@ -45,6 +45,14 @@ describe('bookingUrlWithContext', () => {
     expect(new URL(url).searchParams.get('ua')).toBe('Mozilla/5.0 (iPhone)');
   });
 
+  it('says meta_report=0 when Meta must not hear about this browser, and nothing otherwise', () => {
+    const base = { fbc: null, fbp: null, utm: {}, firstUtm: {}, externalId: 'ext-1', pageViewEventId: 'ev', pixelId: null };
+    const held = new URL(bookingUrlWithContext('https://app.iclosed.io/e/agentica/meet', { ...base, report: false }));
+    const told = new URL(bookingUrlWithContext('https://app.iclosed.io/e/agentica/meet', { ...base, report: true }));
+    expect(held.searchParams.get('meta_report')).toBe('0');
+    expect(told.searchParams.has('meta_report')).toBe(false);
+  });
+
   it('returns the plain url when there is no context', () => {
     expect(bookingUrlWithContext('https://app.iclosed.io/e/agentica/meet', null)).toBe('https://app.iclosed.io/e/agentica/meet');
   });

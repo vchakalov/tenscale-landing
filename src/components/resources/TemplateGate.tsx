@@ -1,13 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { track } from "@/lib/analytics";
 
 /** The public copy of the template. Notion puts a Duplicate button on it. */
 export const AI_BRAIN_TEMPLATE_URL = "https://tenscale.notion.site/AI-Brain-3fea5f5d6f158114a357ca3bec779cd0";
 
 type Refusal = "invalid" | "disposable" | "no_mail";
+
+const noSubscription = () => () => {};
+
+/** False in the HTML the server sent, true once React runs the page. */
+function useHydrated(): boolean {
+  return useSyncExternalStore(noSubscription, () => true, () => false);
+}
 
 const REFUSALS: Record<Refusal, string> = {
   invalid: "That doesn't look like an email address.",
@@ -27,6 +34,7 @@ const REFUSALS: Record<Refusal, string> = {
 export function TemplateGate({ resource, source }: { resource: "ai-brain"; source: string }) {
   const [state, setState] = useState<"idle" | "sending" | "done">("idle");
   const [refusal, setRefusal] = useState<Refusal | null>(null);
+  const hydrated = useHydrated();
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -108,8 +116,11 @@ export function TemplateGate({ resource, source }: { resource: "ai-brain"; sourc
         />
         {/* No person sees or fills this; a bot that does is told yes and filed nowhere. */}
         <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-px w-px opacity-0" />
+        {/* Until the page's script runs, the button does nothing. A press before
+            then was a plain browser submit, which put the address in the URL
+            (25 October 2026), where analytics and the Meta pixel read it. */}
         <button
-          type="submit"
+          type={hydrated ? "submit" : "button"}
           disabled={state === "sending"}
           className="group inline-flex h-14 shrink-0 items-center justify-between gap-4 rounded-full bg-[linear-gradient(180deg,#242424_0%,#000000_100%)] pr-2 pl-7 text-[17px] font-semibold whitespace-nowrap text-white ring-1 ring-white/10 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-visible:ring-4 focus-visible:ring-[#e2f93b]/70 focus-visible:outline-none active:scale-[0.98] disabled:opacity-80 sm:h-12 sm:pl-6 sm:text-[15px]"
         >

@@ -1,7 +1,7 @@
 /// <reference types="@cloudflare/workers-types" />
 import { TEAM_COOKIE, verdictFor, type AudienceEnv } from './audience.js';
 import { sendCapi, sha256Hex } from './capi.js';
-import { parseCookie, readContext, serializeCookie } from './context.js';
+import { lostUtm, parseCookie, readContext, serializeCookie } from './context.js';
 import { buildMetaCookie, buildSetCookie, readRawCookie } from './cookie.js';
 import { parseEngagement } from './events.js';
 import { SIGNUP_PATH, handleSignup, type SignupEnv } from './signup.js';
@@ -185,6 +185,9 @@ async function withTracking(request: Request, url: URL, asset: Response, env: En
       utm: context.utm,
       firstUtm: context.firstUtm,
       externalId: context.externalId,
+      // This page view's own source when the ad click arrived without UTMs, so
+      // PostHog files it as a paid click too (src/lib/analytics.ts).
+      inferredUtm: lostUtm(url),
       // The pixel sends external_id as given; hashed here, it matches what the
       // server sends for the same visitor.
       externalIdHash: await sha256Hex(context.externalId),

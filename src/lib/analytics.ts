@@ -16,7 +16,13 @@ export const POSTHOG_KEY = "phc_tVhroSsJ6YMQAx7AEi7oL6YVJVu5gj2ZbhYkQ4rt2VLD";
 declare global {
   interface Window {
     /** `report`: whether Meta may hear about this visitor at all (worker/audience.ts). */
-    __ag?: { externalId?: string | null; pixelId?: string | null; report?: boolean };
+    __ag?: {
+      externalId?: string | null;
+      pixelId?: string | null;
+      report?: boolean;
+      /** `{utm_source, utm_medium}` for an ad click that arrived without UTMs (worker/context.ts). */
+      inferredUtm?: Record<string, string> | null;
+    };
     /** The thank-you page's query as iClosed sent it, before the pixel script took the lead's details out of the URL. */
     __agSearch?: string;
     fbq?: (...args: unknown[]) => void;
@@ -44,6 +50,14 @@ export function initAnalytics(): void {
     // has loaded and gone quiet instead, which loses the first second or two
     // of a recording and nothing else.
     disable_session_recording: true,
+    // Instagram drops an ad's UTMs on most clicks. The Worker reads the app
+    // back out of the click id, and this page view's events carry it, so a paid
+    // click is not filed under "not set".
+    before_send: (event) => {
+      const inferred = window.__ag?.inferredUtm;
+      if (event && inferred && !event.properties.utm_source) Object.assign(event.properties, inferred);
+      return event;
+    },
     ...(externalId ? { bootstrap: { distinctID: externalId } } : {}),
   });
   const startRecording = () => window.setTimeout(() => posthog.startSessionRecording(), 1500);

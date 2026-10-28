@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { buildSetCookie } from './cookie.js';
-import { newFbp, parseCookie, readContext, serializeCookie } from './context.js';
+import { lostUtm, newFbp, paidClickSource, parseCookie, readContext, serializeCookie } from './context.js';
 
 const NOW = 1_758_600_000_000;
 const ids = () => 'rand-1';
@@ -95,6 +95,39 @@ describe('cookie round trip', () => {
 
   it('ignores a damaged cookie instead of throwing', () => {
     expect(parseCookie('ag_ctx=not-base64-%%%')).toBeNull();
+  });
+});
+
+/** A click id shaped like Meta's: two letters for the app, then base64url of its fields. */
+function clickId(app: 'PA' | 'Iw', fields: string): string {
+  return app + btoa(fields).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+const PAID = 'extn\x03aem\x010\x00pdof\x02adid\x01\xab7\xec_\xfc\xc3\x91srtc\x06';
+const ORGANIC = 'extn\x03aem\x010\x00pdof\x02srtc\x06';
+
+describe('an ad click that lost its UTMs', () => {
+  it('tells a paid Instagram or Facebook click from its click id', () => {
+    expect(paidClickSource(clickId('PA', PAID))).toBe('ig');
+    expect(paidClickSource(clickId('Iw', PAID))).toBe('fb');
+  });
+
+  it('leaves a link from a post or a bio, and a click id it cannot read, unpaid', () => {
+    expect(paidClickSource(clickId('PA', ORGANIC))).toBeNull();
+    expect(paidClickSource('IwAR3xYz')).toBeNull();
+    expect(paidClickSource('AbC123')).toBeNull();
+    expect(paidClickSource(null)).toBeNull();
+  });
+
+  it('files the visit as a paid click from that app, last and first touch', () => {
+    const ctx = ctxFor(`https://tenscale.ai/landing-sp/?fbclid=${clickId('PA', PAID)}`);
+    expect(ctx.utm).toEqual({ utm_source: 'ig', utm_medium: 'paid' });
+    expect(ctx.firstUtm).toEqual({ utm_source: 'ig', utm_medium: 'paid' });
+  });
+
+  it("never overrides the ad's own UTMs", () => {
+    const url = new URL(`https://tenscale.ai/landing-sp/?utm_source=fb&utm_medium=paid&utm_campaign=42&fbclid=${clickId('PA', PAID)}`);
+    expect(lostUtm(url)).toBeNull();
+    expect(ctxFor(url.toString()).utm.utm_campaign).toBe('42');
   });
 });
 

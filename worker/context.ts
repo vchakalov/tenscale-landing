@@ -22,6 +22,39 @@ function utmFrom(url: URL): Record<string, string> {
   return out;
 }
 
+/**
+ * The app a paid Meta click came from, read out of its click id.
+ *
+ * Instagram drops an ad's URL parameters on most clicks (78% of them from 20
+ * October 2026) but keeps the fbclid, and the fbclid of an ad click carries an
+ * `adid` field. Its first two characters name the app: `PA` Instagram, `Iw`
+ * Facebook. A link in a post or a bio gets an fbclid too, without `adid`, and
+ * is not a paid click. Meta does not document the format, so a click id this
+ * cannot read counts as not paid.
+ */
+export function paidClickSource(fbclid: string | null): 'ig' | 'fb' | null {
+  if (!fbclid) return null;
+  const app = fbclid.startsWith('PA') ? 'ig' : fbclid.startsWith('Iw') ? 'fb' : null;
+  if (!app) return null;
+  try {
+    const body = fbclid.slice(2).replace(/-/g, '+').replace(/_/g, '/');
+    return atob(body + '='.repeat((4 - (body.length % 4)) % 4)).includes('adid') ? app : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * What an ad click without UTMs is: `utm_source` the app (`ig`, `fb`, the
+ * codes our ads' `{{site_source_name}}` gives) and `utm_medium` paid. Null when
+ * the URL has its own UTMs, or the click was not a paid one.
+ */
+export function lostUtm(url: URL): Record<string, string> | null {
+  if (Object.keys(utmFrom(url)).length > 0) return null;
+  const source = paidClickSource(url.searchParams.get('fbclid'));
+  return source ? { utm_source: source, utm_medium: 'paid' } : null;
+}
+
 /*
   base64 of the UTF-8 bytes. btoa alone takes only Latin-1, so a UTM value in
   Cyrillic or with an emoji threw, and the page failed. ASCII-only cookies
@@ -71,7 +104,7 @@ export function readContext(
   makeFbp: (now: number) => string = newFbp,
 ): TrackingContext {
   const old = parseCookie(cookieHeader);
-  const utm = utmFrom(url);
+  const utm = lostUtm(url) ?? utmFrom(url);
   const clickId = url.searchParams.get('fbclid');
 
   // The click id is case sensitive: Meta says never normalize it. A click id we
