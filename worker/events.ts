@@ -11,8 +11,12 @@
  */
 export const VIDEO_IDS = ['vsl', 'thank_you'] as const;
 export const VIDEO_PERCENTS = [25, 50, 75, 95] as const;
-export const BUTTON_IDS = ['hero_desktop', 'hero_mobile', 'after_benefits', 'after_objections', 'sticky_mobile'] as const;
-/** Where the calendar was opened from: the landing's buttons, the home page's, or anything else. */
+/** The landing's buttons, then the offer page's (/offer). */
+export const BUTTON_IDS = [
+  'hero_desktop', 'hero_mobile', 'after_benefits', 'after_objections', 'sticky_mobile',
+  'offer_hero', 'offer_means', 'offer_bonuses', 'offer_book',
+] as const;
+/** Where the calendar was opened from: the landing's and offer page's buttons, the home page's, or anything else. */
 export const CALENDAR_SOURCES = [...BUTTON_IDS, 'hero', 'header', 'guarantee', 'proof', 'footer', 'other'] as const;
 
 export interface EngagementEvent {

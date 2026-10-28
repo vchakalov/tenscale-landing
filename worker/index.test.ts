@@ -41,6 +41,17 @@ describe('page requests', () => {
     }
   });
 
+  it('tells the page an Instagram ad click without UTMs is paid, and stores it as the touch', async () => {
+    const paid = 'PA' + btoa('extn\x03aem\x010\x00pdof\x02adid\x01\xab7\xec_\xfc\xc3\x91').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    const res = await worker.fetch(new Request(`https://tenscale.ai/landing-sp/?fbclid=${paid}`), envWith(html), ctx);
+    const body = await res.text();
+    expect(body).toContain('"inferredUtm":{"utm_source":"ig","utm_medium":"paid"}');
+    expect(body).toContain('"utm":{"utm_source":"ig","utm_medium":"paid"}');
+
+    const tagged = await worker.fetch(new Request(`https://tenscale.ai/landing-sp/?utm_source=ig&utm_campaign=42&fbclid=${paid}`), envWith(html), ctx);
+    expect(await tagged.text()).toContain('"inferredUtm":null');
+  });
+
   it('gives the pixel a hashed external id', async () => {
     const res = await worker.fetch(new Request('https://tenscale.ai/landing/'), envWith(html), ctx);
     expect(await res.text()).toMatch(/"externalIdHash":"[0-9a-f]{64}"/);
@@ -230,6 +241,13 @@ describe('engagement events to Meta', () => {
     const [fromLanding] = await post({ ...video, event_name: 'CalendarOpen', params: { source: 'sticky_mobile' } });
     expect(fromLanding.custom_data).toEqual({ source: 'sticky_mobile' });
     expect(await post({ ...video, event_name: 'CalendarOpen', params: { source: 'anything' } })).toEqual([]);
+  });
+
+  it('accepts the offer page\'s buttons for ButtonClick and CalendarOpen', async () => {
+    const [click] = await post({ ...video, event_name: 'ButtonClick', params: { button_id: 'offer_hero' } });
+    expect(click.custom_data).toEqual({ button_id: 'offer_hero' });
+    const [open] = await post({ ...video, event_name: 'CalendarOpen', params: { source: 'offer_book' } });
+    expect(open.custom_data).toEqual({ source: 'offer_book' });
   });
 });
 
