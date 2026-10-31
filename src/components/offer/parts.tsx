@@ -9,22 +9,6 @@ export function Shout({ children, className, as: Tag = "h2" }: { children: React
   );
 }
 
-/**
- * The label on every "See proof" link. A magnifier rather than ↗: the link
- * opens the screenshot over the page, and an arrow reads as "leaves the page".
- */
-export function SeeProof() {
-  return (
-    <span className="inline-flex items-center gap-1">
-      <svg viewBox="0 0 24 24" fill="none" className="h-[1em] w-[1em]" aria-hidden="true">
-        <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="2.2" />
-        <path d="M16 16l4.5 4.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-      </svg>
-      See proof
-    </span>
-  );
-}
-
 /** A filled tick in a disc, the mark every list on the page uses. */
 export function Tick({ className }: { className?: string }) {
   return (

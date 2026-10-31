@@ -6,11 +6,15 @@ import Image from "next/image";
  * book. Drawn in CSS around the real screenshots, so the screens stay sharp
  * and a new screenshot needs no new artwork.
  *
- * Centre: the creatives library the moment six new ads land, a frame of the
- * home page's creatives clip (videos/tour-creatives.mp4 at 15 s, where the ads fill the screen). Left: two
- * ads routed to their own rewritten pages, that clip's last frame (the
- * tour-pages poster). Right: the angle evaluator sorting winners from losers.
- * The studio shot was left out: its interface text is in Bulgarian.
+ * Centre: the creatives library, the most varied set of ads we have
+ * (images/tenscale/features-creatives.png without the sidebar and the
+ * breadcrumb, which still says "Agentica"). Right: the angles board, a 2x
+ * screenshot of the app (dev.tenscale.ai, the Evelin SF account, 2026-10-31)
+ * cut to the Winning and Testing columns so it reads at tablet size. Left: two ads
+ * routed to their own rewritten pages, the last frame of
+ * videos/tour-pages.mp4, sharpened and set on a 16:10 canvas so both pages
+ * show in full, because the point is that they differ (Ben, 2026-10-31). It is
+ * a file of its own so the home page's poster stays light.
  */
 export function Bundle() {
   return (
@@ -29,8 +33,8 @@ export function Bundle() {
               <Image
                 src="/images/offer/hero-creatives.webp"
                 alt="The creatives library: rows of ad creatives the engine made for one offer"
-                width={1024}
-                height={572}
+                width={1440}
+                height={983}
                 priority
                 className="h-full w-full object-cover object-top"
               />
@@ -42,13 +46,13 @@ export function Bundle() {
 
         <Laptop
           className="absolute bottom-0 left-0 z-10 w-[46%]"
-          shot={{ src: "/videos/tour-pages.webp", width: 1280, height: 716 }}
-          alt="Two ads for two angles routed to the same landing page, rewritten for each, with conversion rates up over 300%"
+          shot={{ src: "/images/offer/hero-pages.webp", width: 1280, height: 800 }}
+          alt="Two ads for two angles, each routed to its own version of the landing page, with conversion rates up 322% and 313%"
         />
         <Tablet
           className="absolute right-[1%] bottom-[2%] z-10 w-[34%]"
-          shot={{ src: "/images/tenscale/offer-angle-evaluator.webp", width: 1400, height: 782 }}
-          alt="The angle evaluator: winning, testing and losing angles with their ROAS and CPA"
+          shot={{ src: "/images/offer/hero-angles.webp", width: 1200, height: 901 }}
+          alt="The angles board: winning and testing angles with their cost per result, spend and results"
         />
       </div>
     </div>

@@ -22,14 +22,14 @@ export function OfferButton({
   tone = "lime",
   sub = (
     <>
-      See How To Automate Your Agency In <span className="whitespace-nowrap">15–30 Mins</span>
+      See Exactly How AI Can Grow Your Marketing
     </>
   ),
   className,
   // "30-min" kept on one line: a break after its hyphen read as "30-" and "min".
   children = (
     <>
-      Yes! Book my free <span className="whitespace-nowrap">30-min</span> automation call
+      Yes! Book my free <span className="whitespace-nowrap">30-min</span> <span className="whitespace-nowrap">AI growth</span> call
     </>
   ),
 }: {
@@ -64,7 +64,7 @@ export function OfferButton({
     >
       <span className="flex flex-col items-center">
         <span className="text-[19px] leading-[1.12] font-black tracking-[-0.01em] text-balance uppercase sm:text-[26px]">{children}</span>
-        <span className={cn("mt-2 text-[13px] leading-[18px] font-medium sm:text-[15px]", tone === "lime" ? "text-black/65" : "text-white/70")}>
+        <span className={cn("mt-2 text-[13px] leading-[18px] font-medium text-balance sm:text-[15px]", tone === "lime" ? "text-black/65" : "text-white/70")}>
           {sub}
         </span>
       </span>

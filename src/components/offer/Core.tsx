@@ -3,9 +3,9 @@ import { Shout, Tick } from "@/components/offer/parts";
 
 /**
  * The engine in three parts, each next to the home page's clip of it running,
- * each said the same way: the problem in a sentence or two, the fix as three
- * short points, and the manual work it replaces as tags. The copywriter's
- * third pass (2026-10-28), cut down by Ben to be quicker to read.
+ * each said the same way: a name with a line in brackets, the problem with
+ * its conclusion underlined, and the fix as three short points. Ben's words
+ * (2026-10-30) on the copywriter's third pass (2026-10-28).
  *
  * The note on personalized funnels says "up to", as the home page's step 3
  * does: the clip's two pages went from 0.9% to 3.8% and from 0.8% to 3.3%.
@@ -15,54 +15,72 @@ type Part = {
   tag: string;
   /** A small aside under the tag, for the one number worth pointing out. */
   note?: { text: string; figure: string };
-  problem: string;
+  problem: React.ReactNode;
   fix: string[];
-  replaces: string[];
   clip: string;
   alt: string;
 };
 
 const PARTS: Part[] = [
   {
-    name: "Angles & Ad Creatives",
-    tag: "How The Engine Builds Your Ads",
-    problem:
-      "Meta now picks who sees your ad based on the creative. 3 or 4 ads per client, or 50 copies of one idea, burn out fast and get expensive.",
+    name: "Angles & Ads",
+    tag: "Not Just Pretty Ads… Converting Ads, In Unlimited Amounts",
+    problem: (
+      <>
+        Meta&apos;s Andromeda runs on creatives, and they <strong className="font-bold text-[#0b0b0c]">burn out FAST</strong>{" "}
+        (you practically need new ones every day). But new ads aren&apos;t enough…{" "}
+        <strong className="font-bold text-[#0b0b0c] underline decoration-[#0b0b0c] decoration-2 underline-offset-4">
+          you need new angles
+        </strong>
+        , because 50 versions of one idea look like a single ad to Meta.
+      </>
+    ),
     fix: [
       "Finds what’s winning on Meta and TikTok right now",
       "Turns your offer into dozens of different buyer angles",
-      "Makes images and AI UGC videos for every angle, in any language",
+      "Makes AI images & videos (UGC, B‑roll, talking heads and 11 more) for every angle",
     ],
-    replaces: ["Strategy calls", "Briefs", "Designers", "Freelancers", "UGC creators", "Video editors"],
     clip: "tour-creatives",
     alt: "Generating creatives: the engine reads the best hooks and winning ads, then six new creatives land in the library",
   },
   {
     name: "Personalized Funnels",
-    tag: "How The Engine Converts The Clicks",
-    note: { text: "Btw, this alone boosts conversions by", figure: "up to 300%" },
-    problem:
-      "Different ads, same landing page. The page doesn’t say what the ad promised, so clicks you already paid for leave.",
+    tag: "Angle → Ad → Landing Page… One Message, All The Way Through",
+    note: { text: "BTW, this ALONE =", figure: "up to 300% more conversions" },
+    problem: (
+      <>
+        Meta is going hyper-personal, so every buyer expects a journey built for them. You KNOW each angle (and awareness
+        level) needs its own landing page… but building them all by hand was impossible.{" "}
+        <strong className="font-bold text-[#0b0b0c] underline decoration-[#0b0b0c] decoration-2 underline-offset-4">
+          Until now.
+        </strong>
+      </>
+    ),
     fix: [
       "Every ad gets its own landing page",
       "Each page repeats the exact promise of its ad",
-      "One line of code. Your layout, facts and prices stay the same",
+      "Full CRO from one line of code: AI changes elements, split tests them and keeps what converts",
     ],
-    replaces: ["One page for everyone", "Page variants built by hand"],
     clip: "tour-pages",
     alt: "Two ads for two angles go through a router to the same landing page, rewritten for each angle, and the conversion rate climbs over 300%",
   },
   {
     name: "Rule-Based Automation",
-    tag: "How The Engine Runs The Account 24/7",
-    problem:
-      "Someone has to sit in Ads Manager every day. Bad ads usually get caught after the budget is already gone.",
+    tag: "We Monitor & Operate Your Ads 24/7",
+    problem: (
+      <>
+        You have to monitor, scale, duplicate, manage budgets and launch new ads EVERY day…{" "}
+        <strong className="font-bold text-[#0b0b0c] underline decoration-[#0b0b0c] decoration-2 underline-offset-4">
+          doing all that by hand is <em>unreasonable</em>.
+        </strong>
+      </>
+    ),
     fix: [
-      "Set your rules once, like a target CPA",
-      "Losers paused, tired ads replaced, winners scaled, 24/7",
-      "Runs through the official Meta API. You approve every ad",
+      "Set rules on ANY metric (CTR, CPA, ROAS and 60 more)",
+      "Stops bad ads, replaces tired ones, scales budgets, duplicates winners and more",
+      // Not "Meta-Partner approved" until that status is confirmed: the page must not suggest a partnership with Meta.
+      "Runs through Meta’s official API (as safe as it gets)",
     ],
-    replaces: ["Daily Ads Manager checks", "Manual budget changes"],
     clip: "tour-rules",
     alt: "Building a rule that replaces creatives when ROAS drops below 1.5",
   },
@@ -73,7 +91,8 @@ export function Core() {
     <section className="w-full bg-white px-4 py-20 sm:px-8 sm:py-32">
       <div className="mx-auto flex max-w-[960px] flex-col items-center text-center">
         <Shout className="text-[clamp(32px,5.6vw,60px)] leading-[1.02] text-[#0b0b0c]">
-          Here&apos;s How The Tenscale AI Engine Replaces <span className="text-[#6a2cff]">Weeks Of Manual Agency Work:</span>
+          Here&apos;s How The Tenscale AI Engine Does{" "}
+          <span className="text-[#6a2cff]">The Work Of An Entire Marketing Team:</span>
         </Shout>
       </div>
 
@@ -92,11 +111,15 @@ export function Core() {
                     {i + 1}
                   </span>
                   <h3 className="mt-6 text-[30px] leading-[1.02] font-black tracking-[-0.025em] text-[#0b0b0c] sm:text-[42px]">{part.name}</h3>
-                  <p className="mt-2 text-[17px] leading-[24px] font-bold text-[#6a2cff] sm:text-[19px] sm:leading-[27px]">({part.tag})</p>
+                  {/* A tag with an ellipsis breaks after it, so the line turns where the sentence does. */}
+                  <p className="mt-2 text-[17px] leading-[24px] font-bold text-balance text-[#6a2cff] sm:text-[19px] sm:leading-[27px]">
+                    ({part.tag.split("… ").map((line, n) => (n === 0 ? line : <span key={n}>…<br />{line}</span>))})
+                  </p>
                   {part.note && (
-                    <p className="mt-5 inline-flex max-w-full -rotate-1 items-baseline gap-x-1.5 rounded-full bg-[#e2f93b] px-4 py-2 text-[15px] leading-[21px] font-semibold text-[#0b0b0c] sm:text-[16px]">
+                    // Black with a lime figure: a lime fill is kept for the buttons (Ben, 2026-10-30).
+                    <p className="mt-5 inline-flex max-w-full items-baseline gap-x-1.5 rounded-2xl bg-[#0b0b0c] px-4 py-2 text-[15px] leading-[21px] font-semibold text-white sm:rounded-full sm:text-[16px]">
                       <span>
-                        {part.note.text} <span className="font-black whitespace-nowrap text-[#6a2cff]">{part.note.figure}</span>
+                        {part.note.text} <span className="font-black whitespace-nowrap text-[#e2f93b]">{part.note.figure}</span>
                       </span>
                     </p>
                   )}
@@ -105,28 +128,15 @@ export function Core() {
                 <div className="mt-7 flex flex-col gap-6 text-left">
                   <div>
                     <p className="text-[12px] font-black tracking-[0.14em] text-[#8a8a90] uppercase sm:text-[13px]">The Problem</p>
-                    <p className="mt-1.5 text-[17px] leading-[27px] text-[#3a3a3d] sm:text-[18px] sm:leading-[29px]">{part.problem}</p>
+                    <p className="mt-1.5 text-[17px] leading-[27px] text-pretty text-[#3a3a3d] sm:text-[18px] sm:leading-[29px]">{part.problem}</p>
                   </div>
                   <div>
-                    <p className="text-[12px] font-black tracking-[0.14em] text-[#6a2cff] uppercase sm:text-[13px]">How We Fix It</p>
+                    <p className="text-[12px] font-black tracking-[0.14em] text-[#0b0b0c] uppercase sm:text-[13px]">How We Fix It</p>
                     <ul className="mt-2.5 flex flex-col gap-2.5">
                       {part.fix.map((point) => (
-                        <li key={point} className="flex items-start gap-3 text-[17px] leading-[25px] font-semibold text-[#0b0b0c] sm:text-[18px] sm:leading-[27px]">
-                          <Tick className="mt-0.5 h-6 w-6 bg-[#e2f93b] text-[#0b0b0c]" />
+                        <li key={point} className="flex items-start gap-3 text-[17px] leading-[25px] font-semibold text-pretty text-[#0b0b0c] sm:text-[18px] sm:leading-[27px]">
+                          <Tick className="mt-0.5 h-6 w-6 bg-[#6a2cff] text-white" />
                           {point}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-[12px] font-black tracking-[0.14em] text-[#0b0b0c] uppercase sm:text-[13px]">Replaces</p>
-                    <ul className="mt-2.5 flex flex-wrap gap-2">
-                      {part.replaces.map((item) => (
-                        <li
-                          key={item}
-                          className="rounded-full bg-[#f3f3ef] px-3.5 py-1.5 text-[14px] font-semibold text-[#6a6a70] line-through decoration-[#6a2cff]/70 decoration-2 ring-1 ring-black/[0.06] sm:text-[15px]"
-                        >
-                          {item}
                         </li>
                       ))}
                     </ul>

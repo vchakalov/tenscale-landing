@@ -22,7 +22,7 @@ export type BonusVisualKind = "call" | "support" | "workflow" | "report" | "play
 
 const VISUALS: Record<BonusVisualKind, string> = {
   call: "A weekly 1-on-1 strategy call: Ray from Tenscale on camera, sharing the angle evaluator",
-  support: "The client's private VIP support channel with Ray and Alex from Tenscale answering a launch question",
+  support: "The client's private support channel with Ray and Alex from Tenscale answering a launch question",
   workflow: "The lead gen engine as a workflow: offer, winning ads, AI angles, creatives, video and page copy, approval, launch, rules and the CRM",
   report: "The US Market Intel spreadsheet: this week's winning hooks by angle, format and niche, with CTR and CPA trend",
   playbook: "The Andromeda Execution Playbook: a checklist of the rules the engine runs on",

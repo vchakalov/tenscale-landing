@@ -1,28 +1,86 @@
-import { Shout, Tick } from "@/components/offer/parts";
+import { Shout } from "@/components/offer/parts";
 
 /**
  * What actually happens after someone joins. A buyer cannot picture an
  * "install" and assumes they will be left with a login (Ben, 2026-10-28), so
  * the steps are spelled out before the bonuses: first the install, then what
  * carries on every day. Drawn like The Core: numbered black discs, heavy type.
- * The refund line says 30 days, like the guarantee; change them together.
+ * The words are Ben's (2026-10-30), in short lines for the eye.
+ * The refund line names no period, like the guarantee section.
  */
-const PHASES = [
+const PHASES: { title: string; steps: { title: string; lines: React.ReactNode[] }[] }[] = [
   {
     title: "First, We Install It",
     steps: [
-      { title: "We embed our people in your team", body: "A few of our developers and media buyers work alongside yours from day one." },
-      { title: "We install, migrate and set up everything", body: "Your accounts, offers and pages, moved over and running. You don’t lift a finger." },
-      { title: "We train your team", body: "Live sessions until your people run the engine on their own." },
-      { title: "We document everything", body: "Every process written down, so nothing lives in one person’s head." },
+      {
+        title: "Our People Join Your Team",
+        lines: [
+          <>
+            Our developers and media buyers work <em>side by side</em> with yours… from DAY ONE.
+          </>,
+        ],
+      },
+      {
+        title: "We Set It ALL Up",
+        lines: [
+          <>
+            Your accounts, offers and pages, moved over and running. <em>(You don&apos;t lift a finger.)</em>
+          </>,
+        ],
+      },
+      {
+        title: "We Train Your Team Until They Don’t Need Us",
+        lines: [
+          <>
+            Live sessions… until your people run the Engine <em className="whitespace-nowrap">on their own</em>.
+          </>,
+        ],
+      },
+      {
+        title: "We Document EVERYTHING",
+        lines: [
+          <>
+            Video courses, call recordings, consultations… and your own <em>personal AI</em>{" "}
+            to help whenever you&apos;re stuck.
+          </>,
+          <>
+            <em>(So nothing lives in one person&apos;s head.)</em>
+          </>,
+        ],
+      },
     ],
   },
   {
     title: "Then, We Stay",
     steps: [
-      { title: "We’re on call 24/7, every day", body: "A real person answers, every time." },
-      { title: "The software gets better every month", body: "New features land in your account as we ship them." },
-      { title: "Our AI team helps with the rest", body: "Anywhere else in your business AI can help, we’ll show you how." },
+      {
+        title: "We’re On Call 24/7",
+        lines: [
+          <>
+            Your own private group on Slack, Telegram or Discord <em>(whichever your team uses)</em>… where we talk,
+            plan and solve problems with you.
+          </>,
+          <>A real person answers, every time.</>,
+        ],
+      },
+      {
+        title: "Your Engine Gets Better EVERY Month",
+        lines: [
+          <>New features land in your account the day we ship them.</>,
+          <>
+            And we&apos;ve got a LOT lined up for the coming months (stuff that will change how you market)…{" "}
+            <em>you get every single one.</em>
+          </>,
+        ],
+      },
+      {
+        title: "Our AI Team Helps With Everything Else",
+        lines: [
+          <>
+            Anywhere else AI can help your business, we&apos;ll show you how <em>(not just your ads)</em>.
+          </>,
+        ],
+      },
     ],
   },
 ];
@@ -52,10 +110,14 @@ export function OfferProcess() {
                       {n}
                     </span>
                     <div className="min-w-0 pt-1">
-                      <p className="text-[19px] leading-[25px] font-black tracking-[-0.01em] text-[#0b0b0c] sm:text-[22px] sm:leading-[28px]">
+                      <p className="text-[19px] leading-[25px] font-black tracking-[-0.01em] text-balance text-[#0b0b0c] sm:text-[22px] sm:leading-[28px]">
                         {step.title}
                       </p>
-                      <p className="mt-1.5 text-[16px] leading-[25px] text-[#4a4a4e] sm:text-[17px] sm:leading-[27px]">{step.body}</p>
+                      <div className="mt-1.5 flex flex-col gap-1.5 text-[16px] leading-[25px] text-pretty text-[#4a4a4e] sm:text-[17px] sm:leading-[27px]">
+                        {step.lines.map((line, k) => (
+                          <p key={k}>{line}</p>
+                        ))}
+                      </div>
                     </div>
                   </li>
                 );
@@ -65,10 +127,13 @@ export function OfferProcess() {
         ))}
       </div>
 
-      <div className="mx-auto mt-4 flex w-full max-w-[1120px] items-center justify-center gap-4 rounded-[28px] bg-[#e2f93b] px-6 py-6 text-left sm:px-10 sm:py-8">
-        <Tick className="h-11 w-11 bg-[#0b0b0c] text-[#e2f93b] sm:h-12 sm:w-12" />
-        <p className="text-[20px] leading-[26px] font-black tracking-[-0.01em] text-[#0b0b0c] sm:text-[28px] sm:leading-[34px]">
-          Not happy in your first 30 days? We give you your money back.
+      {/* The guarantee as words, not another box, with the promise itself set large (Ben, 2026-10-30). */}
+      <div className="mx-auto mt-14 flex w-full max-w-[1120px] flex-col items-center text-center sm:mt-16">
+        <p className="text-[clamp(34px,5.6vw,60px)] leading-[0.98] font-black tracking-[-0.025em] text-balance text-[#0b0b0c] uppercase">
+          <span className="text-[#6a2cff]">100%</span> Of Your Money Back
+        </p>
+        <p className="mt-3 text-[18px] leading-[26px] font-semibold text-balance text-[#3a3a3d] sm:text-[22px] sm:leading-[30px]">
+          If you&apos;re not happy.
         </p>
       </div>
     </section>
